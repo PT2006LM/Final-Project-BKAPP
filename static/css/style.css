@@ -1,0 +1,110 @@
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#page-header {
+    position: sticky;
+    z-index: 99;
+}
+
+
+.humb-bars {
+    position: relative;
+    padding: 10px;
+    z-index: 5;
+    background: #0097e6;
+    border-radius: 0;
+    outline: none;
+}
+
+.humb-bars:focus {
+    outline: none !important;
+}
+
+.humbar-container {
+    width: 38px;
+    height: 30px;
+    position: relative;
+}
+
+.humb-bars .bar {
+    width: 100%;
+    height: 4px;
+    background: #000;
+    position: absolute;
+    left: 0px;
+    border-radius: 4px;
+    transition: 0.1s linear;
+}
+
+.humb-bars .bar:first-child {
+    top: 3px;
+    transform: rotate(0);
+}
+
+.humb-bars .bar:nth-child(2) {
+    top: 13px;
+    opacity: 1;
+}
+
+.humb-bars .bar:nth-child(3) {
+    top: 23px;
+    transform: rotate(0);
+}
+
+.humb-bars.active .bar:first-child {
+    top: 13px;
+    transform: rotate(45deg);
+}
+
+.humb-bars.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.humb-bars.active .bar:nth-child(3) {
+    top: 13px;
+    transform: rotate(-45deg);
+}
+
+
+
+@media (max-width: 576px) { 
+    #navbarMenu {
+        position: absolute;
+        z-index: 4;
+        height: 100vh;
+        width: 100vw;
+        display: block;
+        top: 100%;
+        left: 100%;
+        background: #353b48;
+        transition: 0.1s linear;
+        /* Use JS to estimate width */
+    }
+
+    .overlay-bg.display {
+        z-index: 3;
+        position: absolute;
+        display: block;
+        top: 100%;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #2f3640;
+        opacity: 0.8;
+    }
+
+    #navbarMenu .dropdown-btn {
+        position: absolute;
+        bottom: 0;
+    }
+    
+    #navbarMenu a {
+        color: #fff;
+    }
+
+    #navbarMenu.display {
+        left: 40px;
+    }
+}
