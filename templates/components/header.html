@@ -10,7 +10,7 @@
 
     <div class="overlay-bg"></div>
     
-    <div class="collapse navbar-collapse" id="navbarMenu">
+    <div class="collapse navbar-collapse p-0" id="navbarMenu">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a href="#" class="nav-link">Item 1</a>
@@ -26,13 +26,14 @@
             </li>
         </ul>
 
-        <div class="dropdown dropdown-btn">
-            <button class="btn dropdown-toggle" id="userDropdown" data-toggle='dropdown'>USERNAME</button>
-            <div class="dropdown-menu" aria-labelledby="#userDropdown">
-                <a href="#" class="dropdown-item">ACCOUNT</a>
-                <a href="#" class="dropdown-item">COUPONS</a>
-                <a href="#" class="dropdown-item">SIGN OUT</a>
-            </div>
+        <div class="dropdown-btn" id="user">
+            <a class="menubar-switch" data-toggle='dropdown'>USERNAME</a>
+            
+            <ul id="usernav-list">
+                <li><a href="#">ACCOUNT</a></li>
+                <li><a href="#">COUPONS</a></li>
+                <li><a href="#">SIGN OUT</a></li>
+            </ul>
         </div>
     </div>
     

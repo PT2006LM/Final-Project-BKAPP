@@ -8,6 +8,40 @@ body {
     z-index: 99;
 }
 
+#user > a {
+    display: block;
+    height: 100%;
+    padding: 8px;
+    cursor: pointer;
+}
+
+#user ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #353b48;
+}
+
+#user li > a {
+    padding: 12px 10px 12px 20px;
+    display: block;
+    text-align: right;
+    color: #fff;
+}
+
+#user li > a:hover {
+    background: #000;
+}
+
+#user > a:hover ~ ul,
+#user ul:hover {
+    display: block;
+}
+
+
 
 .humb-bars {
     position: relative;
@@ -67,7 +101,9 @@ body {
     transform: rotate(-45deg);
 }
 
-
+.overlay-bg {
+    display: none;
+}
 
 @media (max-width: 576px) { 
     #navbarMenu {
@@ -80,7 +116,6 @@ body {
         left: 100%;
         background: #353b48;
         transition: 0.1s linear;
-        /* Use JS to estimate width */
     }
 
     .overlay-bg.display {
@@ -95,7 +130,7 @@ body {
         opacity: 0.8;
     }
 
-    #navbarMenu .dropdown-btn {
+    #navbarMenu #user {
         position: absolute;
         bottom: 0;
     }
@@ -106,5 +141,49 @@ body {
 
     #navbarMenu.display {
         left: 40px;
+    }
+
+    #user {
+        width: 100%;
+    }
+
+    #user > a {
+        text-align: center;
+    }
+
+    #user .menubar-sm {
+        position: absolute;
+        display: block;
+        left: 100%;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        transition: 0.2s linear;
+    }
+
+    #user .menubar-sm.display {
+        left: 0;
+    }
+
+    #user .menubar-sm > ul {
+        display: block;
+        position: relative;
+        top: 0;
+        background: none;
+    }
+
+    #user .menubar-sm > ul a {
+        color: red;
+        text-align: left;
+    }
+
+    #user .menubar-sm > a#menubar-switch {
+        display: block;
+        width: 100%;
+        color: red;
+        text-align: center;
+        cursor: pointer;
+        font-size: 1.2rem;
     }
 }
