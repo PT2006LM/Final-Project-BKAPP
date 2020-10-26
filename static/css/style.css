@@ -3,14 +3,19 @@ body {
     overflow-x: hidden;
 }
 
+#navbarMenu a {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #page-header {
     position: sticky;
     z-index: 99;
 }
 
 #user > a {
-    display: block;
-    height: 100%;
     padding: 8px;
     cursor: pointer;
 }
@@ -147,8 +152,9 @@ body {
         width: 100%;
     }
 
-    #user > a {
-        text-align: center;
+    #navbarMenu > ul a {
+        justify-content: start;
+        padding-left: 40px;
     }
 
     #user .menubar-sm {
