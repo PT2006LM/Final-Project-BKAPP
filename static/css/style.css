@@ -1,3 +1,9 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
   min-height: 100vh;
   overflow-x: hidden;
@@ -235,5 +241,68 @@ body {
     top: 13px;
     transform: rotate(-45deg);
   }
+}
+
+#page-footer {
+  display: block;
+  padding: 20px 72px 24px;
+  background: #2f2f2f;
+}
+
+#page-footer .top-items {
+  margin-top: 16px;
+}
+
+#page-footer .top-items ul.social-btns {
+  margin: 0;
+}
+
+#page-footer .top-items ul.social-btns li {
+  display: inline;
+  list-style: none;
+  margin-right: 10px;
+}
+
+#page-footer .top-items ul.social-btns li a i {
+  display: inline-block;
+  font-size: 30px;
+  color: #dcdde1;
+  transition: 0.2s ease-in-out;
+}
+
+#page-footer .top-items ul.social-btns li a i:hover {
+  color: #0097e6;
+}
+
+#page-footer .top-items a.top-btn {
+  display: block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: solid 2px #dcdde1;
+  overflow: hidden;
+  transition: 0.2s ease-in-out;
+}
+
+#page-footer .top-items a.top-btn .arrow {
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: solid 2px #dcdde1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -25%) rotate(45deg);
+  border-bottom: none;
+  border-right: none;
+  transition: 0.2s ease-in-out;
+}
+
+#page-footer .top-items a.top-btn:hover {
+  border-color: #0097e6;
+}
+
+#page-footer .top-items a.top-btn:hover .arrow {
+  border-color: #0097e6;
 }
 /*# sourceMappingURL=style.css.map */
