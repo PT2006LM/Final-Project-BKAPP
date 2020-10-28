@@ -10,11 +10,13 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    {% include 'components/header.html' %}
+    <div id="page-wrapper">
+        {% include 'components/header.html' %}
 
-    {% block content %}{% endblock %}
+        {% block content %}{% endblock %}
 
-    {% include 'components/footer.html' %}
+        {% include 'components/footer.html' %}
+    </div>
     
     <script src="{% static 'js/jquery.slim.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

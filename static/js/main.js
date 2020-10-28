@@ -1,4 +1,4 @@
-const SM_BREAK_POINT = 576;
+const SM_BREAK_POINT = 768;
 
 const pageHeader = document.querySelector('#page-header');
 const humBarButton = document.querySelector('.humb-bars');

@@ -9,7 +9,7 @@ $user-nav-btns-fontsize: 0.8em;
 
 $header-divide-color: #3f3f3f;
 $navbar-left-responsive: 40px;
-$break-point: 576px;
+$break-point: 768px;
 
 
 @mixin aligncenter {
@@ -31,7 +31,8 @@ $break-point: 576px;
 }
 
 #page-header {
-    position: sticky;
+    position: fixed;
+    width: 100%;
     z-index: 99;
     background: $header-background-color;
 
@@ -39,7 +40,7 @@ $break-point: 576px;
         display: none;
 
         @include Responsive($break-point) {
-            &.active {
+            &.display {
                 z-index: 3;
                 position: absolute;
                 display: block;
@@ -48,12 +49,13 @@ $break-point: 576px;
                 width: 100vw;
                 height: 100vh;
                 background: $header-background-color;
-                opacity: 0.8;
+                opacity: 0.9;
             }
         }
     }
 
     #navbarMenu {
+        overflow: hidden;
         a {
             height: $header-height;
             @include aligncenter;
