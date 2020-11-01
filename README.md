@@ -13,7 +13,7 @@
 Để đưa phần code đã được thay đổi (và committed) về github.
 1. Tạo đường dẫn remote cho git với `git remote add origin <url>`. Cú pháp này sẽ tạo 1 branch remote (mặc định ở local tên là master) tên là `origin`. Chú ý về đường dẫn:  
     *  Đường dẫn này khác với url clone ban đầu. Cụ thể sẽ chứa thông tin để xác nhận tài khoản github (chứ k liên quan gì tới git).
-    *  Cú pháp đường dẫn nếu dùng HTTPS (repos này chưa thiết lập SSL): `https://<tên-đăng-nhập-github>:<mật-khẩu-github>@github.com/<tên-repos>.git`, ở đây `tên-repos` = `Final_project_BKAPP`
+    *  Cú pháp đường dẫn nếu dùng HTTPS (repos này chưa thiết lập SSL): `https://<tên-đăng-nhập-github>:<mật-khẩu-github>@github.com/<tên-repos>`, ở đây `tên-repos` = `PT2006LM/Final-Project-BKAPP.git`
     *  Cú pháp để đổi đường dẫn remote: `git remote set-url origin <url-mới>`
     *  Cú pháp để kiểm tra tất các remote url ở tất cả các branch ở local: `git remote -v`
     
