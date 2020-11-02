@@ -457,8 +457,24 @@ a:hover {
 
 #carousel-wrapper {
   display: grid;
-  grid-template-columns: 75% 25%;
+  grid-template-columns: 70% 30%;
   grid-template-rows: 1fr;
+}
+
+#carousel-wrapper .carousel-component[data-component=captions] {
+  font-size: 0.9rem;
+}
+
+#carousel-wrapper .carousel-component[data-component=captions] h4 {
+  font-size: 1.1rem;
+}
+
+#carousel-wrapper .carousel-detail {
+  background: #2f2f2f;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 13px;
 }
 
 #carousel-wrapper .carousel-detail ul {
@@ -466,10 +482,46 @@ a:hover {
   display: flex;
 }
 
+#carousel-wrapper .carousel-detail ul li {
+  margin-right: 20px;
+}
+
+#carousel-wrapper .carousel-detail ul li:last-child {
+  margin-right: 0;
+}
+
+#carousel-wrapper .carousel-detail ul li input {
+  display: none;
+}
+
+#carousel-wrapper .carousel-detail ul li input:checked ~ label .carousel-icon {
+  width: 20px;
+  height: 20px;
+}
+
+#carousel-wrapper .carousel-detail ul li label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+#carousel-wrapper .carousel-detail ul li label .carousel-icon {
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  border: solid 3px #aaa;
+  transition: 0.2s linear;
+}
+
 @media screen and (max-width: 992px) {
   #carousel-wrapper {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr auto;
   }
 }
 /*# sourceMappingURL=style.css.map */

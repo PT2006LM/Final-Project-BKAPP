@@ -4,7 +4,7 @@ const carouselDur = 5000;
 var carouselScrollInterval;
 
 startInterval();
-$('.carousel-component[data-component="controller"] input[type="radio"]#0').prop('checked', true);
+$('.carousel-component[data-component="controller"] input[type="radio"]#carousel-homepage-0').prop('checked', true);
 
 function startInterval() {
     carouselScrollInterval = setInterval(updateCarousel, carouselDur);
@@ -15,7 +15,7 @@ $('.carousel').carousel({
 })
 
 $('.carousel').on('slide.bs.carousel', function(data) {
-    $(`.carousel-component[data-component="controller"] input[type="radio"]#${data.to}`).prop('checked', true);
+    $(`.carousel-component[data-component="controller"] input[type="radio"]#carousel-homepage-${data.to}`).prop('checked', true);
 })
 
 function updateCarousel() {
