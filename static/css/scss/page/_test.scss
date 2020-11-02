@@ -1,2 +1,11 @@
 @import 'components/header';
 @import 'components/carousel';
+
+
+article {
+    ul {
+        li {
+            list-style: none;
+        }
+    }
+}

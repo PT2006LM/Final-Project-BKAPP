@@ -524,4 +524,8 @@ a:hover {
     grid-template-rows: 1fr auto;
   }
 }
+
+article ul li {
+  list-style: none;
+}
 /*# sourceMappingURL=style.css.map */
