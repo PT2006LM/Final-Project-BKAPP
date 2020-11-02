@@ -10,14 +10,43 @@ $page-background: #060606;
 
 #hompage-header {
     height: $header-height;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     background: $page-background;
     z-index: 10;
+    color: $text-color;
+    width: 100%;
 
     &.stick {
         top: $main-header-height;
+    }
+
+
+    .btns > ul {
+        display: flex;
+        align-items: center;
+        margin: 0;
+
+        li {
+            list-style: none;
+            margin-right: 20px;
+
+            a {
+                color: $text-color;
+                opacity: 0.6;
+
+                &.active {
+                    opacity: 1;
+                }
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
 
 

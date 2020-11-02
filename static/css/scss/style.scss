@@ -16,6 +16,14 @@ body {
     overflow-x: hidden;
 }
 
+.stick {
+    position: fixed;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
 @import 'header/header';
 @import 'footer/footer';
 @import 'page/test';

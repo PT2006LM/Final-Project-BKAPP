@@ -1,0 +1,10 @@
+$carousel-thumbnail-fr-width: 75%;
+$carousel-detail-fr-width: 100% - $carousel-thumbnail-fr-width;
+
+
+
+#carousel-wrapper {
+    display: grid;
+    grid-template-columns: 75% 25%;
+    grid-template-rows: 1fr;
+}

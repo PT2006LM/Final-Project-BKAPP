@@ -82,7 +82,7 @@ function initialSetup() {
 }
 
 
-
+// Start Collapse header menu setup
 function resizeCollapsedNavbarMenu() {
     if (isScreenSmallerThanBreakPoint()) {
         collapsableNavbarMenu.style.height = 
@@ -129,3 +129,4 @@ function isScreenSmallerThanBreakPoint() {
 function resetResponsiveForSmallScreen() {
     userMenuBarOnSmallDevice.classList.remove('display');
 }
+// End Collapse header menu setup
