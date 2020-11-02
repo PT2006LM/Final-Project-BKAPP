@@ -30,8 +30,11 @@ $break-point: 768px;
     }
 }
 
-#page-header {
+.stick {
     position: fixed;
+}
+
+#page-header {
     width: 100%;
     z-index: 99;
     background: $header-background-color;

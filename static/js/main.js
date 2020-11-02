@@ -17,6 +17,7 @@ userMenuBarOnSmallDevice.appendChild(userMenuBarSwitch);
 
 const pageHeaderOriginalHeight = pageHeader.offsetHeight;
 var pageHeaderResized = false;
+const hompageContentHeader = document.querySelector('#hompage-header');
 
 initialSetup();
 
@@ -64,6 +65,20 @@ function initialSetup() {
         resizeCollapsedNavbarMenu();
         setupUserMenuBar();
     }   
+
+    onscroll = function() {
+        if (pageHeader.offsetTop < window.pageYOffset) {
+            pageHeader.classList.add('stick');
+            if (hompageContentHeader) {
+                hompageContentHeader.classList.add('stick');
+            }
+        } else {
+            pageHeader.classList.remove('stick');
+            if (hompageContentHeader) {
+                hompageContentHeader.classList.remove('stick');
+            }
+        }
+    }
 }
 
 

@@ -16,8 +16,11 @@ body {
   overflow-x: hidden;
 }
 
-#page-header {
+.stick {
   position: fixed;
+}
+
+#page-header {
   width: 100%;
   z-index: 99;
   background: #2f2f2f;
@@ -392,5 +395,32 @@ body {
   #page-footer {
     padding: 1em 1.5em;
   }
+}
+
+#hompage-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #060606;
+  z-index: 10;
+}
+
+#hompage-header.stick {
+  top: 50px;
+}
+
+#hompage-header .search-form {
+  background: #2f2f2f;
+  padding: 0 15px;
+}
+
+#hompage-header .search-form input {
+  font-size: 14px;
+  padding: 12px 5px;
+  margin: 0 10px;
+  background: none;
+  border: none;
+  color: #dcdde1;
 }
 /*# sourceMappingURL=style.css.map */
