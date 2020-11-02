@@ -460,4 +460,16 @@ a:hover {
   grid-template-columns: 75% 25%;
   grid-template-rows: 1fr;
 }
+
+#carousel-wrapper .carousel-detail ul {
+  list-style: none;
+  display: flex;
+}
+
+@media screen and (max-width: 992px) {
+  #carousel-wrapper {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}
 /*# sourceMappingURL=style.css.map */
