@@ -2,10 +2,83 @@
 @import 'components/carousel';
 
 
-article {
+$breakpoint-lg: 992px;
+$breakpoint-sm: 576px;
+$text-color: rgb(173, 175, 174);
+
+@mixin Responsive($canvas) {
+    @media screen and (max-width: $canvas) {@content;}
+}
+
+p {
+    margin: 0;
+}
+
+
+article { 
+    .detail {
+        margin-top: 15px;
+    }
+
+    .price {
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+
+        span {
+            padding: 3px 6px;
+            margin-right: 13px;
+            font-size: 11px;
+        }
+    }
+
+    a {
+        p {
+            color: $text-color;
+        }
+    }
+
     ul {
         li {
             list-style: none;
+        }
+    }
+
+    &.notifier.game-grids {
+        section {
+            display: flex;
+            background: #888;
+            position: relative;
+            justify-content: space-between;
+
+            .content {
+                width: 40%;
+                display: block;
+            }
+
+            .thumbnail {
+                position: relative;
+                height: 100%;
+            
+                @include Responsive($breakpoint-lg) {
+                    width: 60%;
+                }
+
+                svg {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+
+            @include Responsive($breakpoint-sm) {
+                flex-direction: column;
+
+                .content,
+                .thumbnail {
+                    width: 100%;
+                }
+            }
         }
     }
 }

@@ -462,11 +462,18 @@ a:hover {
 }
 
 #carousel-wrapper .carousel-component[data-component=captions] {
-  font-size: 0.9rem;
+  height: 100%;
+  font-size: 0.7rem;
+  cursor: default;
 }
 
 #carousel-wrapper .carousel-component[data-component=captions] h4 {
   font-size: 1.1rem;
+}
+
+#carousel-wrapper .carousel-component[data-component=captions] a[role=button] {
+  font-size: 0.9rem;
+  color: #adafae;
 }
 
 #carousel-wrapper .carousel-detail {
@@ -474,7 +481,8 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 13px;
+  padding: 25px;
+  padding-left: 40px;
 }
 
 #carousel-wrapper .carousel-detail ul {
@@ -523,9 +531,84 @@ a:hover {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
   }
+  #carousel-wrapper .carousel-component[data-component=captions] {
+    font-size: 0.8rem;
+  }
+  #carousel-wrapper .carousel-component[data-component=captions] h4 {
+    font-size: 1rem;
+  }
+  #carousel-wrapper .carousel-component[data-component=captions] a[role=button] {
+    float: right;
+  }
+  #carousel-wrapper .carousel-detail {
+    padding: 20px;
+  }
+}
+
+p {
+  margin: 0;
+}
+
+article .detail {
+  margin-top: 15px;
+}
+
+article .price {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+article .price span {
+  padding: 3px 6px;
+  margin-right: 13px;
+  font-size: 11px;
+}
+
+article a p {
+  color: #adafae;
 }
 
 article ul li {
   list-style: none;
+}
+
+article.notifier.game-grids section {
+  display: flex;
+  background: #888;
+  position: relative;
+  justify-content: space-between;
+}
+
+article.notifier.game-grids section .content {
+  width: 40%;
+  display: block;
+}
+
+article.notifier.game-grids section .thumbnail {
+  position: relative;
+  height: 100%;
+}
+
+@media screen and (max-width: 992px) {
+  article.notifier.game-grids section .thumbnail {
+    width: 60%;
+  }
+}
+
+article.notifier.game-grids section .thumbnail svg {
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 576px) {
+  article.notifier.game-grids section {
+    flex-direction: column;
+  }
+  article.notifier.game-grids section .content,
+  article.notifier.game-grids section .thumbnail {
+    width: 100%;
+  }
 }
 /*# sourceMappingURL=style.css.map */

@@ -4,6 +4,10 @@ $breakpoint-lg: 992px;
 $carousel-page-btn-size: 38px;
 $carousel-page-btn-color: #aaa;
 $header-background-color: #2f2f2f;
+$text-color: rgb(173, 175, 174);
+
+$carousel-cap-font-size-lg: 0.7rem;
+$carousel-cap-font-other: 0.8rem;
 
 @mixin Responsive($canvas) {
     @media screen and (max-width: $canvas) {@content;}
@@ -15,9 +19,15 @@ $header-background-color: #2f2f2f;
     grid-template-rows: 1fr;
     
     .carousel-component[data-component=captions] {
-        font-size: 0.9rem;
+        height: 100%;
+        font-size: $carousel-cap-font-size-lg;
+        cursor: default;
         h4 {
-            font-size: 1.1rem;
+            font-size: $carousel-cap-font-size-lg + 0.4rem;
+        }
+        a[role=button] {
+            font-size: $carousel-cap-font-size-lg + 0.2rem;
+            color: $text-color;
         }
     }
 
@@ -26,7 +36,8 @@ $header-background-color: #2f2f2f;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 13px;
+        padding: 25px;
+        padding-left: 40px;
         ul {
             list-style: none;
             display: flex;
@@ -77,6 +88,21 @@ $header-background-color: #2f2f2f;
         & {
             grid-template-columns: 1fr;
             grid-template-rows: 1fr auto;
+
+            .carousel-component[data-component=captions] {
+                font-size: $carousel-cap-font-other;
+                h4 {
+                    font-size: $carousel-cap-font-other + 0.2rem;
+                }
+
+                a[role=button] {
+                    float: right;
+                }
+            }
+
+            .carousel-detail {
+                padding: 20px;
+            }
         }
     }
 }
