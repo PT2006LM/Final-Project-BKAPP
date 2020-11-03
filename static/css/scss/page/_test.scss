@@ -3,8 +3,9 @@
 
 
 $breakpoint-lg: 992px;
+$breakpoint-md: 768px;
 $breakpoint-sm: 576px;
-$text-color: rgb(173, 175, 174);
+$text-color: #ddd;
 
 @mixin Responsive($canvas) {
     @media screen and (max-width: $canvas) {@content;}
@@ -15,13 +16,27 @@ p {
 }
 
 
-article { 
+article.home-item { 
+    margin-top: 60px;
+
+    & > header {
+        font-size: 1.6em;
+        font-weight: 500;
+        line-height: 2em;
+    }
+
     .detail {
         margin-top: 15px;
+        font-size: 0.75rem;
+        line-height: 1.5em;
+        margin-bottom: 16px;
+
+        p {
+            opacity: 0.7;
+        }
     }
 
     .price {
-        margin-top: 15px;
         display: flex;
         align-items: center;
         font-size: 1rem;
@@ -34,9 +49,7 @@ article {
     }
 
     a {
-        p {
-            color: $text-color;
-        }
+        color: $text-color;
     }
 
     ul {
@@ -48,20 +61,40 @@ article {
     &.notifier.game-grids {
         section {
             display: flex;
-            background: #888;
+            background: #083314;
             position: relative;
             justify-content: space-between;
+            align-items: center;
 
             .content {
                 width: 40%;
                 display: block;
+                padding-left: 40px;
+
+
+                header, p {
+                    margin-bottom: 30px;
+                }
+
+                header {
+                    font-size: 3em;
+                }
+
+                p {
+                    margin-right: 30px;
+                    opacity: 0.8;
+                }
+
+                a[role=button] {
+                    padding: 15px 60px;
+                }
             }
 
             .thumbnail {
                 position: relative;
                 height: 100%;
             
-                @include Responsive($breakpoint-lg) {
+                @include Responsive($breakpoint-md) {
                     width: 60%;
                 }
 
@@ -71,12 +104,16 @@ article {
                 }
             }
 
-            @include Responsive($breakpoint-sm) {
+            @include Responsive($breakpoint-md) {
                 flex-direction: column;
 
                 .content,
                 .thumbnail {
                     width: 100%;
+                }
+
+                .content {
+                    padding: 50px 20px;
                 }
             }
         }

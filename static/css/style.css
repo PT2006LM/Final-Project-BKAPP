@@ -549,66 +549,104 @@ p {
   margin: 0;
 }
 
-article .detail {
-  margin-top: 15px;
+article.home-item {
+  margin-top: 60px;
 }
 
-article .price {
+article.home-item > header {
+  font-size: 1.6em;
+  font-weight: 500;
+  line-height: 2em;
+}
+
+article.home-item .detail {
   margin-top: 15px;
+  font-size: 0.75rem;
+  line-height: 1.5em;
+  margin-bottom: 16px;
+}
+
+article.home-item .detail p {
+  opacity: 0.7;
+}
+
+article.home-item .price {
   display: flex;
   align-items: center;
   font-size: 1rem;
 }
 
-article .price span {
+article.home-item .price span {
   padding: 3px 6px;
   margin-right: 13px;
   font-size: 11px;
 }
 
-article a p {
-  color: #adafae;
+article.home-item a {
+  color: #ddd;
 }
 
-article ul li {
+article.home-item ul li {
   list-style: none;
 }
 
-article.notifier.game-grids section {
+article.home-item.notifier.game-grids section {
   display: flex;
-  background: #888;
+  background: #083314;
   position: relative;
   justify-content: space-between;
+  align-items: center;
 }
 
-article.notifier.game-grids section .content {
+article.home-item.notifier.game-grids section .content {
   width: 40%;
   display: block;
+  padding-left: 40px;
 }
 
-article.notifier.game-grids section .thumbnail {
+article.home-item.notifier.game-grids section .content header, article.home-item.notifier.game-grids section .content p {
+  margin-bottom: 30px;
+}
+
+article.home-item.notifier.game-grids section .content header {
+  font-size: 3em;
+}
+
+article.home-item.notifier.game-grids section .content p {
+  margin-right: 30px;
+  opacity: 0.8;
+}
+
+article.home-item.notifier.game-grids section .content a[role=button] {
+  padding: 15px 60px;
+}
+
+article.home-item.notifier.game-grids section .thumbnail {
   position: relative;
   height: 100%;
 }
 
-@media screen and (max-width: 992px) {
-  article.notifier.game-grids section .thumbnail {
+@media screen and (max-width: 768px) {
+  article.home-item.notifier.game-grids section .thumbnail {
     width: 60%;
   }
 }
 
-article.notifier.game-grids section .thumbnail svg {
+article.home-item.notifier.game-grids section .thumbnail svg {
   width: 100%;
   height: auto;
 }
 
-@media screen and (max-width: 576px) {
-  article.notifier.game-grids section {
+@media screen and (max-width: 768px) {
+  article.home-item.notifier.game-grids section {
     flex-direction: column;
   }
-  article.notifier.game-grids section .content,
-  article.notifier.game-grids section .thumbnail {
+  article.home-item.notifier.game-grids section .content,
+  article.home-item.notifier.game-grids section .thumbnail {
     width: 100%;
+  }
+  article.home-item.notifier.game-grids section .content {
+    padding: 50px 20px;
   }
 }
 /*# sourceMappingURL=style.css.map */
