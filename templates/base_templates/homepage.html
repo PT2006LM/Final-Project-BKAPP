@@ -5,11 +5,11 @@
 
 {% block content %}
     <div id="hompage-header" class="d-flex align-items-center">
-        <div class="container-lg d-flex align-items-center justify-content-between">
+        <div class="container-lg d-flex align-items-center justify-content-between px-lg-5">
             <div class="btns">
                 <ul>
                     <li><a href="#" class="active" role="button">Discover</a></li>
-                    <li><a href="#" role="button">Browser</a></li>
+                    <li><a href="{% url 'test-browser' %}" role="button">Browser</a></li>
                 </ul>
             </div>
             
@@ -26,7 +26,7 @@
     </div>
 
 
-    <div class="container-lg my-4">
+    <div class="container-lg my-4 px-lg-5">
         <div id="carousel-wrapper">
             <div class="carousel-thumbnails-container">
                 <div class="carousel-component carousel slide" data-component="thumbnails" data-ride="carousel">

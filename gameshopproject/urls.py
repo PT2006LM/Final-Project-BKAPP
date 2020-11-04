@@ -16,12 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.shortcuts import render
+from gameshopproject import views
 
 
-def test(request):
-    return render(request, 'test.html')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('test/', test, name='test'),
+    path('test/', views.homepage, name='test-home'),
+    path('test/browser/', views.browser, name='test-browser')
 ]

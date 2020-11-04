@@ -24,6 +24,21 @@ a:hover {
     text-decoration: none;
 }
 
+li {
+    list-style: none;
+}
+
+p {
+    margin: 0;
+}
+
+$text-color: #ddd;
+
+a:hover {
+    color: $text-color;
+}
+
 @import 'header/header';
 @import 'footer/footer';
-@import 'page/test';
+@import 'page/homepage';
+@import 'page/browser';

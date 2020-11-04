@@ -24,6 +24,18 @@ a:hover {
   text-decoration: none;
 }
 
+li {
+  list-style: none;
+}
+
+p {
+  margin: 0;
+}
+
+a:hover {
+  color: #ddd;
+}
+
 #page-header {
   width: 100%;
   z-index: 99;
@@ -46,10 +58,6 @@ a:hover {
     background: #2f2f2f;
     opacity: 0.9;
   }
-}
-
-#page-header #navbarMenu {
-  overflow: hidden;
 }
 
 #page-header #navbarMenu a {
@@ -127,6 +135,7 @@ a:hover {
 #page-header #navbarMenu > #user ul {
   display: none;
   position: absolute;
+  z-index: 10;
   top: 100%;
   right: 0;
   padding: 0;
@@ -208,6 +217,7 @@ a:hover {
   }
   #page-header #navbarMenu.display {
     left: 40px;
+    overflow: hidden;
   }
 }
 
@@ -420,7 +430,6 @@ a:hover {
 }
 
 #hompage-header .btns > ul li {
-  list-style: none;
   margin-right: 20px;
 }
 
@@ -545,52 +554,44 @@ a:hover {
   }
 }
 
-p {
-  margin: 0;
-}
-
-article.home-item {
-  margin-top: 60px;
-}
-
-article.home-item > header {
-  font-size: 1.6em;
-  font-weight: 500;
-  line-height: 2em;
-}
-
-article.home-item .detail {
+.detail {
   margin-top: 15px;
   font-size: 0.75rem;
   line-height: 1.5em;
   margin-bottom: 16px;
 }
 
-article.home-item .detail p {
+.detail p {
   opacity: 0.7;
 }
 
-article.home-item .price {
+.price {
   display: flex;
   align-items: center;
   font-size: 1rem;
 }
 
-article.home-item .price span {
+.price span {
   padding: 3px 6px;
   margin-right: 13px;
   font-size: 11px;
 }
 
-article.home-item a {
+a {
   color: #ddd;
 }
 
-article.home-item ul li {
-  list-style: none;
+.home-item {
+  margin-top: 60px;
 }
 
-article.home-item.notifier.game-grids section {
+.home-item > header {
+  font-size: 1.6em;
+  font-weight: 500;
+  line-height: 2em;
+}
+
+.home-item.notifier.game-grids section {
   display: flex;
   background: #083314;
   position: relative;
@@ -598,55 +599,59 @@ article.home-item.notifier.game-grids section {
   align-items: center;
 }
 
-article.home-item.notifier.game-grids section .content {
+.home-item.notifier.game-grids section .content {
   width: 40%;
   display: block;
   padding-left: 40px;
 }
 
-article.home-item.notifier.game-grids section .content header, article.home-item.notifier.game-grids section .content p {
+.home-item.notifier.game-grids section .content header, .home-item.notifier.game-grids section .content p {
   margin-bottom: 30px;
 }
 
-article.home-item.notifier.game-grids section .content header {
+.home-item.notifier.game-grids section .content header {
   font-size: 3em;
 }
 
-article.home-item.notifier.game-grids section .content p {
+.home-item.notifier.game-grids section .content p {
   margin-right: 30px;
   opacity: 0.8;
 }
 
-article.home-item.notifier.game-grids section .content a[role=button] {
+.home-item.notifier.game-grids section .content a[role=button] {
   padding: 15px 60px;
 }
 
-article.home-item.notifier.game-grids section .thumbnail {
+.home-item.notifier.game-grids section .thumbnail {
   position: relative;
   height: 100%;
 }
 
 @media screen and (max-width: 768px) {
-  article.home-item.notifier.game-grids section .thumbnail {
+  .home-item.notifier.game-grids section .thumbnail {
     width: 60%;
   }
 }
 
-article.home-item.notifier.game-grids section .thumbnail svg {
+.home-item.notifier.game-grids section .thumbnail svg {
   width: 100%;
   height: auto;
 }
 
 @media screen and (max-width: 768px) {
-  article.home-item.notifier.game-grids section {
+  .home-item.notifier.game-grids section {
     flex-direction: column;
   }
-  article.home-item.notifier.game-grids section .content,
-  article.home-item.notifier.game-grids section .thumbnail {
+  .home-item.notifier.game-grids section .content,
+  .home-item.notifier.game-grids section .thumbnail {
     width: 100%;
   }
-  article.home-item.notifier.game-grids section .content {
+  .home-item.notifier.game-grids section .content {
     padding: 50px 20px;
   }
+}
+
+ul li {
+  list-style: none;
 }
 /*# sourceMappingURL=style.css.map */

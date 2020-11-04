@@ -1,5 +1,5 @@
-@import 'components/header';
-@import 'components/carousel';
+@import 'components/homepage/header';
+@import 'components/homepage/carousel';
 
 
 $breakpoint-lg: 992px;
@@ -11,12 +11,37 @@ $text-color: #ddd;
     @media screen and (max-width: $canvas) {@content;}
 }
 
-p {
-    margin: 0;
+
+
+
+.detail {
+    margin-top: 15px;
+    font-size: 0.75rem;
+    line-height: 1.5em;
+    margin-bottom: 16px;
+
+    p {
+        opacity: 0.7;
+    }
 }
 
+.price {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
 
-article.home-item { 
+    span {
+        padding: 3px 6px;
+        margin-right: 13px;
+        font-size: 11px;
+    }
+}
+
+a {
+    color: $text-color;
+}
+
+.home-item { 
     margin-top: 60px;
 
     & > header {
@@ -25,38 +50,7 @@ article.home-item {
         line-height: 2em;
     }
 
-    .detail {
-        margin-top: 15px;
-        font-size: 0.75rem;
-        line-height: 1.5em;
-        margin-bottom: 16px;
-
-        p {
-            opacity: 0.7;
-        }
-    }
-
-    .price {
-        display: flex;
-        align-items: center;
-        font-size: 1rem;
-
-        span {
-            padding: 3px 6px;
-            margin-right: 13px;
-            font-size: 11px;
-        }
-    }
-
-    a {
-        color: $text-color;
-    }
-
-    ul {
-        li {
-            list-style: none;
-        }
-    }
+    
 
     &.notifier.game-grids {
         section {
