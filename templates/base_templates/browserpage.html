@@ -26,280 +26,190 @@
     </div>
 
 
-    <div class="container-lg my-4 px-lg-5">
-        
+    <div class="container-lg my-4 px-lg-5 home-item">
         <div class="d-flex flex-row-reverse">
+            <input type="checkbox" id="filter-sidebar">
 
-            <div id="filter">
-                <header>Filter</header>
-                <div class="filter-group">
-                    <header>Category</header>
-                    <ul>
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Advanture</a></li>
-                        <li><a href="#">Racing</a></li>
-                    </ul>
-                </div>
-                <div class="filter-group">
-                    <header>Features</header>
-                    <ul>
-                        <li><a href="#">Controller Support</a></li>
-                        <li><a href="#">Co-op</a></li>
-                        <li><a href="#">Single Player</a></li>
-                    </ul>
-                </div>
+            <aside id="filter">
+                <label for="filter-sidebar" class="overlay-bg"></label>
+                <section class="content">
+                    <header class="section-header">Filter</header>
+                    <div>
+                        <div class="filter-group">
+                            <input type="checkbox" name="filter" id="filter-item0">
+                            <header><label for="filter-item0">
+                                <span>Categories</span>
+                                <svg width="24" height="16">
+                                    <path d="M2 2 L12 12 L22 2" stroke="#ddd" stroke-width="4" fill="none" />
+                                </svg>
+                            </label></header>
+                            <ul>
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Advanture</a></li>
+                                <li><a href="#">Racing</a></li>
+                            </ul>
+                        </div>
+                        <div class="filter-group">
+                            <input type="checkbox" name="filter" id="filter-item1">
+                            <header>
+                                <label for="filter-item1">
+                                    <span>Features</span>
+                                    <svg width="24" height="16">
+                                        <path d="M2 2 L12 12 L22 2" stroke="#ddd" stroke-width="4" fill="none" />
+                                    </svg>
+                                </label>
+                            </header>
+                            <ul>
+                                <li><a href="#">Controller Support</a></li>
+                                <li><a href="#">Co-op</a></li>
+                                <li><a href="#">Single Player</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+
+            <div class="game-grids">
+                <header class="section-header">
+                    <input type="checkbox" name="switch-status" id="filter-menu-switch">
+                    <label for="filter-menu-switch">
+                        <span>Sorted by:</span> Somecategory
+                            <svg width="24" height="16">
+                                <path d="M2 2 L12 12 L22 2" stroke="#ddd" stroke-width="4" fill="none" />
+                            </svg>
+
+                            <ul>
+                                <li><a href="#">Category 1</a></li>
+                                <li><a href="#">Category 2</a></li>
+                                <li><a href="#">Category 3</a></li>
+                            </ul>
+                    </label>
+                    <label for="filter-sidebar" class="d-block-inline d-lg-none">Filter</label>
+                </header>
+                <ul class="row mr-0 mr-lg-3">
+                    <li class="col-6 col-md-3 mb-4">
+                        <a href="#">
+                            <svg width="200" height="280" style="width: 100%; height: auto;">
+                                <rect width="100%" height="100%" style="fill: #444"></rect>
+                            </svg>
+                            <div class="detail">
+                                <head>Lorem ipsum.</head>
+                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                            </div>
+                            <div class="price">
+                                <span class="badge badge-primary">-40%</span>
+                                <p class="lead d-inline">$60</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="col-6 col-md-3 mb-4">
+                        <a href="#">
+                            <svg width="200" height="280" style="width: 100%; height: auto;">
+                                <rect width="100%" height="100%" style="fill: #444"></rect>
+                            </svg>
+                            <div class="detail">
+                                <head>Lorem ipsum.</head>
+                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                            </div>
+                            <div class="price">
+                                <span class="badge badge-primary">-40%</span>
+                                <p class="lead d-inline">$60</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="col-6 col-md-3 mb-4">
+                        <a href="#">
+                            <svg width="200" height="280" style="width: 100%; height: auto;">
+                                <rect width="100%" height="100%" style="fill: #444"></rect>
+                            </svg>
+                            <div class="detail">
+                                <head>Lorem ipsum.</head>
+                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                            </div>
+                            <div class="price">
+                                <span class="badge badge-primary">-40%</span>
+                                <p class="lead d-inline">$60</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="col-6 col-md-3 mb-4">
+                        <a href="#">
+                            <svg width="200" height="280" style="width: 100%; height: auto;">
+                                <rect width="100%" height="100%" style="fill: #444"></rect>
+                            </svg>
+                            <div class="detail">
+                                <head>Lorem ipsum.</head>
+                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                            </div>
+                            <div class="price">
+                                <span class="badge badge-primary">-40%</span>
+                                <p class="lead d-inline">$60</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="col-6 col-md-3 mb-4">
+                        <a href="#">
+                            <svg width="200" height="280" style="width: 100%; height: auto;">
+                                <rect width="100%" height="100%" style="fill: #444"></rect>
+                            </svg>
+                            <div class="detail">
+                                <head>Lorem ipsum.</head>
+                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                            </div>
+                            <div class="price">
+                                <span class="badge badge-primary">-40%</span>
+                                <p class="lead d-inline">$60</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="col-6 col-md-3 mb-4">
+                        <a href="#">
+                            <svg width="200" height="280" style="width: 100%; height: auto;">
+                                <rect width="100%" height="100%" style="fill: #444"></rect>
+                            </svg>
+                            <div class="detail">
+                                <head>Lorem ipsum.</head>
+                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                            </div>
+                            <div class="price">
+                                <span class="badge badge-primary">-40%</span>
+                                <p class="lead d-inline">$60</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="col-6 col-md-3 mb-4">
+                        <a href="#">
+                            <svg width="200" height="280" style="width: 100%; height: auto;">
+                                <rect width="100%" height="100%" style="fill: #444"></rect>
+                            </svg>
+                            <div class="detail">
+                                <head>Lorem ipsum.</head>
+                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                            </div>
+                            <div class="price">
+                                <span class="badge badge-primary">-40%</span>
+                                <p class="lead d-inline">$60</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="col-6 col-md-3 mb-4">
+                        <a href="#">
+                            <svg width="200" height="280" style="width: 100%; height: auto;">
+                                <rect width="100%" height="100%" style="fill: #444"></rect>
+                            </svg>
+                            <div class="detail">
+                                <head>Lorem ipsum.</head>
+                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                            </div>
+                            <div class="price">
+                                <span class="badge badge-primary">-40%</span>
+                                <p class="lead d-inline">$60</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
             </div>
-
-            <ul class="game-grids">
-                <div class="row home-item">
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                </div>
-                <div class="row">
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                </div>
-                <div class="row">
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                </div>
-                <div class="row">
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-6 col-md-3 mb-4">
-                        <a href="#">
-                            <svg width="200" height="280" style="width: 100%; height: auto;">
-                                <rect width="100%" height="100%" style="fill: #444"></rect>
-                            </svg>
-                            <div class="detail">
-                                <head>Lorem ipsum.</head>
-                                <p>Nihil ipsam nostrum dolorem molestiae?</p>
-                            </div>
-                            <div class="price">
-                                <span class="badge badge-primary">-40%</span>
-                                <p class="lead d-inline">$60</p>
-                            </div>
-                        </a>
-                    </li>
-                </div>
-            </ul>
+            
         </div>
         
     </div>

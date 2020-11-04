@@ -651,7 +651,184 @@ a {
   }
 }
 
-ul li {
-  list-style: none;
+#filter {
+  flex-basis: 240px;
+}
+
+#filter section.content header {
+  padding: 7px 0 17px;
+}
+
+#filter section.content .filter-group {
+  font-size: 0.8rem;
+  border-bottom: solid 1px rgba(200, 200, 200, 0.35);
+}
+
+#filter section.content .filter-group:first-child {
+  border-top: solid 1px rgba(200, 200, 200, 0.35);
+}
+
+#filter section.content .filter-group input[type=checkbox] {
+  display: none;
+}
+
+#filter section.content .filter-group input[type=checkbox]:checked ~ header label {
+  opacity: 1;
+}
+
+#filter section.content .filter-group input[type=checkbox]:checked ~ header label svg {
+  transform: rotate(0deg) scale(0.7);
+}
+
+#filter section.content .filter-group input[type=checkbox]:checked ~ ul {
+  display: block;
+}
+
+#filter section.content .filter-group header label {
+  display: block;
+  padding: 20px 12px;
+  cursor: pointer;
+  margin: 2px;
+  position: relative;
+  opacity: 0.6;
+  transition: 0.2s ease-in-out;
+  text-transform: uppercase;
+}
+
+#filter section.content .filter-group header label svg {
+  float: right;
+  position: relative;
+  transform: rotate(180deg) scale(0.7);
+  transition: 0.2s ease-in-out;
+}
+
+#filter section.content .filter-group header:hover {
+  opacity: 1;
+}
+
+#filter section.content .filter-group ul {
+  display: none;
+}
+
+#filter section.content .filter-group ul a {
+  padding: 15px;
+  display: block;
+  opacity: 0.6;
+}
+
+#filter section.content .filter-group ul a:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 992px) {
+  #filter {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+  }
+  #filter label.overlay-bg {
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    background: rgba(200, 200, 200, 0.75);
+  }
+  #filter section.content {
+    background: #060606;
+    width: 400px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+input[type=checkbox]#filter-sidebar {
+  display: none;
+}
+
+@media screen and (max-width: 992px) {
+  input[type=checkbox]#filter-sidebar:checked ~ #filter {
+    display: block;
+  }
+}
+
+.game-grids {
+  width: calc(100% - 240px);
+}
+
+@media screen and (max-width: 992px) {
+  .game-grids {
+    width: 100%;
+  }
+}
+
+.game-grids header {
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.game-grids header input[type=checkbox] {
+  display: none;
+}
+
+.game-grids header input[type=checkbox]:checked ~ label {
+  border: solid 1px #ddd;
+}
+
+.game-grids header input[type=checkbox]:checked ~ label svg {
+  transform: scale(0.5) rotate(0);
+}
+
+.game-grids header input[type=checkbox]:checked ~ label ul {
+  display: block;
+}
+
+.game-grids header label {
+  padding: 3px 7px;
+  position: relative;
+  left: -8px;
+  border: solid 1px rgba(200, 200, 200, 0);
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.game-grids header label span {
+  opacity: 0.6;
+}
+
+.game-grids header label svg {
+  transform: scale(0.5) rotate(180deg);
+  transition: 0.2s ease-in-out;
+}
+
+.game-grids header label ul {
+  font-size: 0.9em;
+  z-index: 4;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #3f3f3f;
+  padding: 10px 0;
+}
+
+.game-grids header label ul a {
+  display: block;
+  padding: 10px 20px;
+  opacity: 0.6;
+}
+
+.game-grids header label ul a:hover, .game-grids header label ul a.active {
+  opacity: 1;
+}
+
+.game-grids header label ul a.active {
+  text-decoration: underline;
 }
 /*# sourceMappingURL=style.css.map */
