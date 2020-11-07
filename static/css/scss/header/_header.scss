@@ -54,7 +54,7 @@ $break-point: 768px;
     }
 
     #navbarMenu {
-        overflow: hidden;
+        
         a {
             height: $header-height;
             @include aligncenter;
@@ -127,6 +127,7 @@ $break-point: 768px;
             & ul {
                 display: none;
                 position: absolute;
+                z-index: 10;
                 top: 100%;
                 right: 0;
                 padding: 0;
@@ -199,6 +200,7 @@ $break-point: 768px;
         }
 
         @include Responsive($break-point) {
+            
             position: absolute;
             z-index: 4;
             height: 100vh;
@@ -211,6 +213,7 @@ $break-point: 768px;
 
             &.display {
                 left: $navbar-left-responsive;
+                overflow: hidden;
             }
         }
     }

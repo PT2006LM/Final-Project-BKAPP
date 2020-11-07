@@ -1,0 +1,322 @@
+{% extends 'base_generics.html' %}
+{% load static %}
+
+{% block title %}Test Template{% endblock %}
+
+{% block content %}
+    <div id="hompage-header" class="d-flex align-items-center">
+        <div class="container-lg d-flex align-items-center justify-content-between px-lg-5">
+            <div class="btns">
+                <ul>
+                    <li><a href="#" class="active" role="button">Discover</a></li>
+                    <li><a href="{% url 'test-browser' %}" role="button">Browser</a></li>
+                </ul>
+            </div>
+            
+            
+            <form action="" class="search-form">
+                <i class="fas fa-search"></i>
+                <input 
+                    type="text" 
+                    id="text"
+                    placeholder="Search"
+                    >
+            </form>
+        </div>
+    </div>
+
+
+    <div class="container-lg my-4 px-lg-5">
+        <div id="carousel-wrapper">
+            <div class="carousel-thumbnails-container">
+                <div class="carousel-component carousel slide" data-component="thumbnails" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <svg width="100%" height="300">
+                                <rect width="100%" height="100%" style="fill:#666"></rect>
+                            </svg>
+                        </div>
+                        <div class="carousel-item">
+                            <svg width="100%" height="300">
+                                <rect width="100%" height="100%" style="fill:#656"></rect>
+                            </svg>
+                        </div>
+                        <div class="carousel-item">
+                            <svg width="100%", height="300">
+                                <rect width="100%" height="100%" style="fill: #555"></rect>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div class="carousel-detail">
+                <div class="carousel-component" data-component="controller">
+                    <ul class="m-0">
+                        <li>
+                            <input type="radio" name="carousel-id" id="carousel-homepage-0" checked>
+                            <label for="carousel-homepage-0">
+                                <div class="carousel-icon"></div>
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" name="carousel-id" id="carousel-homepage-1">
+                            <label for="carousel-homepage-1">
+                                <div class="carousel-icon"></div>
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" name="carousel-id" id="carousel-homepage-2">
+                            <label for="carousel-homepage-2">
+                                <div class="carousel-icon"></div>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+    
+                <div class="carousel-component carousel slide" data-component="captions" data-ride="carousel">
+                    <div class="carousel-inner h-100">
+                        <div class="carousel-item h-100 active">
+                            <div class="d-flex flex-column justify-content-between h-100 position-relative">
+                                <article>
+                                    <header>Lorem ipsum dolor sit.</header>
+                                    <h4>Lorem ipsum dolor sit.</h4>
+                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore aliquam perferendis temporibus aperiam ab quisquam</p>
+                                </article>
+                                <div class="button-wrapper">
+                                    <a href="#" role="button">Learn More -></a>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="carousel-item h-100">
+                            <div class="d-flex flex-column justify-content-between h-100 position-relative">
+                                <article>
+                                    <header>Lorem ipsum dolor sit.</header>
+                                    <h4>Lorem ipsum dolor sit.</h4>
+                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore aliquam perferendis temporibus aperiam ab quisquam</p>
+                                </article>
+                                <div class="button-wrapper position-relative">
+                                    <a href="#" role="button">Buy Here -></a>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="carousel-item h-100">
+                            <div class="d-flex flex-column justify-content-between h-100 position-relative">
+                                <article>
+                                    <header>Lorem ipsum dolor sit.</header>
+                                    <h4>Lorem ipsum dolor sit.</h4>
+                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore aliquam perferendis temporibus aperiam ab quisquam</p>
+                                </article>
+                                <div class="button-wrapper position-relative">
+                                    <a href="#" role="button">Play Free Now -></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <article id="list-game-available" class="home-item">
+            <header>Available</header>
+            <ul class="row">
+                <li class="col-6 col-md-3 mb-4">
+                    <a href="#">
+                        <svg width="200" height="280" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <head>Lorem ipsum.</head>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <div class="price">
+                            <span class="badge badge-primary">-40%</span>
+                            <p class="lead d-inline">$60</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3 mb-4">
+                    <a href="#">
+                        <svg width="200" height="280" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <head>Lorem ipsum.</head>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <div class="price">
+                            <span class="badge badge-primary">-40%</span>
+                            <p class="lead d-inline">$60</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3 mb-4">
+                    <a href="#">
+                        <svg width="200" height="280" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <head>Lorem ipsum.</head>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <div class="price">
+                            <span class="badge badge-primary">-40%</span>
+                            <p class="lead d-inline">$60</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3 mb-4">
+                    <a href="#">
+                        <svg width="200" height="280" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <head>Lorem ipsum.</head>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <div class="price">
+                            <span class="badge badge-primary">-40%</span>
+                            <p class="lead d-inline">$60</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </article>
+
+        <article class="notifier game-grids home-item" id="list-game-available">
+            <header>Notification</header>
+            
+            <section>
+                <div class="content">
+                    <header class="lead">Title</header>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis, provident?</p>
+                    <a href="#" class="btn btn-lg btn-secondary" role="button">Enter</a>
+                </div>
+                <div class="thumbnail">
+                    <svg height="400" width="400">
+                        <rect width="100%" height="100%" style="fill: #333"></rect>
+                    </svg>
+                </div>
+            </section>
+        </article>
+        
+
+        <article id="list-game-comming-soon" class="d-none d-sm-block game-grids home-item">
+            <header>Comming Soon</header>
+            <ul class="row">
+                <li class="col-4">
+                    <a href="#">
+                        <svg width="250" height="140" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <head>Lorem ipsum.</head>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <p>Comming Soon</p>
+                    </a>
+                </li>
+                <li class="col-4">
+                    <a href="#">
+                        <svg width="250" height="140" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <head>Lorem ipsum.</head>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <p>Comming Soon</p>
+                    </a>
+                </li>
+                <li class="col-4">
+                    <a href="#">
+                        <svg width="250" height="140" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <head>Lorem ipsum.</head>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <p>Comming Soon</p>
+                    </a>
+                </li>
+            </ul>
+        </article>
+
+        <article id="list-game-most-popular" class="game-grids home-item">
+            <h5>Most Popular</h5>
+            <ul class="row">
+                <li class="col-6 col-md-3 mb-2">
+                    <a href="#">
+                        <svg width="200" height="280" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <head>Lorem ipsum dolor sit amet.</head>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <div class="price">
+                            <span class="badge badge-primary">-40%</span>
+                            <p class="lead d-inline">$60</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3 mb-2">
+                    <a href="#">
+                        <svg width="200" height="280" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <head>Lorem ipsum dolor sit amet.</head>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <div class="price">
+                            <span class="badge badge-primary">-40%</span>
+                            <p class="lead d-inline">$60</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3 mb-2">
+                    <a href="#">
+                        <svg width="200" height="280" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <header>Lorem ipsum dolor sit amet.</header>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <div class="price">
+                            <span class="badge badge-primary">-40%</span>
+                            <p class="lead d-inline">$60</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3 mb-2">
+                    <a href="#">
+                        <svg width="200" height="280" style="width: 100%; height: auto;">
+                            <rect width="100%" height="100%" style="fill: #444"></rect>
+                        </svg>
+                        <div class="detail">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                            <p>Nihil ipsam nostrum dolorem molestiae?</p>
+                        </div>
+                        <div class="price">
+                            <span class="badge badge-primary">-40%</span>
+                            <p class="lead d-inline">$60</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </article>
+        
+    </div>
+    
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{% static 'js/homepage.js' %}"></script>
+{% endblock %}
