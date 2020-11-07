@@ -13,6 +13,35 @@ class Games(models.Model):
     rating = models.FloatField()
     aboutgame = models.TextField()
     aboutgameimg = models.ImageField()
-class Specifications(models.Model):
-    mire = models.CharField(max_length=50)
+
+class SpecificationsMini(models.Model):
+    os = models.CharField(max_length=50)
+    processor = models.CharField(max_length=50)
+    memory = models.CharField(max_length=20)
+    graphics = models.CharField(max_length=50)
+    direct = models.CharField(max_length=20)
+    soundcard = models.CharField(max_length=20)
+    storage = models.CharField(max_length=50)
+    language = models.CharField(max_length=50)
+
+class SpecificationsRecom(models.Model):
+    os = models.CharField(max_length=50)
+    processor = models.CharField(max_length=50)
+    memory = models.CharField(max_length=20)
+    graphics = models.CharField(max_length=50)
+    direct = models.CharField(max_length=20)
+    soundcard = models.CharField(max_length=20)
+    storage = models.CharField(max_length=50)
+
+class Addons(models.Model):
+    name = models.CharField(max_length=50)
+    thumbnail = models.ImageField()
+    icon = models.ImageField()
+    price = models.FloatField()
+    develop = models.CharField(max_length=50)
+    publisher = models.CharField(max_length=50)
+    available = models.DateField()
+    rating = models.PositiveIntegerField()
+    tags = models.CharField(max_length=50)
+
     
