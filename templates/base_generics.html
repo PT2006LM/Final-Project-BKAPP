@@ -1,27 +1,13 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zxx">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    {% include 'widgets/head.html' %}
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <div id="page-wrapper">
-        {% include 'components/header.html' %}
-
-        {% block content %}{% endblock %}
-
-        {% include 'components/footer.html' %}
-    </div>
     
-    <script src="{% static 'js/jquery.slim.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
-
-    {% block scripts %}{% endblock %}
+    
 </body>
 </html>
