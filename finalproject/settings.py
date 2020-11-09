@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'gameshopproject.urls'
+ROOT_URLCONF = 'finalproject.urls'
 
 TEMPLATES = [
     {
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'gameshopproject.wsgi.application'
+WSGI_APPLICATION = 'finalproject.wsgi.application'
 
 
 # Database
