@@ -23,5 +23,11 @@ from finalproject import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('test/', views.homepage, name='test-home'),
-    path('test/browser/', views.browser, name='test-browser')
+    path('test/shop-grid/', views.shop_grid, name='test-shop-grid'),
+    path('test/shoping-cart/', views.shoping_cart, name='test-shoping-cart'),
+    path('test/shop-details/', views.shop_detail, name='test-shop-detail'),
+    path('test/contact/', views.contact, name='test-contact'),
+    path('test/checkout/', views.checkout, name='test-checkout'),
+    path('test/blog/', views.blog, name='test-blog'),
+    path('test/blog-details/', views.blog_details, name='test-blog-details'),
 ]
