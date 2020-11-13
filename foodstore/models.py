@@ -5,15 +5,15 @@ from django.utils.text import slugify
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=50)
+    slug = models.SlugField(max_length=50, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if not self.slug:
+        if not self.slug or self.slug == '':
             self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.slug
+        return self.name
 
 class Product(models.Model):
     name = models.CharField(max_length=50)
