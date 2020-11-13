@@ -1,12 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.slug
 
 class Product(models.Model):
     name = models.CharField(max_length=50)
@@ -21,8 +28,16 @@ class Product(models.Model):
     date_created = models.DateField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
+    STATUS_STATES = ['Empty', 'In Stock']
+
     def __str__(self):
         return self.name
+
+    def get_amount_str(self):
+        return f"{self.amount} {self.unit}"
+
+    def get_status_text(self):
+        return self.STATUS_STATES[self.status]
 
     class Meta:
         ordering = ['-date_created']
