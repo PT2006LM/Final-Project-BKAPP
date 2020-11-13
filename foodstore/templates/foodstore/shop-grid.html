@@ -152,7 +152,7 @@
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="{% url 'product-detail' product.category product.pk %}">{{ product.name }}</a></h6>
+                                    <h6><a href="{% url 'product-detail' product.category.slug product.pk %}">{{ product.name }}</a></h6>
                                     <h5>${{ product.price }}</h5>
                                 </div>
                             </div>
