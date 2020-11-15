@@ -42,7 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # 3rd party apps
+    'ckeditor',
+    'ckeditor_uploader',
+
+    # owned apps
     'foodstore',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +92,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'foodstore',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
         'USER': 'root',
         'PASSWORD': '',
@@ -138,3 +144,6 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"

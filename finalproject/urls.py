@@ -22,6 +22,7 @@ from finalproject import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', views.homepage, name='home'),
     path('test/', views.homepage, name='test-home'),
     path('test/shop-grid/', views.shop_grid, name='test-shop-grid'),
