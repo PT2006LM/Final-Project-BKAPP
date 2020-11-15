@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -11,6 +12,11 @@ class Category(models.Model):
         if not self.slug or self.slug == '':
             self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('products-by-category', kwargs={
+            'category': self.slug
+        })
 
     def __str__(self):
         return self.name
@@ -39,8 +45,15 @@ class Product(models.Model):
     def get_status_text(self):
         return self.STATUS_STATES[self.status]
 
+    def get_absolute_url(self):
+        return reverse('product-detail', kwargs={
+            'category': self.category.slug,
+            'pk': self.pk
+        })
+
     class Meta:
         ordering = ['-date_created']
+        
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

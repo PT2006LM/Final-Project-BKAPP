@@ -16,6 +16,7 @@ class BlogAdmin(admin.ModelAdmin):
     ]
     readonly_fields = ('created_at',)
     list_display = ('title', 'author', 'created_at')
+    list_filter = ('created_at', )
 
 
 @admin.register(models.Comment)
@@ -31,5 +32,5 @@ class CommentAdmin(admin.ModelAdmin):
 @admin.register(models.Reply)
 class ReplyAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
-    list_filter = ('created_at')
+    list_filter = ('created_at', )
     list_display = ('comment', 'created_at')
