@@ -20,7 +20,7 @@
                         <h4>Department</h4>
                         <ul>
                             {% for category in category_list %}
-                                <li><a href="#">{{ category }}</a></li>
+                                <li><a href="{% url 'products-by-category' category.slug %}">{{ category }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -128,9 +128,11 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4">
-                            <div class="filter__found">
-                                <h6><span>{{ product_count }}</span> Products found</h6>
-                            </div>
+                            {% if product_list.count > 0 %}
+                                <div class="filter__found">
+                                    <h6><span>{{ product_count }}</span> Products found</h6>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="col-lg-4 col-md-3">
                             <div class="filter__option">
@@ -140,40 +142,42 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    {% for product in product_list %}
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg"
-                                    data-setbg="{% if product.thumbnail %}{{ product.thumbnail }}{% else %}{% static 'img/product/default.jpg' %}{% endif %}">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="{% url 'product-detail' product.category.slug product.pk %}">{{ product.name }}</a></h6>
-                                    <h5>${{ product.price }}</h5>
+                {% if product_list.count > 0 %}
+                    <div class="row">
+                        {% for product in product_list %}
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg"
+                                        data-setbg="{% if product.thumbnail %}{{ product.thumbnail }}{% else %}{% static 'img/product/default.jpg' %}{% endif %}">
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="{% url 'product-set-favorite' product.category.slug product.pk %}"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6><a href="{% url 'product-detail' product.category.slug product.pk %}">{{ product.name }}</a></h6>
+                                        <h5>${{ product.price }}</h5>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                    
-                </div>
-                <div class="product__pagination d-flex justify-content-center">
-                    {% if page_obj.has_previous %}
-                        <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
-                        <a href="?page=1">1</a>
-                    {% endif %}
-                    <span class="current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                    </span>
+                        {% endfor %}
+                        
+                    </div>
+                    <div class="product__pagination d-flex justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                            <a href="?page=1">1</a>
+                        {% endif %}
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
 
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
-                        <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
-                    {% endif %}
-                </div>
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                            <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                        {% endif %}
+                    </div>
+                {% else %}<h4 class="text-center">Empty list</h4>{% endif %}
             </div>
         </div>
     </div>
