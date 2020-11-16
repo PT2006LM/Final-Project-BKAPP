@@ -42,7 +42,7 @@ def set_favorite_product(request, category, product_id):
     # Get a Product instance with id from database
     # Add Product instance if its id not existed in session
     # Remove Product instance if it's already existed
-    print(request.session['favorite_products'])
+    print(request.GET)
     try:
         favorite_products = request.session['favorite_products']
     except KeyError:
@@ -64,9 +64,6 @@ def set_favorite_product(request, category, product_id):
         'pk': product_id
     }))
 
-
-def product_detail(request):
-    return render(request, 'foodstore/shop-details.html')
 
 
 def cart(request):
