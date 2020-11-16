@@ -42,7 +42,7 @@ def set_favorite_product(request, category, product_id):
     # Get a Product instance with id from database
     # Add Product instance if its id not existed in session
     # Remove Product instance if it's already existed
-    print(request.GET)
+    next_url = request.GET.__getitem__('next')
     try:
         favorite_products = request.session['favorite_products']
     except KeyError:
@@ -59,10 +59,7 @@ def set_favorite_product(request, category, product_id):
     favorite_products['length'] = len(favorite_products['object_ids'])
 
     request.session['favorite_products'] = favorite_products
-    return HttpResponseRedirect(reverse('product-detail', kwargs={
-        'category': category,
-        'pk': product_id
-    }))
+    return HttpResponseRedirect(next_url)
 
 
 
