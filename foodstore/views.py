@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView
-from foodstore import models
+from foodstore import models, forms
+from foodstore.cart import Cart, get_cart_from_session
 
 
 
@@ -15,8 +16,6 @@ class ProductList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['product_count'] = self.product_count
-        if self.request.method == 'GET':
-            print(self.request.GET.keys())
         return context
 
 
@@ -27,15 +26,6 @@ class ProductList(ListView):
             pass
         self.product_count = queryset.count()
         return super().paginate_queryset(queryset, page_size)
-
-
-def products(request):
-    return render(request, 'foodstore/shop-grid.html')
-
-
-class ProductDetail(DetailView):
-    template_name = 'foodstore/shop-details.html'
-    model = models.Product
 
 
 def set_favorite_product(request, category, product_id):
@@ -63,8 +53,49 @@ def set_favorite_product(request, category, product_id):
 
 
 
+def product_detail(request, category, pk):
+    
+    product = models.Product.objects.get(pk=pk)
+    template_name = 'foodstore/shop-details.html'
+    if request.method == 'POST':
+
+        form = forms.AddItemToCartForm(request.POST)
+        if form.is_valid():
+            cart = get_cart_from_session(request)
+
+            # Add new items
+            cart.add_item_to_cart(item_id=form.data['product_id'],
+                        amount=int(form.data['quantity']))
+            
+            # Save cart back to session
+            request.session['cart'] = cart.get_serialized_data()
+
+            return HttpResponseRedirect(reverse('products'))
+
+    elif request.method == 'GET':
+        form = forms.AddItemToCartForm({
+            'quantity': '1'})
+        return render(request, template_name, {
+            'product': product,
+            'form': form
+        })
+        
+
+
+
 def cart(request):
-    return render(request, 'foodstore/shoping-cart.html')
+    cart = get_cart_from_session(request)
+    cart_data = []
+    for key in cart.cart_data:
+        cart_data.append({
+            'amount': cart.cart_data[key]['amount'],
+            'total_price': cart.cart_data[key]['total_price'],
+            'product': models.Product.objects.get(pk=int(key))
+        })
+    print(cart_data)
+    return render(request, 'foodstore/shoping-cart.html', {
+        'cart_data': cart_data
+    })
 
 
 def checkout(request):

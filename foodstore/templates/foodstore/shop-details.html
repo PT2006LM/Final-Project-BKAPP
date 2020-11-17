@@ -52,14 +52,18 @@
                     </div>
                     <div class="product__details__price">${{ product.price }}</div>
                     <p>{{ product.description|linebreaks }}</p>
-                    <div class="product__details__quantity">
-                        <div class="quantity">
-                            <div class="pro-qty">
-                                <input type="text" value="1">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    {{ form.quantity }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <a href="#" class="primary-btn">ADD TO CARD</a>
+                        <input type="hidden" name="product_id" value="{{ product.pk }}">
+                        <input type="submit" value="ADD TO CARD" class="primary-btn">
+                    </form>
                     <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                     <ul>
                         <li><b>Availability</b> <span>{{ product.get_status_text }}</span></li>
