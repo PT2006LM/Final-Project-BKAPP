@@ -73,8 +73,7 @@ def product_detail(request, category, pk):
             return HttpResponseRedirect(reverse('products'))
 
     elif request.method == 'GET':
-        form = forms.AddItemToCartForm({
-            'quantity': '1'})
+        form = forms.AddItemToCartForm()
         return render(request, template_name, {
             'product': product,
             'form': form
@@ -85,17 +84,44 @@ def product_detail(request, category, pk):
 
 def cart(request):
     cart = get_cart_from_session(request)
-    cart_data = []
-    for key in cart.cart_data:
-        cart_data.append({
-            'amount': cart.cart_data[key]['amount'],
-            'total_price': cart.cart_data[key]['total_price'],
-            'product': models.Product.objects.get(pk=int(key))
+    form_cart_items_data = {}
+
+    if request.method == "POST":
+        for key in cart.cart_data:
+            form_cart_items_data[key] = cart.cart_data[key]['amount']
+        form = forms.CartEditForm(extra=form_cart_items_data)
+        form.data = request.POST
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            print(cleaned_data)
+            total_price = cleaned_data.pop('total_price')
+            for key, value in cleaned_data:
+                print(key)
+                if "productamount_" in key:
+                    print(value)
+            return HttpResponseRedirect(reverse('cart-detail'))
+        else:
+            print("Not valid")
+
+
+    elif request.method == "GET":
+        
+        cart_data = []
+        
+        for key in cart.cart_data:
+            cart_data.append({
+                'amount': cart.cart_data[key]['amount'],
+                'total_price': cart.cart_data[key]['total_price'],
+                'product': models.Product.objects.get(pk=int(key))
+            })
+            form_cart_items_data["product_%s" % key] = cart.cart_data[key]['amount']
+        form_cart_items_data['total_price'] = str(cart.total_price)
+        form = forms.CartEditForm(data=form_cart_items_data,                extra=form_cart_items_data)
+        return render(request, 'foodstore/shoping-cart.html', {
+            'cart_data': cart_data,
+            'form': form,
+            'total_price': cart.total_price,
         })
-    print(cart_data)
-    return render(request, 'foodstore/shoping-cart.html', {
-        'cart_data': cart_data
-    })
 
 
 def checkout(request):
