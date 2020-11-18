@@ -88,20 +88,20 @@ def cart(request):
 
     if request.method == "POST":
         for key in cart.cart_data:
-            form_cart_items_data[key] = cart.cart_data[key]['amount']
-        form = forms.CartEditForm(extra=form_cart_items_data)
-        form.data = request.POST
+            form_cart_items_data["product_%s" % key] = cart.cart_data[key]['amount']
+        form = forms.CartEditForm(request.POST, extra=form_cart_items_data)
         if form.is_valid():
             cleaned_data = form.cleaned_data
             print(cleaned_data)
             total_price = cleaned_data.pop('total_price')
-            for key, value in cleaned_data:
-                print(key)
-                if "productamount_" in key:
-                    print(value)
+            for key in cleaned_data:
+                if key.__contains__("product_"):
+                    print(key)
             return HttpResponseRedirect(reverse('cart-detail'))
         else:
-            print("Not valid")
+            print("Errorrr")
+            print(len(form.errors))
+            return HttpResponseRedirect(reverse('cart-detail'))
 
 
     elif request.method == "GET":

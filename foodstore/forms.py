@@ -27,5 +27,5 @@ class CartEditForm(forms.Form):
         if extra:
             for item in extra:
                 if item != 'total_price':
-                    self.fields[item] = forms.IntegerField(
+                    self.fields[item] = forms.FloatField(
                         widget=forms.TextInput(), initial=extra[item])
