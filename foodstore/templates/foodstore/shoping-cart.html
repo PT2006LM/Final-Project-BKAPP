@@ -64,7 +64,10 @@
                     <div class="shoping__cart__btns">
                         <a href="{% url 'products' %}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
                         <input type="hidden" name="total_price" value="{{ total_price }}" id="id_total_price">
-                        <input type="submit" value="Update Cart" class="primary-btn cart-btn cart-btn-right border-0">
+                        <input type="submit" 
+                            value="Update Cart" 
+                            name="submit"
+                            class="primary-btn cart-btn cart-btn-right border-0">
                     </div>
                 </div>
             </div>
