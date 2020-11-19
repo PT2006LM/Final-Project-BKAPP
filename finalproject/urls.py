@@ -36,6 +36,7 @@ urlpatterns = [
     path('test/blog-details/', views.blog_details, name='test-blog-details'),
 
     path('store/', include('foodstore.urls')),
+    path('cart/', include('cart.urls')),
 ]
 
 if settings.DEBUG:

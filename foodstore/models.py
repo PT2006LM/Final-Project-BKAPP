@@ -62,15 +62,3 @@ class Review(models.Model):
     stars = models.IntegerField()
     comment = models.TextField()
     date_created = models.DateField(auto_now_add=True)
-
-class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_created = models.DateField(auto_now_add=True)
-    coupon = models.FloatField()
-    total_price = models.FloatField()
-
-class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    products = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField()
-    price = models.FloatField()

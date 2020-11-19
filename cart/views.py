@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView
-from foodstore import models, forms
-from foodstore.cart import Cart, get_cart_from_session
+from foodstore import models
+from cart.cart import Cart, get_cart_from_session
+from cart.forms import CartEditForm
 
 
 
@@ -28,7 +28,7 @@ def handle_update_cart_form(request):
 
     for key in cart.cart_data:
         form_cart_items_data[key] = cart.cart_data[key]['amount']
-    form = forms.CartEditForm(request.POST, extra=form_cart_items_data)
+    form = CartEditForm(request.POST, extra=form_cart_items_data)
     if form.is_valid():
         cleaned_data = form.cleaned_data
         # Remove total_price from cleaned_data
@@ -67,7 +67,7 @@ def get(request):
     form_cart_items_data['total_price'] = str(cart.total_price)
     # Init form with data provided above and construct fields based on
     # extra parameter
-    form = forms.CartEditForm(data=form_cart_items_data, 
+    form = CartEditForm(data=form_cart_items_data, 
             extra=form_cart_items_data)
         
     for cart_item in cart_rendering_data:

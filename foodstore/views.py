@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
-from foodstore import models, forms
-from foodstore.cart import get_cart_from_session
+
+from foodstore import models
+from cart.cart import get_cart_from_session
+from cart.forms import CartEditForm, AddItemToCartForm
 
 class ProductList(ListView):
     """
@@ -65,7 +67,7 @@ def product_detail(request, category, pk):
     template_name = 'foodstore/shop-details.html'
     if request.method == 'POST':
 
-        form = forms.AddItemToCartForm(request.POST)
+        form = AddItemToCartForm(request.POST)
         if form.is_valid():
             cart = get_cart_from_session(request)
 
@@ -79,8 +81,13 @@ def product_detail(request, category, pk):
             return HttpResponseRedirect(reverse('products'))
 
     elif request.method == 'GET':
-        form = forms.AddItemToCartForm()
+        form = AddItemToCartForm()
         return render(request, template_name, {
             'product': product,
             'form': form
         })
+
+
+
+def checkout(request):
+    return render(request, 'foodstore/checkout.html')

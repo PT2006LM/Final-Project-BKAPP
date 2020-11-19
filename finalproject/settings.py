@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     # owned apps
     'foodstore',
+    'cart',
     'blog',
 ]
 
