@@ -29,34 +29,30 @@
                             </thead>
                             <tbody>
                                 {% for cart_item in cart_data %}
-                                    {% for field in form %}
-                                        {% if field is not form.total_price %}
-                                        <tr>
-                                            <td class="shoping__cart__item">
-                                                <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% static 'img/product/default.jpg' %}{% endif %}" alt="" style="width: 100px; height: 100px">
-                                                <h5>{{ cart_item.product.name }}</h5>
-                                            </td>
-                                            <td class="shoping__cart__price">
-                                                ${{ cart_item.product.price }}
-                                            </td>
-                                            <td class="shoping__cart__quantity">
-                                                <div class="quantity">
-                                                    <div class="pro-qty">
-                                                        {{ field }}
-                                                    </div>
+                                    <tr>
+                                        <td class="shoping__cart__item">
+                                            <img src="{% if cart_item.product.thumbnail %}{{ cart_item.product.thumbnail.url }}{% else %}{% static 'img/product/default.jpg' %}{% endif %}" alt="" style="width: 100px; height: 100px">
+                                            <h5>{{ cart_item.product.name }}</h5>
+                                        </td>
+                                        <td class="shoping__cart__price">
+                                            ${{ cart_item.product.price }}
+                                        </td>
+                                        <td class="shoping__cart__quantity">
+                                            <div class="quantity">
+                                                <div class="pro-qty">
+                                                    {{ cart_item.form_field }}
                                                 </div>
-                                            </td>
+                                            </div>
+                                        </td>
+                                        
+                                        <td class="shoping__cart__total">
+                                            ${{ cart_item.total_price }}
+                                        </td>
+                                        <td class="shoping__cart__item__close">
+                                            <span class="icon_close"></span>
                                             
-                                            <td class="shoping__cart__total">
-                                                ${{ cart_item.total_price }}
-                                            </td>
-                                            <td class="shoping__cart__item__close">
-                                                <span class="icon_close"></span>
-                                                
-                                            </td>
-                                        </tr>
-                                    {% endif %}
-                                    {% endfor %}
+                                        </td>
+                                    </tr>
                                 {% endfor %}
                             </tbody>
                         </table>

@@ -8,16 +8,21 @@ class AddItemToCartForm(forms.Form):
 
 
 class CartEditForm(forms.Form):
-    # Form used to edit cart before checkout
-    # Extra fields in kwargs will be cartitem for each carted product
-    # Total price field managed by js
+    """
+    Form used to edit cart before checkout
+    Extra fields in kwargs will be cartitem for each carted product
+    Total price field managed by js
+    """
+    # Used to fetch to form
     total_price = forms.FloatField(initial=0, 
         widget=forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
-        # The form inited with 'extra' keyword in case of GET form
-        # as its rendering based on session's cart items number
-        # In other methods, 'extra' won't be passed in
+        """
+        The form inited with 'extra' keyword in case of GET form
+        as its rendering based on session's cart items number
+        In other methods, 'extra' won't be passed in
+        """
         try:
             extra = kwargs.pop('extra')
         except KeyError:
@@ -27,5 +32,9 @@ class CartEditForm(forms.Form):
         if extra:
             for item in extra:
                 if item != 'total_price':
-                    self.fields[item] = forms.FloatField(
+                    self.fields[item] = forms.IntegerField(
                         widget=forms.TextInput(), initial=extra[item])
+
+
+    def get_field(self, field_name):
+        return self.fields[field_name]

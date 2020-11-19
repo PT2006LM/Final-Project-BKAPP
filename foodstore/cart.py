@@ -9,6 +9,12 @@ class Cart:
 
     
     def add_item_to_cart(self, item_id, amount):
+        """
+        Add item to the cart by product_id and amount.
+        Cart item associated with product_id is validated and its price, amount
+        are updated accordingly. 
+        NOTE: Total price of cart also updated
+        """
         if item_id in self.cart_data.keys():
             self.cart_data[item_id]['amount'] += amount
             self.cart_data[item_id]['total_price'] += self.cart_data[item_id]['price'] * amount
@@ -23,11 +29,30 @@ class Cart:
             self.total_price += product.price * amount
             self.length += 1
 
-    def edit_cart_data(self, new_data):
-        self.cart_data = new_data
+
+    def update_cart_data(self, cart_data):
+        """
+        Reset data and re-fetched -- need to be further optimized
+
+        Receive a raw dictionary of 'product_id': 'amount'
+        'cart_data' refreshed and add each item in the dictionary to the cart
+        """
+        self.reset_data()
+        for item in cart_data:
+            self.add_item_to_cart(item, cart_data[item])
+
+    
+    def reset_data(self):
+        self.cart_data = {}
+        self.total_price = 0
+        self.length = 0
 
     
     def get_serialized_data(self):
+        """
+        Get data needed to stored in session and can be deserialized
+        to be processed in views
+        """
         return {
             'cart_data': self.cart_data,
             'total_price': self.total_price,
@@ -36,6 +61,10 @@ class Cart:
 
 
 def get_cart_from_session(request):
+    """
+    Deserialized cart data from session if existed or return an empty cart
+    otherwise
+    """
     # Check cart from session
     try:
         current_data = request.session['cart']

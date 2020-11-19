@@ -8,6 +8,9 @@ from foodstore.cart import Cart, get_cart_from_session
 
 
 class ProductList(ListView):
+    """
+    Views listing product including category filter
+    """
     template_name = 'foodstore/shop-grid.html'
     model = models.Product
     paginate_by = 1
@@ -20,7 +23,11 @@ class ProductList(ListView):
 
 
     def paginate_queryset(self, queryset, page_size):
+        """
+        Process filtering
+        """
         try:
+            # Filter by category
             queryset = queryset.filter(category__slug=self.kwargs['category'])
         except KeyError:
             pass
@@ -29,9 +36,11 @@ class ProductList(ListView):
 
 
 def set_favorite_product(request, category, product_id):
-    # Get a Product instance with id from database
-    # Add Product instance if its id not existed in session
-    # Remove Product instance if it's already existed
+    """
+    Get a Product instance with id from database
+    Add Product instance if its id not existed in session
+    Remove Product instance if it's already existed
+    """
     next_url = request.GET.__getitem__('next')
     try:
         favorite_products = request.session['favorite_products']
@@ -54,7 +63,6 @@ def set_favorite_product(request, category, product_id):
 
 
 def product_detail(request, category, pk):
-    
     product = models.Product.objects.get(pk=pk)
     template_name = 'foodstore/shop-details.html'
     if request.method == 'POST':
@@ -69,6 +77,7 @@ def product_detail(request, category, pk):
             
             # Save cart back to session
             request.session['cart'] = cart.get_serialized_data()
+            print(request.session['cart'])
 
             return HttpResponseRedirect(reverse('products'))
 
@@ -83,20 +92,26 @@ def product_detail(request, category, pk):
 
 
 def cart(request):
+    # del request.session['cart']
     cart = get_cart_from_session(request)
     form_cart_items_data = {}
+    print(request.session['cart'])
 
     if request.method == "POST":
+        # Generating a form with extra fields according to 
+        # session's cart_data, with data provied by request.POST
         for key in cart.cart_data:
-            form_cart_items_data["product_%s" % key] = cart.cart_data[key]['amount']
+            form_cart_items_data[key] = cart.cart_data[key]['amount']
         form = forms.CartEditForm(request.POST, extra=form_cart_items_data)
         if form.is_valid():
             cleaned_data = form.cleaned_data
-            print(cleaned_data)
             total_price = cleaned_data.pop('total_price')
-            for key in cleaned_data:
-                if key.__contains__("product_"):
-                    print(key)
+            cart_data = cleaned_data
+            cart.update_cart_data(cart_data)
+            # cart.update_cart_price(total_price)
+
+            request.session['cart'] = cart.get_serialized_data()
+
             return HttpResponseRedirect(reverse('cart-detail'))
         else:
             print("Errorrr")
@@ -114,9 +129,15 @@ def cart(request):
                 'total_price': cart.cart_data[key]['total_price'],
                 'product': models.Product.objects.get(pk=int(key))
             })
-            form_cart_items_data["product_%s" % key] = cart.cart_data[key]['amount']
+            form_cart_items_data[key] = cart.cart_data[key]['amount']
         form_cart_items_data['total_price'] = str(cart.total_price)
-        form = forms.CartEditForm(data=form_cart_items_data,                extra=form_cart_items_data)
+        form = forms.CartEditForm(data=form_cart_items_data, 
+                extra=form_cart_items_data)
+        
+        for cart_item in cart_data:
+            product_id = str(cart_item['product'].pk)
+            cart_item['form_field'] = form[product_id]
+
         return render(request, 'foodstore/shoping-cart.html', {
             'cart_data': cart_data,
             'form': form,
