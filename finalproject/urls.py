@@ -19,11 +19,11 @@ from django.shortcuts import render
 from finalproject import views
 from django.conf import settings
 from django.conf.urls.static import static
-
+from backend import views as viewadmin
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', views.homepage, name='home'),
     path('test/', views.homepage, name='test-home'),
@@ -37,6 +37,19 @@ urlpatterns = [
 
     path('store/', include('foodstore.urls')),
     path('cart/', include('cart.urls')),
+
+    # admin
+    path('admin', viewadmin.adminController.index , name='admin.index'),
+    # category
+    path('admin/category', viewadmin.categoryControler.index , name='admin.category.index'),
+    path('admin/category/create', viewadmin.categoryControler.create , name='admin.category.create'),
+    path('admin/category/edit/<int:id>', viewadmin.categoryControler.edit , name='admin.category.edit'),
+    path('admin/category/delete/<int:id>', viewadmin.categoryControler.delete , name='admin.category.delete'),
+    #product
+    path('admin/product', viewadmin.productController.index , name='admin.product.index'),
+    path('admin/product/create', viewadmin.productController.create , name='admin.product.create'),
+    path('admin/product/edit/<int:id>', viewadmin.productController.edit , name='admin.product.edit'),
+    path('admin/product/delete/<int:id>', viewadmin.productController.delete , name='admin.product.delete'),
 ]
 
 if settings.DEBUG:
