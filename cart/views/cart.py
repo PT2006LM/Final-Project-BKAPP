@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from foodstore import models
+from foodstore.models import Product
 from cart.cart import Cart, get_cart_from_session
 from cart.forms import CartEditForm
 
@@ -61,7 +61,7 @@ def get(request):
         cart_rendering_data.append({
             'amount': cart.cart_data[key]['amount'],
             'total_price': cart.cart_data[key]['total_price'],
-            'product': models.Product.objects.get(pk=int(key))
+            'product': Product.objects.get(pk=int(key))
         })
         form_cart_items_data[key] = cart.cart_data[key]['amount']
     form_cart_items_data['total_price'] = str(cart.total_price)
@@ -74,7 +74,7 @@ def get(request):
         product_id = str(cart_item['product'].pk)
         cart_item['form_field'] = form[product_id]
 
-    return render(request, 'foodstore/shoping-cart.html', {
+    return render(request, 'cart/shopping-cart.html', {
         'cart_data': cart_rendering_data,
         'total_price': cart.total_price,
     })

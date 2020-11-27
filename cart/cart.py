@@ -1,7 +1,17 @@
-from foodstore import models
+from foodstore.models import Product
 
 
 class Cart:
+    """
+    Abstract object to deal with Product models from foodstore.
+    cart_data store item as {
+        'product_id': {
+            'amount': ...,
+            'price': ...,
+            'total_price': ...
+        }
+    }
+    """
     def __init__(self, cart_data={}, total_price=0):
         self.cart_data = cart_data
         self.total_price = total_price
@@ -20,7 +30,7 @@ class Cart:
             self.cart_data[item_id]['total_price'] += self.cart_data[item_id]['price'] * amount
             self.total_price += self.cart_data[item_id]['price'] * amount
         else:
-            product = models.Product.objects.get(pk=item_id)
+            product = Product.objects.get(pk=item_id)
             self.cart_data[item_id] = {
                     'amount': amount,
                     'price': product.price,
@@ -40,6 +50,8 @@ class Cart:
         self.reset_data()
         for item in cart_data:
             self.add_item_to_cart(item, cart_data[item])
+            if cart_data[item] == 0:
+                del self.cart_data[item]
 
     
     def reset_data(self):
@@ -58,6 +70,12 @@ class Cart:
             'total_price': self.total_price,
             'length': self.length,
         }
+
+    def is_empty(self):
+        """
+        Is this cart has any items
+        """
+        return self.cart_data == {}
 
 
 def get_cart_from_session(request):
