@@ -50,7 +50,6 @@
                                         </td>
                                         <td class="shoping__cart__item__close">
                                             <span class="icon_close"></span>
-                                            
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -73,7 +72,7 @@
             </div>
         </form>
         <div class="row">
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
                 <div class="shoping__continue">
                     <div class="shoping__discount">
                         <h5>Discount Codes</h5>
@@ -83,12 +82,12 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-lg-6">
                 <div class="shoping__checkout">
                     <h5>Cart Total</h5>
                     <ul>
-                        <li>Subtotal <span>$454.98</span></li>
+                        <li>Subtotal <span>${{ total_price }}</span></li>
                         <li>Total <span>${{ total_price }}</span></li>
                     </ul>
                     <a href="{% url 'checkout' %}" class="primary-btn">PROCEED TO CHECKOUT</a>
@@ -98,16 +97,13 @@
     </div>
 </section>
 <!-- Shoping Cart Section End -->
+{% endblock %}
 
 
-
+{% block script %}
 <script>
 
-// Track change of product amount => change of cart item price => total price change
-// Add event for delete cart-item
-
-
+    // Track change of product amount => change of cart item price => total price change
+    // Add event for delete cart-item
 </script>
-
-
 {% endblock %}

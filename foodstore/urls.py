@@ -12,10 +12,7 @@ urlpatterns = [
     path('products/<slug:category>/<int:pk>/', 
         views.product_detail, 
         name='product-detail'),
-    path('checkout/', views.checkout, name='checkout'),
-
     path('products/<slug:category>/<int:product_id>/set-favorite/', 
         views.set_favorite_product,
         name='product-set-favorite'),
-
 ]
