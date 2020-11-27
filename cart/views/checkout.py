@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from cart.cart import get_cart_from_session
+from cart.forms import OrderForm
 from foodstore.models import Product
 
 
@@ -16,7 +17,7 @@ def checkout(request):
     #   'product': assocaited Product object from database assocated with id,
     #   'total_price': total_price from serialized data
     # }
-    print(cart)
+    
     cart_context_data = {
         'cart_data': [ {
             'product': Product.objects.get(pk=int(key)),
@@ -25,5 +26,10 @@ def checkout(request):
         'total_price': cart['total_price']
     }
 
+    context_data = {
+        'cart': cart_context_data,
+        'form': OrderForm()
+    }
+
     return render(request, 'cart/checkout.html', 
-        context=cart_context_data)
+        context=context_data)

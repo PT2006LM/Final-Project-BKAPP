@@ -1,10 +1,17 @@
 from django import forms
+from cart.models import Order
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = '__all__'
+
 
 
 class AddItemToCartForm(forms.Form):
     quantity = forms.FloatField(initial=0, 
         widget=forms.TextInput())
-
 
 
 class CartEditForm(forms.Form):
