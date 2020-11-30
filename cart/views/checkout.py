@@ -44,6 +44,10 @@ def checkout(request):
         request_user = request.user
         form = OrderForm(request.POST)
         if form.is_valid(): 
+            # Clear cart session
+            request.session['cart'] = {}
+            del request.session['cart']
+            
             cleaned_data = form.cleaned_data
             # Create a CartOrder models from cart['total_price'], session's User
             cart_order = CartOrder.objects.create(
@@ -70,7 +74,7 @@ def checkout(request):
                 addition_note=cleaned_data['addition_note'],
                 order_data=cart_order
             )
-            return redirect(reverse('checkout'))
+            return render(request, 'cart/checkout_completed.html')
         else:
             print("Invalid")
             return render(request, 'cart/checkout.html', 

@@ -1,0 +1,17 @@
+{% extends 'base_generics.html' %}
+
+{% load static %}
+{% block title %}Ogani Template{% endblock %}
+
+{% block content %}
+{% include 'widgets/content_components/header.html' %}
+
+{% include 'widgets/content_components/breadcrumb.html' with page_title="Checkout" %}
+
+<!-- Checkout Section Begin -->
+<p>Thank you for shopping. Our shipper will contact you soon.</p>
+
+<a href="{% url 'home' %}" class="btn btn-lg btn-primary">
+    Click here to head home</a>
+<!-- Checkout Section End -->
+{% endblock %}

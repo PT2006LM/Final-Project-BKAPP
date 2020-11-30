@@ -3,16 +3,41 @@ from cart.models import Order
 
 
 class OrderForm(forms.Form):
-    first_name = forms.CharField(label='First Name')
-    last_name = forms.CharField(label='Last Name')
+    first_name = forms.CharField(label='First Name', 
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        }))
+    last_name = forms.CharField(label='Last Name',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        }))
     detail_address = forms.CharField(label='Address', 
-        widget=forms.Textarea())
-    street = forms.CharField(label="Street")
-    city = forms.CharField(label="City")
-    phone = forms.CharField(label="Phone Number")
-    email = forms.EmailField(label="Email", widget=forms.EmailInput())
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'placeholder': 'Appartement, building, ect...'
+        }))
+    street = forms.CharField(label="Street", 
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        }))
+    city = forms.CharField(label="City",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        }))
+    phone = forms.CharField(label="Phone Number",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        }))
+    email = forms.EmailField(label="Email", 
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control'
+        }))
     addition_note = forms.CharField(label="Notes", 
-        widget=forms.Textarea(), required=False)
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'placeholder': 'Your remark to us...'
+        }), 
+        required=False)
 
 
 
