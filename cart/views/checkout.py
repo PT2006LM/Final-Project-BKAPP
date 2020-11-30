@@ -72,7 +72,7 @@ def checkout(request):
             )
             # Clear cart session
             del request.session['cart']
-            return redirect(reverse('checkout'))
+            return render(request, 'cart/checkout_completed.html')
         else:
             print("Invalid")
             return render(request, 'cart/checkout.html', 
