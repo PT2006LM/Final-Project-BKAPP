@@ -1,11 +1,27 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from backend import forms
 from foodstore import models
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 class adminController:
+    @login_required(login_url=reverse_lazy('admin.login'))
     def index(request):
-        return render(request,'main.html')
+        return render(request,'pages/index.html')
+    def login(request):
+        logout(request)
+        username = password = ''
+        if request.POST:
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect('index.html')
+        return render(request,'pages/login.html')
 
 class categoryControler:
     def index(request):
