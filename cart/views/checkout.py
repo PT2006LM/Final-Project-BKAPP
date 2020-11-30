@@ -70,6 +70,8 @@ def checkout(request):
                 addition_note=cleaned_data['addition_note'],
                 order_data=cart_order
             )
+            # Clear cart session
+            del request.session['cart']
             return redirect(reverse('checkout'))
         else:
             print("Invalid")

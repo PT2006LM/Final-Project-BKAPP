@@ -33,3 +33,4 @@ class Order(models.Model):
     email = models.CharField(max_length=20)
     addition_note = models.TextField(max_length=50)
     order_data = models.OneToOneField(CartOrder, on_delete=models.CASCADE)
+    paid = models.BooleanField(default=False)
