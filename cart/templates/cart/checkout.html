@@ -19,10 +19,10 @@
         </div> -->
         <div class="checkout__form">
             <h4>Billing Details</h4>
-            <form action="#">
+            <form action="" method="POST">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Fist Name<span>*</span></p>
@@ -94,8 +94,13 @@
                         <div class="checkout__input">
                             <p>Order notes<span>*</span></p>
                             <input type="text" placeholder="Notes about your order, e.g. special notes for delivery.">
-                        </div>
+                        </div> -->
+
+                        {% csrf_token %}
+                        {{ form }}
                     </div>
+
+
                     <div class="col-lg-4 col-md-6">
                         <div class="checkout__order">
                             <h4>Your Order</h4>
@@ -137,11 +142,6 @@
             </form>
         </div>
     </div>
-
-    <form action="">
-        {% csrf_token %}
-        {{ form }}
-    </form>
 </section>
 <!-- Checkout Section End -->
 {% endblock %}

@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='order',
             name='order_data',
-            field=models.OneToOneField(default=0, on_delete=django.db.models.deletion.CASCADE, to='cart.cart'),
+            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.CASCADE, to='cart.cart'),
             preserve_default=False,
         ),
     ]

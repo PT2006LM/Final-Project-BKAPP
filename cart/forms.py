@@ -2,10 +2,18 @@ from django import forms
 from cart.models import Order
 
 
-class OrderForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = '__all__'
+class OrderForm(forms.Form):
+    first_name = forms.CharField(label='First Name')
+    last_name = forms.CharField(label='Last Name')
+    detail_address = forms.CharField(label='Address', 
+        widget=forms.Textarea())
+    street = forms.CharField(label="Street")
+    city = forms.CharField(label="City")
+    phone = forms.CharField(label="Phone Number")
+    email = forms.EmailField(label="Email", widget=forms.EmailInput())
+    addition_note = forms.CharField(label="Notes", 
+        widget=forms.Textarea(), required=False)
+
 
 
 
