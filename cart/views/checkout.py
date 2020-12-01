@@ -71,7 +71,7 @@ def checkout(request):
             Order.objects.create(
                 first_name=cleaned_data['first_name'],
                 last_name=cleaned_data['last_name'],
-                street=cleaned_data['street'],
+                districts=cleaned_data['district'],
                 city=cleaned_data['city'],
                 detail_address=cleaned_data['detail_address'],
                 phone=cleaned_data['phone'],
