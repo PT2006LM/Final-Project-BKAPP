@@ -8,6 +8,11 @@
 
 {% include 'widgets/content_components/breadcrumb.html' with page_title="Checkout" %}
 
+<script>
+    let vietNameLocData = {{ vietnam_loc_data|safe }};
+    let cities = {{ vietnam_loc_data|safe }}.map(item => item.name);
+</script>
+
 <!-- Checkout Section Begin -->
 <section class="checkout spad">
     <div class="container">
@@ -48,9 +53,9 @@
                         </div>
 
                         <div class="checkout__input">
-                            <strong>{{ form.street.label_tag }} <span>*</span></strong>
-                            {{ form.street }}
-                            <small>{{ form.street.errors }}</small>
+                            <strong>{{ form.district.label_tag }} <span>*</span></strong>
+                            {{ form.district }}
+                            <small>{{ form.district.errors }}</small>
                         </div>
 
                         <div class="checkout__input">
@@ -122,4 +127,27 @@
     </div>
 </section>
 <!-- Checkout Section End -->
+{% endblock %}
+
+
+{% block script %}
+<script>
+    // Restore original select option
+    $('.checkout__input select')
+        .append($('<option disabled selected></option')
+            .text('Select an item'))
+        .removeAttr('style');
+
+    $('.nice-select').remove();
+
+
+    // Add data to select
+    $('#id_city').each(function() {
+        cities.forEach(element => {
+            console.log(element);
+            $(this).append($('<option></option>')
+                .val(element).text(element));
+        });
+    })
+</script>
 {% endblock %}
