@@ -23,7 +23,7 @@ from backend import views as viewadmin
 
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('djangoadmin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', views.homepage, name='home'),
     path('test/contact/', views.contact, name='test-contact'),

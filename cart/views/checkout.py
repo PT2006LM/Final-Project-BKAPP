@@ -3,6 +3,7 @@ from django.urls import reverse
 from cart.cart import get_cart_from_session
 from cart.forms import OrderForm
 from cart.models import CartItem, CartOrder, Order
+import json
 
 from foodstore.models import Product
 
@@ -20,18 +21,22 @@ def checkout(request):
         #   'product': assocaited Product object from database assocated with id,
         #   'total_price': total_price from serialized data
         # }
+        # Get vietnam location's data to render district and city fields
+        with open('cart/vietnam_loc_data.json', 'r') as json_file:
+            vietnam_loc_data = json.load(json_file)
         
         cart_context_data = {
             'cart_data': [ {
                 'product': Product.objects.get(pk=int(key)),
                 'total_price': value['total_price']
             } for key, value in cart['cart_data'].items()],
-            'total_price': cart['total_price']
+            'total_price': cart['total_price'],
         }
 
         context_data = {
             'cart': cart_context_data,
-            'form': OrderForm()
+            'form': OrderForm(),
+            'vietnam_loc_data': vietnam_loc_data
         }
 
         return render(request, 'cart/checkout.html', 
@@ -66,7 +71,7 @@ def checkout(request):
             Order.objects.create(
                 first_name=cleaned_data['first_name'],
                 last_name=cleaned_data['last_name'],
-                street=cleaned_data['street'],
+                districts=cleaned_data['district'],
                 city=cleaned_data['city'],
                 detail_address=cleaned_data['detail_address'],
                 phone=cleaned_data['phone'],

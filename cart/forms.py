@@ -16,13 +16,13 @@ class OrderForm(forms.Form):
             'class': 'form-control',
             'placeholder': 'Appartement, building, ect...'
         }))
-    street = forms.CharField(label="Street", 
-        widget=forms.TextInput(attrs={
-            'class': 'form-control'
+    district = forms.CharField(label="Street", 
+        widget=forms.Select(attrs={
+            'class': 'custom-select'
         }))
     city = forms.CharField(label="City",
-        widget=forms.TextInput(attrs={
-            'class': 'form-control'
+        widget=forms.Select(attrs={
+            'class': 'custom-select'
         }))
     phone = forms.CharField(label="Phone Number",
         widget=forms.TextInput(attrs={
