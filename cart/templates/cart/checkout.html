@@ -134,18 +134,23 @@
 <script>
     // Restore original select option
     $('.checkout__input select')
-        .append($('<option disabled selected></option>')
+        .append($('<option disabled></option>')
             .text('Select an item'))
         .removeAttr('style');
 
     $('.nice-select').remove();
 
 
-    // Add data to select
+    // Add data to select and enabled first city to be selected
     $('#id_city').each(function() {
-        cities.forEach(element => {
-            $(this).append($('<option></option>')
+        cities.forEach((element, index) => {
+            if (index === 0) {
+                $(this).append($('<option selected></option>')
                 .val(element).text(element))
+            } else {
+                $(this).append($('<option></option>')
+                .val(element).text(element))
+            }
         });
     })
     .change(function(event) {
@@ -168,5 +173,20 @@
                         .val(item.name).text(item.name))
             )
     })
+
+    // Add first city's districts to districts collection
+    // And select first district
+    let districts = vietNameLocData[0]['districts'];
+    // Removed old data in select#id_district
+    $('select#id_district')
+            .children('option').remove();
+    $('select#id_district')
+        .append(
+            $('<option disabled selected></option>')
+                .text('Select an item'),
+            districts.map(item => 
+                $('<option></option>')
+                    .val(item.name).text(item.name))
+        )
 </script>
 {% endblock %}
