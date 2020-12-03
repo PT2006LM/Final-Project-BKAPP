@@ -34,6 +34,13 @@ urlpatterns = [
     # admin
     path('admin', viewadmin.adminController.index , name='admin.index'),
     path('login', viewadmin.adminController.login , name='admin.login'),
+    # user
+    path('admin/user', viewadmin.userController.list,  name = 'admin.user.list'),
+    path('admin/user/create', viewadmin.userController.register,  name = 'admin.user.register'),
+    # path('admin/user/profile', views.UserController.profile, name='admin.user.profile'),
+    # path('admin/user/show/<int:id>', views.UserController.show, name='admin.user.show'),
+    # path('admin/login', views.UserController.login,  name = 'admin.user.login'),
+
     # category
     path('admin/category', viewadmin.categoryControler.index , name='admin.category.index'),
     path('admin/category/create', viewadmin.categoryControler.create , name='admin.category.create'),

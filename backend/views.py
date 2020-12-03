@@ -10,6 +10,7 @@ class adminController:
     @login_required(login_url=reverse_lazy('admin.login'))
     def index(request):
         return render(request,'pages/index.html')
+
     def login(request):
         logout(request)
         username = password = ''
@@ -20,8 +21,27 @@ class adminController:
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('index.html')
+                    return redirect('admin.index')
         return render(request,'pages/login.html')
+
+class userController:
+    def list(request):
+            obj = models.User.objects.all()
+            return render(request, 'pages/user/list.html', {
+                'obj': obj
+            })
+    def register(request):
+        form = forms.UserRegisterForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            user = form.save(commit = False)
+            password = form.cleaned_data.get('password')
+            user.set_password(password)
+            user.save()
+            return redirect('admin.user.list')
+        return render(request, 'pages/user/register.html',{
+            'form': form
+            })
+
 
 class categoryControler:
     def index(request):
