@@ -34,7 +34,8 @@
                                             <img src="{% if cart_item.product.thumbnail %}{{ cart_item.product.thumbnail.url }}{% else %}{% static 'img/product/default.jpg' %}{% endif %}" alt="" style="width: 100px; height: 100px">
                                             <h5>{{ cart_item.product.name }}</h5>
                                         </td>
-                                        <td class="shoping__cart__price">
+                                        <td class="shoping__cart__price"
+                                            data="{{ cart_item.product.price }}">
                                             ${{ cart_item.product.price }}
                                         </td>
                                         <td class="shoping__cart__quantity">
@@ -45,7 +46,8 @@
                                             </div>
                                         </td>
                                         
-                                        <td class="shoping__cart__total">
+                                        <td class="shoping__cart__total"
+                                            data="{{ cart_item.total_price }}">
                                             ${{ cart_item.total_price }}
                                         </td>
                                         <td class="shoping__cart__item__close">
@@ -87,8 +89,10 @@
                 <div class="shoping__checkout">
                     <h5>Cart Total</h5>
                     <ul>
-                        <li>Subtotal <span>${{ total_price }}</span></li>
-                        <li>Total <span>${{ total_price }}</span></li>
+                        <!-- <li>Subtotal <span class='subtotal'>{{ total_price }}</span></li> -->
+                        <li>Total <span class='total'
+                            data="{{ total_price }}"
+                            >{{ total_price }}</span></li>
                     </ul>
                     <a href="{% url 'checkout' %}" class="primary-btn">PROCEED TO CHECKOUT</a>
                 </div>
@@ -103,7 +107,78 @@
 {% block script %}
 <script>
 
+    // let totalPriceDOM = $('.shoping__checkout')
+    //     .children('ul').children('li').children('.total');
+
     // Track change of product amount => change of cart item price => total price change
+    // Add event to inc button
+    $('.inc').click(function() {
+        // Get amount value from corresponding product
+        let amount = parseInt($(this).parent().children('input').val()) + 1;
+
+        let productDOM = $(this)
+            .parent().parent().parent().parent();
+
+        // Get price value of corresponding product
+        let priceText = productDOM.children('.shoping__cart__price').attr('data');
+        let price = parseFloat(priceText);
+
+        // Query total price element and update
+        let productTotalPriceDOM = productDOM.children('.shoping__cart__total');
+        let productOldTotalPrice = parseFloat(productTotalPriceDOM.attr('data'));
+        let productTotalPrice = productOldTotalPrice + price;
+        productTotalPriceDOM.attr('data', productTotalPrice);
+        productTotalPriceDOM.text(productTotalPrice);
+
+        // Query total price of cart and update
+        // let oldTotalPrice = parseFloat(totalPriceDOM.attr('data'));
+        // let totalPrice = oldTotalPrice + price;
+        // totalPriceDOM.attr('data', totalPrice);
+        // totalPriceDOM.text(totalPrice);
+    });
+
+
+    $('.dec').click(function() {
+        // Get amount value from corresponding product
+        let amount = parseInt($(this).parent().children('input').val()) - 1;
+        if (amount < 0) return;
+
+        let productDOM = $(this)
+            .parent().parent().parent().parent();
+
+        // Get price value of corresponding product
+        let priceText = productDOM.children('.shoping__cart__price').attr('data');
+        let price = parseFloat(priceText);
+
+        // Query total price element and update
+        let productTotalPriceDOM = productDOM.children('.shoping__cart__total');
+        let productOldTotalPrice = parseFloat(productTotalPriceDOM.attr('data'));
+        let productTotalPrice = productOldTotalPrice - price;
+        productTotalPriceDOM.attr('data', productTotalPrice);
+        productTotalPriceDOM.text(productTotalPrice);
+
+        // Query total price of cart and update
+        // let oldTotalPrice = parseFloat(totalPriceDOM.attr('data'));
+        // let totalPrice = oldTotalPrice - price;
+        // totalPriceDOM.attr('data', totalPrice);
+        // totalPriceDOM.text(totalPrice);
+    });
+
     // Add event for delete cart-item
+    $('.icon_close').click(function(event) {
+        let mainDOM = $(this).parent().parent();
+
+        // // Get total price of product
+        // let productTotalPriceText = mainDOM.children('.shoping__cart__total').attr('data');
+        // let productTotalPrice = parseFloat(productTotalPriceText);
+        
+        // // Update Total Price
+        // let oldTotalPrice = parseFloat(totalPriceDOM.attr('data'));
+        // let totalPrice = oldTotalPrice - productTotalPrice;
+        // totalPriceDOM.attr('data', totalPrice);
+        // totalPriceDOM.text(totalPrice);
+
+        mainDOM.remove();
+    })
 </script>
 {% endblock %}
