@@ -15,7 +15,7 @@ class ProductList(ListView):
     """
     template_name = 'foodstore/shop-grid.html'
     model = models.Product
-    paginate_by = 2
+    paginate_by = 1
     ordering = '-id'
 
     def get_context_data(self, **kwargs):

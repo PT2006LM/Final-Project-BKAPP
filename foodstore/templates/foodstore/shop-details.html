@@ -42,14 +42,14 @@
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__text">
                     <h3>{{ product.name }}</h3>
-                    <div class="product__details__rating">
+                    <!-- <div class="product__details__rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star-half-o"></i>
                         <span>({% if product.review %}{{ product.reviews.count }}{% else %}0{% endif %} review(s))</span>
-                    </div>
+                    </div> -->
                     <div class="product__details__price">${{ product.price }}</div>
                     <p>{{ product.description|linebreaks }}</p>
                     <form action="" method="POST">
@@ -69,14 +69,14 @@
                         <li><b>Availability</b> <span>{{ product.get_status_text }}</span></li>
                         <li><b>Shipping</b> <span>{{ product.ship }} <samp>Free pickup today</samp></span></li>
                         <li><b>Weight</b> <span>{{ product.get_amount_str }}</span></li>
-                        <li><b>Share on</b>
+                        <!-- <li><b>Share on</b>
                             <div class="share">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
                                 <a href="#"><i class="fa fa-instagram"></i></a>
                                 <a href="#"><i class="fa fa-pinterest"></i></a>
                             </div>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -87,10 +87,10 @@
                             <a class="nav-link active" data-toggle="tab" href="#tabs-2" role="tab"
                                 aria-selected="true">Information</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
                                 aria-selected="false">Reviews <span>({% if product.review %}{{ product.reviews.count }}{% else %}0{% endif %})</span></a>
-                        </li>
+                        </li> -->
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tabs-2" role="tabpanel">
@@ -114,7 +114,7 @@
                                     nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                        <!-- <div class="tab-pane" id="tabs-3" role="tabpanel">
                             <div class="product__details__tab__desc">
                                 <h6>Reviews</h6>
                                 
@@ -123,7 +123,7 @@
                                     <h4 class="text-center">There aren't any review now.</h4>
                                 {% endif %}
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

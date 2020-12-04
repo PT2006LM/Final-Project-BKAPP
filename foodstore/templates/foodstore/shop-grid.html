@@ -5,6 +5,21 @@
 {% block title %}Ogani Template{% endblock %}
 
 
+{% block style %}
+<style>
+    .product__pagination a.disabled {
+        background: #4cd137;
+        color: #fff;
+        pointer-events: none;
+    }
+
+    .product__pagination a.marker {
+        width: 50px;
+    }
+</style>
+{% endblock %}
+
+
 {% block content %}
 {% include 'widgets/content_components/header.html' %}
 
@@ -92,18 +107,7 @@
                         
                     </div>
                     <div class="product__pagination d-flex justify-content-center">
-                        {% if page_obj.has_previous %}
-                            <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
-                            <a href="?page=1">1</a>
-                        {% endif %}
-                        <span class="current">
-                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                        </span>
-
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
-                            <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
-                        {% endif %}
+                        
                     </div>
                 {% else %}<h4 class="text-center">Empty list</h4>{% endif %}
             </div>
@@ -112,3 +116,65 @@
 </section>
 <!-- Product Section End -->
 {% endblock %}
+
+{% block script %}
+<script>
+    let pageNumber = {{ page_obj.number }};
+    let totalPages = {{ page_obj.paginator.num_pages }};
+    let pageDOM = $('.product__pagination');
+    let maxNumberVisiblePaginators = 3;
+
+    // if totalPages <= maxNumberVisiblePaginators => show all page
+    if (totalPages <= maxNumberVisiblePaginators) {
+        addPaginatorsInRange(0, totalPages);
+    } else {
+        // Check if the page number near the beginnin, i.e: 0
+        if (pageNumber <= maxNumberVisiblePaginators/2) {
+            // Show all page from beginning 
+            // till the page with number equal to maxNumberVisiblePaginators
+            addPaginatorsInRange(0, maxNumberVisiblePaginators)
+        } else if (totalPages - pageNumber <= maxNumberVisiblePaginators / 2) {
+            // Page number near the end, i.e: totalPages
+            // Show all page till the end 
+            // with number of pages equal to maxNumberVisiblePaginators
+            addPaginatorsInRange(totalPages - maxNumberVisiblePaginators, totalPages);
+        } else {
+            let currentPagePosition = parseInt(maxNumberVisiblePaginators / 2);
+            addPaginatorsInRange(pageNumber - currentPagePosition - 1, 
+                pageNumber - currentPagePosition - 1 + maxNumberVisiblePaginators);
+        }
+    }
+
+    function addPaginatorsInRange(start, end) {
+        let startPaginatorString = start === 0 && pageNumber === start + 1 ?
+            `<a href="#" class="disabled marker">First</a>` :
+            `<a href="?page=1" class="marker">First</a>`;
+        pageDOM.append(startPaginatorString);
+
+        for (let i = start; i < end; i++) {
+            let newElementString = i === pageNumber - 1 ?
+                `<a href="#" class="disabled">${i + 1}</a>` :
+                `<a href="?page=${i + 1}">${i + 1}</a>`;
+            pageDOM.append(newElementString);
+        }
+
+        let endPaginatorString = end === totalPages && pageNumber === end ?
+            `<a href="#" class="disabled marker">Last</a>` :
+            `<a href="?page=${end}" class="marker">Last</a>`;
+        pageDOM.append(endPaginatorString);
+    }
+</script>
+{% endblock %}
+
+{% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                            <a href="?page=1">1</a>
+                        {% endif %}
+                        <span class="current">
+                            <a href="#">{{ page_obj.number }}</a>
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                            <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                        {% endif %}
