@@ -81,6 +81,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'foodstore.context_processors.category_processor',
             ],
+            'libraries': {
+                'foodstore_tags': 'foodstore.template_tags'
+            }
         },
     },
 ]

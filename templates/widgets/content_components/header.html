@@ -12,10 +12,10 @@
     </div>
     <div class="humberger__menu__cart">
         <ul>
-            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+            <li><a href="#"><i class="fa fa-heart"></i> {% if request.session.favorite_products.length > 0 %}<span>{{ request.session.favorite_products.length }}</span>{% endif %}</a></li>
+            <li><a href="{% url 'cart-detail' %}"><i class="fa fa-shopping-bag"></i> {% if request.session.cart.length > 0 %}<span>{{ request.session.cart.length }}</span>{% endif %}</a></li>
         </ul>
-        <div class="header__cart__price">item: <span>$150.00</span></div>
+        <div class="header__cart__price">item: <span>{{ request.session.cart.total_price }}</span></div>
     </div>
     <div class="humberger__menu__widget">
         <div class="header__top__right__language">
