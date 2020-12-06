@@ -145,7 +145,7 @@
                     <form action="{% url 'products' %}" 
                         method="GET" class="form-inline">
                         <select name="category" class="form-group border-0">
-                            <option>All Categories</option> 
+                            <option disabled selected>All Categories</option> 
                             {% for category in category_list %} 
                                 <option value="{{ category.pk }}">{{ category }}</option>
                             {% endfor %}

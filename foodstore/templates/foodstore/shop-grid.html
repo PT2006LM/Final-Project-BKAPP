@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4">
-                            {% if product_list.count > 0 %}
+                            {% if product_count > 0 %}
                                 <div class="filter__found">
                                     <h6><span>{{ product_count }}</span> Products found</h6>
                                 </div>
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                {% if product_list.count > 0 %}
+                {% if product_count > 0 %}
                     <div class="row">
                         {% for product in product_list %}
                             <div class="col-lg-4 col-md-6 col-sm-6">
@@ -110,7 +110,7 @@
                     <div class="product__pagination d-flex justify-content-center">
                         
                     </div>
-                {% else %}<h4 class="text-center">Empty list</h4>{% endif %}
+                {% else %}<h4 class="text-center">Empty List</h4>{% endif %}
             </div>
         </div>
     </div>
@@ -147,23 +147,25 @@
     }
 
     function addPaginatorsInRange(start, end) {
+        let firstPageUrl = "{% add_query_params request page=1 %}";
         let startPaginatorString = start === 0 && pageNumber === start + 1 ?
             `<a href="#" class="disabled marker">First</a>` :
-            `<a href="{% add_query_params request page=1 %}" class="marker">First</a>`;
+            `<a href="${firstPageUrl}" class="marker">First</a>`;
         pageDOM.append(startPaginatorString);
-        let queryStringBeginChar = document.location.pathname.match(/\?/) ?
-            '&' : '?';
 
         for (let i = start; i < end; i++) {
+            let newPageURL = firstPageUrl.replace(/(page=1)$/, `page=${i+1}`)
             let newElementString = i === pageNumber - 1 ?
                 `<a href="#" class="disabled">${i + 1}</a>` :
-                `<a href="${queryStringBeginChar}page=${i + 1}">${i + 1}</a>`;
+                `<a href="${newPageURL}">${i + 1}</a>`;
             pageDOM.append(newElementString);
         }
 
-        let endPaginatorString = end === totalPages && pageNumber === end ?
+        let lastPage = totalPages;
+        let lastPageURL = firstPageUrl.replace(/(page=1)$/, `page=${lastPage}`)
+        let endPaginatorString = end === lastPage && pageNumber === end ?
             `<a href="#" class="disabled marker">Last</a>` :
-            `<a href="${queryStringBeginChar}page=${totalPages}" class="marker">Last</a>`;
+            `<a href="${lastPageURL}" class="marker">Last</a>`;
         pageDOM.append(endPaginatorString);
     }
 </script>

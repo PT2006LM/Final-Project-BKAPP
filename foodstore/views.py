@@ -18,6 +18,19 @@ class ProductList(ListView):
     paginate_by = 1
     ordering = '-id'
 
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super(ProductList, self).get_queryset(*args, **kwargs)
+        # Check if queried name existed in GET
+        queried_name = self.request.GET.get('q', None)
+        if queried_name:
+            queryset = queryset.filter(name__icontains=queried_name)
+            queried_cat = self.request.GET.get('category', None)
+            if queried_cat:
+                queryset = queryset.filter(category_id=queried_cat)
+        return queryset
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['product_count'] = self.product_count
