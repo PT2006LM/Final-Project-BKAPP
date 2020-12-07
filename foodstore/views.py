@@ -15,11 +15,7 @@ class ProductList(ListView):
     """
     template_name = 'foodstore/shop-grid.html'
     model = models.Product
-<<<<<<< HEAD
-    paginate_by = 1
-    ordering = '-id'
-=======
-    paginate_by = 1
+    paginate_by = 6
 
 
     def get_ordering(self):
@@ -29,7 +25,6 @@ class ProductList(ListView):
         """
         ordering = self.request.GET.get('sort_by', '-id')
         return ordering
->>>>>>> d85c99e32f2f0066a8f3c4981f9f9b5570cbcd40
 
 
     def get_queryset(self, *args, **kwargs):
