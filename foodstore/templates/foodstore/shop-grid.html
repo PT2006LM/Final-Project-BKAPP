@@ -126,6 +126,7 @@
 <script>
     let pageNumber = {{ page_obj.number }};
     let totalPages = {{ page_obj.paginator.num_pages }};
+    let firstPageUrl = "{% add_query_params request page=1 %}";
 </script>
 
 <script src="{% static 'foodstore/js/shop_products.js' %}"></script>

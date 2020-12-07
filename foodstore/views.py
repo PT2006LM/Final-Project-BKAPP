@@ -42,6 +42,7 @@ class ProductList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['product_count'] = self.product_count
+        context['heading_menu'] = 'product'
         ordering = self.request.GET.get('sort_by', None)
         if ordering:
             context['sort_by'] = ordering
