@@ -60,7 +60,7 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <div class="sidebar__item">
+                    <!-- <div class="sidebar__item">
                         <h4>Price</h4>
                         <div class="price-range-wrap">
                             <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
@@ -76,8 +76,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    </div> -->
                 </div>
             </div>
             <div class="col-lg-9 col-md-7">
@@ -114,7 +113,7 @@
                     <div class="row">
                         {% for product in product_list %}
                             <div class="col-12">
-                                <div class="row">
+                                <div class="row py-3">
                                     <a class="col-12 col-lg-5 d-flex justify-content-center" 
                                     href="{{ product.get_absolute_url }}">
                                         <img class="product-thumbnail" src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% static 'img/product/default.jpg' %}{% endif %}" alt=""></a>
@@ -122,7 +121,7 @@
                                     <div class="product__item__text col-12 col-lg-7">
                                         <a href="{% url 'product-set-favorite' product.category.slug product.pk %}?next={{ request.path_info }}"><i class="fa fa-heart"></i></a>
                                         <h6><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h6>
-                                        <h5>${{ product.price }}</h5>
+                                        <h5>{{ product.price|floatformat  }} VND</h5>
                                     </div>
                                 </div>
                             </div>
@@ -142,53 +141,7 @@
 <script>
     let pageNumber = {{ page_obj.number }};
     let totalPages = {{ page_obj.paginator.num_pages }};
-    let pageDOM = $('.product__pagination');
-    let maxNumberVisiblePaginators = 3;
-
-    $('select[name=sort_by]').change(function() {
-        $('#sort-form').submit();
-    })
-
-    // if totalPages <= maxNumberVisiblePaginators => show all page
-    if (totalPages <= maxNumberVisiblePaginators) {
-        addPaginatorsInRange(0, totalPages);
-    } else {
-        // Check if the page number near the beginnin, i.e: 0
-        if (pageNumber <= maxNumberVisiblePaginators/2) {
-            // Show all page from beginning 
-            // till the page with number equal to maxNumberVisiblePaginators
-            addPaginatorsInRange(0, maxNumberVisiblePaginators)
-        } else if (totalPages - pageNumber <= maxNumberVisiblePaginators / 2) {
-            // Page number near the end, i.e: totalPages
-            // Show all page till the end 
-            // with number of pages equal to maxNumberVisiblePaginators
-            addPaginatorsInRange(totalPages - maxNumberVisiblePaginators, totalPages);
-        } else {
-            let currentPagePosition = parseInt(maxNumberVisiblePaginators / 2);
-            addPaginatorsInRange(pageNumber - currentPagePosition - 1, 
-                pageNumber - currentPagePosition - 1 + maxNumberVisiblePaginators);
-        }
-    }
-
-    function addPaginatorsInRange(start, end) {
-        let startPaginatorString = start === 0 && pageNumber === start + 1 ?
-            `<a href="#" class="disabled marker">First</a>` :
-            `<a href="{% add_query_params request page=1 %}" class="marker">First</a>`;
-        pageDOM.append(startPaginatorString);
-        let queryStringBeginChar = document.location.pathname.match(/\?/) ?
-            '&' : '?';
-
-        for (let i = start; i < end; i++) {
-            let newElementString = i === pageNumber - 1 ?
-                `<a href="#" class="disabled">${i + 1}</a>` :
-                `<a href="${queryStringBeginChar}page=${i + 1}">${i + 1}</a>`;
-            pageDOM.append(newElementString);
-        }
-
-        let endPaginatorString = end === totalPages && pageNumber === end ?
-            `<a href="#" class="disabled marker">Last</a>` :
-            `<a href="${queryStringBeginChar}page=${totalPages}" class="marker">Last</a>`;
-        pageDOM.append(endPaginatorString);
-    }
 </script>
+
+<script src="{% static 'foodstore/js/shop_products.js' %}"></script>
 {% endblock %}

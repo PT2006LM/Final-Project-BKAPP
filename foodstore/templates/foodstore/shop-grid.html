@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="product__item__text">
                                         <h6><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h6>
-                                        <h5>${{ product.price }}</h5>
+                                        <h5>{{ product.price|floatformat  }} VND</h5>
                                     </div>
                                 </div>
                             </div>

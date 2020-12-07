@@ -50,7 +50,7 @@
                         <i class="fa fa-star-half-o"></i>
                         <span>({% if product.review %}{{ product.reviews.count }}{% else %}0{% endif %} review(s))</span>
                     </div> -->
-                    <div class="product__details__price">${{ product.price }}</div>
+                    <div class="product__details__price">{{ product.price|floatformat }} VND / {{ product.unit }}</div>
                     <p>{{ product.description|linebreaks }}</p>
                     <form action="" method="POST">
                         {% csrf_token %}
@@ -68,7 +68,6 @@
                     <ul>
                         <li><b>Availability</b> <span>{{ product.get_status_text }}</span></li>
                         <li><b>Shipping</b> <span>{{ product.ship }} <samp>Free pickup today</samp></span></li>
-                        <li><b>Weight</b> <span>{{ product.get_amount_str }}</span></li>
                         <!-- <li><b>Share on</b>
                             <div class="share">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
