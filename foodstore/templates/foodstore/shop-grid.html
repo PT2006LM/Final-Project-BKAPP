@@ -40,7 +40,7 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <div class="sidebar__item">
+                    <!-- <div class="sidebar__item">
                         <h4>Price</h4>
                         <div class="price-range-wrap">
                             <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
@@ -56,21 +56,25 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    </div> -->
                 </div>
             </div>
             <div class="col-lg-9 col-md-7">
                 <div class="filter__item">
                     <div class="row">
                         <div class="col-lg-4 col-md-5">
-                            <div class="filter__sort">
-                                <span>Sort By</span>
-                                <select>
-                                    <option value="0">Default</option>
-                                    <option value="0">Default</option>
-                                </select>
-                            </div>
+                            <form action="" method="get" id="sort-form">
+                                <div class="filter__sort">
+                                    <span>Sort By</span>
+                                    <select name="sort_by">
+                                        <option value="date_created" {% if not sort_by %}selected{% endif %}>By Date Create</option>
+                                        <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name Ascending</option>
+                                        <option value="-name" {% if sort_by == '-name' %}selected{% endif %}>Name Descending</option>
+                                        <option value="price" {% if sort_by == 'price' %}selected{% endif %}>Price Ascending</option>
+                                        <option value="-price" {% if sort_by == '-price' %}selected{% endif %}>Price Descending</option>
+                                    </select>
+                                </div>
+                            </form>
                         </div>
                         <div class="col-lg-4 col-md-4">
                             {% if product_count > 0 %}
@@ -122,51 +126,7 @@
 <script>
     let pageNumber = {{ page_obj.number }};
     let totalPages = {{ page_obj.paginator.num_pages }};
-    let pageDOM = $('.product__pagination');
-    let maxNumberVisiblePaginators = 3;
-
-    // if totalPages <= maxNumberVisiblePaginators => show all page
-    if (totalPages <= maxNumberVisiblePaginators) {
-        addPaginatorsInRange(0, totalPages);
-    } else {
-        // Check if the page number near the beginnin, i.e: 0
-        if (pageNumber <= maxNumberVisiblePaginators/2) {
-            // Show all page from beginning 
-            // till the page with number equal to maxNumberVisiblePaginators
-            addPaginatorsInRange(0, maxNumberVisiblePaginators)
-        } else if (totalPages - pageNumber <= maxNumberVisiblePaginators / 2) {
-            // Page number near the end, i.e: totalPages
-            // Show all page till the end 
-            // with number of pages equal to maxNumberVisiblePaginators
-            addPaginatorsInRange(totalPages - maxNumberVisiblePaginators, totalPages);
-        } else {
-            let currentPagePosition = parseInt(maxNumberVisiblePaginators / 2);
-            addPaginatorsInRange(pageNumber - currentPagePosition - 1, 
-                pageNumber - currentPagePosition - 1 + maxNumberVisiblePaginators);
-        }
-    }
-
-    function addPaginatorsInRange(start, end) {
-        let firstPageUrl = "{% add_query_params request page=1 %}";
-        let startPaginatorString = start === 0 && pageNumber === start + 1 ?
-            `<a href="#" class="disabled marker">First</a>` :
-            `<a href="${firstPageUrl}" class="marker">First</a>`;
-        pageDOM.append(startPaginatorString);
-
-        for (let i = start; i < end; i++) {
-            let newPageURL = firstPageUrl.replace(/(page=1)$/, `page=${i+1}`)
-            let newElementString = i === pageNumber - 1 ?
-                `<a href="#" class="disabled">${i + 1}</a>` :
-                `<a href="${newPageURL}">${i + 1}</a>`;
-            pageDOM.append(newElementString);
-        }
-
-        let lastPage = totalPages;
-        let lastPageURL = firstPageUrl.replace(/(page=1)$/, `page=${lastPage}`)
-        let endPaginatorString = end === lastPage && pageNumber === end ?
-            `<a href="#" class="disabled marker">Last</a>` :
-            `<a href="${lastPageURL}" class="marker">Last</a>`;
-        pageDOM.append(endPaginatorString);
-    }
 </script>
+
+<script src="{% static 'foodstore/js/shop_products.js' %}"></script>
 {% endblock %}

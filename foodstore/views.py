@@ -16,7 +16,15 @@ class ProductList(ListView):
     template_name = 'foodstore/shop-grid.html'
     model = models.Product
     paginate_by = 1
-    ordering = '-id'
+
+
+    def get_ordering(self):
+        """
+        Setup ordering based on 'sort_by' in GET's query.
+        If the parameter not found, default value used.
+        """
+        ordering = self.request.GET.get('sort_by', '-id')
+        return ordering
 
 
     def get_queryset(self, *args, **kwargs):
@@ -25,15 +33,18 @@ class ProductList(ListView):
         queried_name = self.request.GET.get('q', None)
         if queried_name:
             queryset = queryset.filter(name__icontains=queried_name)
-            queried_cat = self.request.GET.get('category', None)
-            if queried_cat:
-                queryset = queryset.filter(category_id=queried_cat)
+        queried_cat = self.request.GET.get('category', None)
+        if queried_cat:
+            queryset = queryset.filter(category_id=queried_cat)
         return queryset
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['product_count'] = self.product_count
+        ordering = self.request.GET.get('sort_by', None)
+        if ordering:
+            context['sort_by'] = ordering
         return context
 
 

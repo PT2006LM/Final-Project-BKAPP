@@ -1,0 +1,115 @@
+@import 'components/homepage/header';
+@import 'components/homepage/carousel';
+
+
+$breakpoint-lg: 992px;
+$breakpoint-md: 768px;
+$breakpoint-sm: 576px;
+$text-color: #ddd;
+
+@mixin Responsive($canvas) {
+    @media screen and (max-width: $canvas) {@content;}
+}
+
+
+
+
+.detail {
+    margin-top: 15px;
+    font-size: 0.75rem;
+    line-height: 1.5em;
+    margin-bottom: 16px;
+
+    p {
+        opacity: 0.7;
+    }
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+
+    span {
+        padding: 3px 6px;
+        margin-right: 13px;
+        font-size: 11px;
+    }
+}
+
+a {
+    color: $text-color;
+}
+
+.home-item { 
+    margin-top: 60px;
+
+    & > header {
+        font-size: 1.6em;
+        font-weight: 500;
+        line-height: 2em;
+    }
+
+    
+
+    &.notifier.game-grids {
+        section {
+            display: flex;
+            background: #083314;
+            position: relative;
+            justify-content: space-between;
+            align-items: center;
+
+            .content {
+                width: 40%;
+                display: block;
+                padding-left: 40px;
+
+
+                header, p {
+                    margin-bottom: 30px;
+                }
+
+                header {
+                    font-size: 3em;
+                }
+
+                p {
+                    margin-right: 30px;
+                    opacity: 0.8;
+                }
+
+                a[role=button] {
+                    padding: 15px 60px;
+                }
+            }
+
+            .thumbnail {
+                position: relative;
+                height: 100%;
+            
+                @include Responsive($breakpoint-md) {
+                    width: 60%;
+                }
+
+                svg {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+
+            @include Responsive($breakpoint-md) {
+                flex-direction: column;
+
+                .content,
+                .thumbnail {
+                    width: 100%;
+                }
+
+                .content {
+                    padding: 50px 20px;
+                }
+            }
+        }
+    }
+}

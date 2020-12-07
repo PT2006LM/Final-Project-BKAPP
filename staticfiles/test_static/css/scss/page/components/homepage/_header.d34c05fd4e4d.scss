@@ -1,0 +1,65 @@
+$header-height: 80px;
+$form-padding: 0 15px;
+$form-font-size: 14px;
+$form-input-padding: 12px 5px;
+$form-input-margin: 0 10px;
+$text-color: #dcdde1;
+$header-background-color: #2f2f2f;
+$main-header-height: 50px;
+$page-background: #060606;
+
+#hompage-header {
+    height: $header-height;
+    background: $page-background;
+    z-index: 10;
+    color: $text-color;
+    width: 100%;
+
+    &.stick {
+        top: $main-header-height;
+    }
+
+
+    .btns > ul {
+        display: flex;
+        align-items: center;
+        margin: 0;
+
+        li {
+            margin-right: 20px;
+
+            a {
+                color: $text-color;
+                opacity: 0.6;
+
+                &.active {
+                    opacity: 1;
+                }
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+
+    .search-form {
+        background: $header-background-color;
+        padding: $form-padding;
+
+        input {
+            font-size: $form-font-size;
+            padding: $form-input-padding;
+            margin: $form-input-margin;
+            background: none;
+            border: none;
+            color: $text-color;
+        }
+    }
+}

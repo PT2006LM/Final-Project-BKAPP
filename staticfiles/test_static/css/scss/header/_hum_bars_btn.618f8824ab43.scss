@@ -1,0 +1,81 @@
+$humbars-btn-bg: #0097e6;
+$humbars-height: 50px;
+$humbars-container-height: 30px;
+$humbars-container-padding: ($humbars-height - $humbars-container-height)/2;
+$humbars-container-width: 38px;
+
+$bar-height: 4px;
+$bar-bg: #000;
+$bar-offset: 3px;
+$bar-rotate-onactive: 45deg;
+
+@mixin center-bar-in-container() {
+    top: ($humbars-container-height - $bar-height) / 2;
+}
+
+@mixin humbar-active() {
+    .bar {
+        &:first-child {
+            @include center-bar-in-container();
+            transform: rotate($bar-rotate-onactive);
+        }
+
+        &:nth-child(2) {
+            opacity: 0;
+        }
+
+        &:nth-child(3) {
+            @include center-bar-in-container();
+            transform: rotate(-$bar-rotate-onactive);
+        }
+    }
+}
+
+
+.humb-bars {
+    position: relative;
+    padding: $humbars-container-padding;
+    z-index: 5;
+    background: $humbars-btn-bg;
+    border-radius: 0;
+    outline: none;
+
+    &:focus {
+        outline: none !important;
+    }
+
+    .humbar-container {
+        width: $humbars-container-width;
+        height: $humbars-container-height;
+        position: relative;
+
+        .bar {
+            width: 100%;
+            height: $bar-height;
+            background: $bar-bg;
+            position: absolute;
+            left: 0px;
+            border-radius: $bar-height;
+            transition: 0.1s linear;
+
+            &:first-child {
+                top: $bar-offset;
+                transform: rotate(0);
+            }
+        
+            &:nth-child(2) {
+                @include center-bar-in-container();
+                opacity: 1;
+            }
+        
+            &:nth-child(3) {
+                top: $humbars-container-height - $bar-height - $bar-offset;
+                transform: rotate(0);
+            }
+        }
+    }
+
+    &.active {
+        @include humbar-active();
+    }
+}

@@ -1,0 +1,108 @@
+$carousel-thumbnail-fr-width: 70%;
+$carousel-detail-fr-width: 100% - $carousel-thumbnail-fr-width;
+$breakpoint-lg: 992px;
+$carousel-page-btn-size: 38px;
+$carousel-page-btn-color: #aaa;
+$header-background-color: #2f2f2f;
+$text-color: rgb(173, 175, 174);
+
+$carousel-cap-font-size-lg: 0.7rem;
+$carousel-cap-font-other: 0.8rem;
+
+@mixin Responsive($canvas) {
+    @media screen and (max-width: $canvas) {@content;}
+}
+
+#carousel-wrapper {
+    display: grid;
+    grid-template-columns: $carousel-thumbnail-fr-width $carousel-detail-fr-width;
+    grid-template-rows: 1fr;
+    
+    .carousel-component[data-component=captions] {
+        height: 100%;
+        font-size: $carousel-cap-font-size-lg;
+        cursor: default;
+        h4 {
+            font-size: $carousel-cap-font-size-lg + 0.4rem;
+        }
+        a[role=button] {
+            font-size: $carousel-cap-font-size-lg + 0.2rem;
+            color: $text-color;
+        }
+    }
+
+    .carousel-detail {
+        background: $header-background-color;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 25px;
+        padding-left: 40px;
+        ul {
+            list-style: none;
+            display: flex;
+
+            li {
+                margin-right: 20px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                input {
+                    display: none;
+                    &:checked {
+                        & ~ label {
+
+                            .carousel-icon {
+                                width: 20px;
+                                height: 20px;
+                            }
+                        }
+                    }
+                }
+
+                label {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    width: $carousel-page-btn-size;
+                    height: $carousel-page-btn-size;
+                    cursor: pointer;
+                    border-radius: 50%;
+
+                    .carousel-icon {
+                        width: 0;
+                        height: 0;
+                        border-radius: 50%;
+                        border: solid 3px $carousel-page-btn-color;
+                        transition: 0.2s linear;
+                    }
+                }
+            }
+        }
+    }
+
+    @include Responsive($breakpoint-lg) {
+        & {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr auto;
+
+            .carousel-component[data-component=captions] {
+                font-size: $carousel-cap-font-other;
+                h4 {
+                    font-size: $carousel-cap-font-other + 0.2rem;
+                }
+
+                a[role=button] {
+                    float: right;
+                }
+            }
+
+            .carousel-detail {
+                padding: 20px;
+            }
+        }
+    }
+}
