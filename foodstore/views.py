@@ -43,6 +43,12 @@ class ProductList(ListView):
         context = super().get_context_data(**kwargs)
         context['product_count'] = self.product_count
         context['heading_menu'] = 'product'
+        try:
+            context['query_cat'] = self.kwargs['category']
+            context['cat_name'] = models.Category.objects.get(
+                slug=self.kwargs['category'])
+        except KeyError:
+            pass
         ordering = self.request.GET.get('sort_by', None)
         if ordering:
             context['sort_by'] = ordering

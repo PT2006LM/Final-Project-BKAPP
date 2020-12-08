@@ -36,7 +36,8 @@
                         <h4>Department</h4>
                         <ul>
                             {% for category in category_list %}
-                                <li><a href="{% url 'products-by-category' category.slug %}">{{ category }}</a></li>
+                                <li><a href="{% url 'products-by-category' category.slug %}"
+                                    >{% if query_cat == category.slug %}<b>{{ category }}</b>{% else %}{{ category }}{% endif %}</a></li>
                             {% endfor %}
                         </ul>
                     </div>

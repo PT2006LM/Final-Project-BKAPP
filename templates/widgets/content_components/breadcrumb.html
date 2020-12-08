@@ -9,7 +9,13 @@
                     <h2>{{ page_title }}</h2>
                     <div class="breadcrumb__option">
                         <a href="{% url 'home' %}">Home</a>
-                        <span>{{ page_title }}</span>
+                        {% if query_cat %}
+                            <a href="{% url 'products' %}"
+                            >Shop</a>
+                            <span>{{ cat_name }}</span>
+                        {% else %}
+                            <span>{{ page_title }}</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
