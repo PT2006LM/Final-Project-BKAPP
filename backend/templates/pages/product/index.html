@@ -30,7 +30,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <a href="{% url 'admin.product.create'%}" class="btn btn-primary">Create</a>
+          <a href="{% url 'backend:product.create'%}" class="btn btn-primary">Create</a>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -57,8 +57,8 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{% url 'admin.product.edit' item.id %}" class="btn btn-success">Edit</a>
-                    <a href="{% url 'admin.product.delete' item.id %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'backend:product.edit' item.id %}" class="btn btn-success">Edit</a>
+                    <a href="{% url 'backend:product.delete' item.id %}" class="btn btn-danger">Delete</a>
                   </div>
                 </td>
                 {% endfor %}

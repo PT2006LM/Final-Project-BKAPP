@@ -29,13 +29,15 @@
         </div> -->
         <div class="header__top__right__auth">
             <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-user"></i>
-                </button>
+                <button class="btn btn-light dropdown-toggle" 
+                    type="button" id="dropdownMenuButton" 
+                    data-toggle="dropdown" aria-haspopup="true" 
+                    aria-expanded="false"
+                    >{% if request.user.is_authenticated %}{{ request.user.username }}{% else %}Guest{% endif %} <i class="fa fa-user"></i></button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a href="{% url 'admin.login' %}"
+                    <a href="{% url 'backend:login' %}"
                         class="dropdown-item">Login</a>
-                    <a href="{% url 'admin.user.register' %}"
+                    <a href="{% url 'backend:register' %}"
                         class="dropdown-item">Register</a>
                 </div>
             </div>
@@ -95,13 +97,15 @@
                         </div> -->
                         <div class="header__top__right__auth">
                             <div class="dropdown">
-                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-user"></i>
-                                </button>
+                                <button class="btn btn-light dropdown-toggle" 
+                                    type="button" id="dropdownMenuButton" 
+                                    data-toggle="dropdown" aria-haspopup="true" 
+                                    aria-expanded="false"
+                                    >{% if request.user.is_authenticated %}{{ request.user.username }}{% else %}Guest{% endif %} <i class="fa fa-user"></i></button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <a href="{% url 'admin.login' %}"
+                                    <a href="{% url 'backend:login' %}"
                                         class="dropdown-item">Login</a>
-                                    <a href="{% url 'admin.user.register' %}"
+                                    <a href="{% url 'backend:register' %}"
                                         class="dropdown-item">Register</a>
                                 </div>
                             </div>

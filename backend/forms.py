@@ -1,6 +1,9 @@
 from django import forms
 from foodstore import models
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import password_validation
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(label='Tên danh mục', widget=forms.TextInput(attrs={'class': "form-control"}))
@@ -24,11 +27,31 @@ class ProductForm(forms.ModelForm):
 
 # User
 class UserRegisterForm(forms.ModelForm):
-    first_name = forms.CharField(label='First name', widget=forms.TextInput(attrs={'class': "form-control"}))
-    last_name = forms.CharField(label='Last name', widget=forms.TextInput(attrs={'class': "form-control"}))
-    username = forms.CharField(label='Tên đăng nhập', widget=forms.TextInput(attrs={'class': "form-control"}))
-    email = forms.EmailField(label= 'Địa chỉ email', widget=forms.TextInput(attrs={'class': "form-control"}))
-    password = forms.CharField(label= 'Mật khẩu', widget=forms.PasswordInput(attrs={'class': "form-control"}))
+    first_name = forms.CharField(label='',
+        widget=forms.TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'First Name'
+            }))
+    last_name = forms.CharField(label='',
+        widget=forms.TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Last name'
+            }))
+    username = forms.CharField(label='',
+        widget=forms.TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Tên đăng nhập'
+            }))
+    email = forms.EmailField(label='',
+        widget=forms.EmailInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Địa chỉ email'
+            }))
+    password = forms.CharField(label='',
+        widget=forms.PasswordInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Mật khẩu'
+            }))
     is_superuser = forms.BooleanField(label='Supper user', required=False)
     is_staff = forms.BooleanField(label='Tài khoản cấp nhân viên', required=False)
     is_active = forms.BooleanField(label='Hoạt động', required=False)
@@ -44,22 +67,48 @@ class UserRegisterForm(forms.ModelForm):
             raise forms.ValidationError('Email này đã được sử dụng')
         return email
 
-class UserRegisterFormHome(forms.ModelForm):
-    first_name = forms.CharField(label='First name', widget=forms.TextInput(attrs={'class': "form-control"}))
-    last_name = forms.CharField(label='Last name', widget=forms.TextInput(attrs={'class': "form-control"}))
-    username = forms.CharField(label='Tên đăng nhập', widget=forms.TextInput(attrs={'class': "form-control"}))
-    email = forms.EmailField(label='Địa chỉ email', widget=forms.TextInput(attrs={'class': "form-control"}))
-    password = forms.CharField(label='Mật khẩu', widget=forms.PasswordInput(attrs={'class': "form-control"}))
+class UserRegisterFormHome(UserCreationForm):
+    first_name = forms.CharField(label='',
+        widget=forms.TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'First Name'
+            }))
+    last_name = forms.CharField(label='',
+        widget=forms.TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Last name'
+            }))
+    username = forms.CharField(label='',
+        widget=forms.TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Tên đăng nhập'
+            }))
+    email = forms.EmailField(label='',
+        widget=forms.EmailInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Địa chỉ email'
+            }))
+    error_messages = {
+        'password_mismatch': _('The two password fields didn’t match.'),
+    }
+    password1 = forms.CharField(
+        label='',
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Mật khẩu'
+            }),
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    password2 = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Nhập lại mật khẩu'
+            }),
+        strip=False,
+        help_text=_("Enter the same password as before, for verification."),
+    )
 
-    class Meta:
-        model = User
-        fields = [
-            'first_name', 'last_name', 'username', 'email', 'password'
-        ]
-
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        email_qs = User.objects.filter(email=email)
-        if email_qs.exists():
-            raise forms.ValidationError('Email này đã được sử dụng')
-        return email
+    class Meta(UserCreationForm.Meta):
+        fields = ("username", "first_name", "last_name", "email")
