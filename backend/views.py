@@ -19,8 +19,13 @@ class adminController:
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
+                    # Check user permission to redirect home page or admin
                     login(request, user)
-                    return redirect('backend:index')
+                    if user.is_staff:
+                        redirect_page = 'backend:index'
+                    else:
+                        redirect_page = 'home'
+                    return redirect(reverse(redirect_page))
         return render(request,'pages/login.html')
 
 def register(request):
@@ -59,9 +64,6 @@ class userController:
             'form': form,
             'title': 'Admin Register'
             })
-    def logout(request):
-        logout(request)
-        return redirect(reverse('home'))
 
 
 class categoryControler:
