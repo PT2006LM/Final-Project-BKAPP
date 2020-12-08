@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2020 at 01:44 PM
+-- Generation Time: Dec 08, 2020 at 06:11 PM
 -- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.33
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -117,7 +117,19 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (53, 'Can add reply', 14, 'add_reply'),
 (54, 'Can change reply', 14, 'change_reply'),
 (55, 'Can delete reply', 14, 'delete_reply'),
-(56, 'Can view reply', 14, 'view_reply');
+(56, 'Can view reply', 14, 'view_reply'),
+(57, 'Can add order', 15, 'add_order'),
+(58, 'Can change order', 15, 'change_order'),
+(59, 'Can delete order', 15, 'delete_order'),
+(60, 'Can view order', 15, 'view_order'),
+(61, 'Can add cart item', 16, 'add_cartitem'),
+(62, 'Can change cart item', 16, 'change_cartitem'),
+(63, 'Can delete cart item', 16, 'delete_cartitem'),
+(64, 'Can view cart item', 16, 'view_cartitem'),
+(65, 'Can add cart order', 17, 'add_cartorder'),
+(66, 'Can change cart order', 17, 'change_cartorder'),
+(67, 'Can delete cart order', 17, 'delete_cartorder'),
+(68, 'Can view cart order', 17, 'view_cartorder');
 
 -- --------------------------------------------------------
 
@@ -144,7 +156,9 @@ CREATE TABLE `auth_user` (
 --
 
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-(1, 'pbkdf2_sha256$216000$mhaj01ZU99Kt$1r6NVMN7srIKlAWo/J0xboCgdImJ0y2jFy6P8HaRtDM=', '2020-12-07 12:12:14.725111', 1, 'admin', '', '', 'foodstore@gmail.com', 1, 1, '2020-11-13 09:57:13.657689');
+(1, 'pbkdf2_sha256$216000$mhaj01ZU99Kt$1r6NVMN7srIKlAWo/J0xboCgdImJ0y2jFy6P8HaRtDM=', '2020-12-07 12:12:14.725111', 1, 'admin', '', '', 'foodstore@gmail.com', 1, 1, '2020-11-13 09:57:13.657689'),
+(2, 'pbkdf2_sha256$216000$OGKbzNbRvLI0$fv/sgCbdmcpx8a/kXS6Lti/mW2P1csrf1zaXRSs//1U=', '2020-12-08 17:05:47.477717', 1, 'nhminh', '', '', 'nhminh0701@gmail.com', 1, 1, '2020-12-07 13:43:13.515535'),
+(6, 'pbkdf2_sha256$216000$7orKSGYqDJJj$0QC6ecx6IxrcaFLCY57hh4BT0Nzif1miWJFx0ssadwU=', '2020-12-08 17:03:31.051607', 0, 'minhsieunhan', 'Minh', 'Nguyen', 'nhminh0701@gmail.com', 0, 1, '2020-12-08 16:50:47.667561');
 
 -- --------------------------------------------------------
 
@@ -216,6 +230,54 @@ CREATE TABLE `blog_reply` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cart_cartitem`
+--
+
+CREATE TABLE `cart_cartitem` (
+  `id` int(11) NOT NULL,
+  `quantity` int(10) UNSIGNED NOT NULL CHECK (`quantity` >= 0),
+  `price` double NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `cart_parent_id` int(11) NOT NULL,
+  `total_price` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart_cartorder`
+--
+
+CREATE TABLE `cart_cartorder` (
+  `id` int(11) NOT NULL,
+  `date_created` date NOT NULL,
+  `total_price` double NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart_order`
+--
+
+CREATE TABLE `cart_order` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(20) NOT NULL,
+  `last_name` varchar(20) NOT NULL,
+  `detail_address` longtext NOT NULL,
+  `districts` varchar(20) NOT NULL,
+  `city` varchar(20) NOT NULL,
+  `phone` varchar(11) NOT NULL,
+  `email` varchar(20) NOT NULL,
+  `addition_note` longtext NOT NULL,
+  `order_data_id` int(11) NOT NULL,
+  `paid` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `django_admin_log`
 --
 
@@ -270,7 +332,10 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 (33, '2020-12-07 12:39:03.816822', '28', 'Thịt bò', 1, '[{\"added\": {}}]', 9, 1),
 (34, '2020-12-07 12:39:49.713259', '29', 'Ức gà', 1, '[{\"added\": {}}]', 9, 1),
 (35, '2020-12-07 12:41:22.802309', '30', 'Cam', 1, '[{\"added\": {}}]', 9, 1),
-(36, '2020-12-07 12:41:53.192369', '31', 'Xoài', 1, '[{\"added\": {}}]', 9, 1);
+(36, '2020-12-07 12:41:53.192369', '31', 'Xoài', 1, '[{\"added\": {}}]', 9, 1),
+(37, '2020-12-08 16:45:03.570305', '3', 'minhsieunhan', 3, '', 4, 2),
+(38, '2020-12-08 16:45:57.033808', '4', 'minhsieunhan', 3, '', 4, 2),
+(39, '2020-12-08 16:47:51.392861', '5', 'minhsieunhan', 3, '', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -296,6 +361,9 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (12, 'blog', 'blog'),
 (13, 'blog', 'comment'),
 (14, 'blog', 'reply'),
+(16, 'cart', 'cartitem'),
+(17, 'cart', 'cartorder'),
+(15, 'cart', 'order'),
 (5, 'contenttypes', 'contenttype'),
 (7, 'foodstore', 'cart'),
 (11, 'foodstore', 'cartitem'),
@@ -347,7 +415,36 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (23, 'foodstore', '0006_auto_20201113_0258', '2020-11-13 09:56:34.944940'),
 (24, 'sessions', '0001_initial', '2020-11-13 09:56:34.985970'),
 (25, 'blog', '0001_initial', '2020-11-16 12:23:54.859924'),
-(26, 'foodstore', '0007_auto_20201113_1006', '2020-11-16 12:23:55.523704');
+(26, 'foodstore', '0007_auto_20201113_1006', '2020-11-16 12:23:55.523704'),
+(27, 'foodstore', '0008_auto_20201119_1015', '2020-12-08 16:43:47.987448'),
+(28, 'cart', '0001_initial', '2020-12-08 16:43:49.024042'),
+(29, 'cart', '0002_order', '2020-12-08 16:43:54.064962'),
+(30, 'cart', '0003_auto_20201127_1122', '2020-12-08 16:43:58.801601'),
+(31, 'cart', '0004_auto_20201127_1122', '2020-12-08 16:44:02.819234'),
+(32, 'cart', '0005_delete_cartitem', '2020-12-08 16:44:06.302263'),
+(33, 'cart', '0006_cartitem', '2020-12-08 16:44:06.667104'),
+(34, 'cart', '0007_delete_cartitem', '2020-12-08 16:44:10.600603'),
+(35, 'cart', '0008_cartitem', '2020-12-08 16:44:11.442063'),
+(36, 'cart', '0009_remove_cartitem_products', '2020-12-08 16:44:16.691850'),
+(37, 'cart', '0010_cartitem_products', '2020-12-08 16:44:17.057708'),
+(38, 'cart', '0011_remove_cartitem_products', '2020-12-08 16:44:18.219707'),
+(39, 'cart', '0012_cartitem_products', '2020-12-08 16:44:18.409327'),
+(40, 'cart', '0013_delete_cartitem', '2020-12-08 16:44:19.378781'),
+(41, 'cart', '0014_cartitem', '2020-12-08 16:44:19.834218'),
+(42, 'cart', '0015_auto_20201127_1134', '2020-12-08 16:44:22.816674'),
+(43, 'cart', '0016_auto_20201127_1134', '2020-12-08 16:44:23.378086'),
+(44, 'cart', '0017_auto_20201127_1137', '2020-12-08 16:44:25.485041'),
+(45, 'cart', '0018_auto_20201127_1137', '2020-12-08 16:44:26.514020'),
+(46, 'cart', '0019_auto_20201127_1138', '2020-12-08 16:44:28.958204'),
+(47, 'cart', '0020_auto_20201127_1141', '2020-12-08 16:44:31.961272'),
+(48, 'cart', '0021_auto_20201127_1142', '2020-12-08 16:44:32.320503'),
+(49, 'cart', '0022_auto_20201127_1143', '2020-12-08 16:44:33.127514'),
+(50, 'cart', '0023_auto_20201127_1143', '2020-12-08 16:44:33.467771'),
+(51, 'cart', '0024_auto_20201127_1143', '2020-12-08 16:44:34.018823'),
+(52, 'cart', '0025_remove_cartorder_coupon', '2020-12-08 16:44:34.144749'),
+(53, 'cart', '0026_auto_20201130_0956', '2020-12-08 16:44:34.573225'),
+(54, 'cart', '0027_order_paid', '2020-12-08 16:44:34.865053'),
+(55, 'cart', '0028_auto_20201201_1019', '2020-12-08 16:44:34.993496');
 
 -- --------------------------------------------------------
 
@@ -367,35 +464,9 @@ CREATE TABLE `django_session` (
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('3dqn7gl8nxdakf2yaurj5nz2d2sledtp', '.eJxVjMsOwiAURP-FtSGXhzxcuu83kMsFpWogKe3K-O_SpAtdTTJzzrxZwG0tYet5CXNiFybY6beLSM9c9yE9sN4bp1bXZY58R_ixdj61lF_Xg_07KNjLsFF5lf3NghlhhEZUKMFHawyeLTohNYD0AImEJkGatHMCnE_eDSmyzxe6XDZ8:1kdVqf:gAvHJqq0y21A7f0PNcyGFoNNW37cXrRd8O81tp1l9gM', '2020-11-27 09:58:29.151435'),
-('n598v8gshwayz2nsdfyuc1k8vno3rqh0', '.eJxVjMsOwiAURP-FtSGXhzxcuu83kMsFpWogKe3K-O_SpAtdTTJzzrxZwG0tYet5CXNiFybY6beLSM9c9yE9sN4bp1bXZY58R_ixdj61lF_Xg_07KNjLsFF5lf3NghlhhEZUKMFHawyeLTohNYD0AImEJkGatHMCnE_eDSmyzxe6XDZ8:1kmFNG:NGfYDdfVDtzHWp3hDI8EMF2qighsYWkHYnU3Af5Rh7E', '2020-12-21 12:12:14.727105');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `foodstore_cart`
---
-
-CREATE TABLE `foodstore_cart` (
-  `id` int(11) NOT NULL,
-  `date_created` date NOT NULL,
-  `coupon` double NOT NULL,
-  `total_price` double NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `foodstore_cartitem`
---
-
-CREATE TABLE `foodstore_cartitem` (
-  `id` int(11) NOT NULL,
-  `quantity` int(10) UNSIGNED NOT NULL CHECK (`quantity` >= 0),
-  `price` double NOT NULL,
-  `cart_id` int(11) NOT NULL,
-  `products_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+('n598v8gshwayz2nsdfyuc1k8vno3rqh0', '.eJxVjMsOwiAURP-FtSGXhzxcuu83kMsFpWogKe3K-O_SpAtdTTJzzrxZwG0tYet5CXNiFybY6beLSM9c9yE9sN4bp1bXZY58R_ixdj61lF_Xg_07KNjLsFF5lf3NghlhhEZUKMFHawyeLTohNYD0AImEJkGatHMCnE_eDSmyzxe6XDZ8:1kmFNG:NGfYDdfVDtzHWp3hDI8EMF2qighsYWkHYnU3Af5Rh7E', '2020-12-21 12:12:14.727105'),
+('sn167cf717lwyrqeosro4sfsjth11vqv', '.eJxVjzkOgzAQRe_iGiGz2Qxl-pwgitDM2GYJwhGYNIi7x0gUSfvfX_R30eIW-nZb7dIORjQiF8mvRsgvO5_AjDh3PmU_h2Wg9LSkF13Tuzd2ul3ev4Ie1z6mpTVaMyiVOQlauqJE0nkpC4aa0AGSIwWuZixyBxpUXYPSUHJFGTFVsdThxy9DsO178WbjsIpmF5OduxAHZCI8jZZDfBHB43kcX09KSXc:1kmgUv:EmOnKjH3cQquBNXEefKq9q7LPgFDn2yPG_QFgiO5UU8', '2020-12-22 17:09:57.305665'),
+('ys89flri1o376hptgsiawu1pz7ur732o', 'e30:1kmgN2:6aqkoh2ylMVuSsaQlnvB4xI2nnF2SeukauqgpFtmJh0', '2020-12-22 17:01:48.046405');
 
 -- --------------------------------------------------------
 
@@ -567,6 +638,28 @@ ALTER TABLE `blog_reply`
   ADD KEY `blog_reply_comment_id_be7970f5_fk_blog_comment_id` (`comment_id`);
 
 --
+-- Indexes for table `cart_cartitem`
+--
+ALTER TABLE `cart_cartitem`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cart_cartitem_products_id_166dedb2` (`product_id`),
+  ADD KEY `cart_cartitem_cart_id_370ad265` (`cart_parent_id`);
+
+--
+-- Indexes for table `cart_cartorder`
+--
+ALTER TABLE `cart_cartorder`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cart_cartorder_user_id_18c9a8de_fk_auth_user_id` (`user_id`);
+
+--
+-- Indexes for table `cart_order`
+--
+ALTER TABLE `cart_order`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `order_data_id` (`order_data_id`);
+
+--
 -- Indexes for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
@@ -593,21 +686,6 @@ ALTER TABLE `django_migrations`
 ALTER TABLE `django_session`
   ADD PRIMARY KEY (`session_key`),
   ADD KEY `django_session_expire_date_a5c62663` (`expire_date`);
-
---
--- Indexes for table `foodstore_cart`
---
-ALTER TABLE `foodstore_cart`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `foodstore_cart_user_id_919fe6a4_fk_auth_user_id` (`user_id`);
-
---
--- Indexes for table `foodstore_cartitem`
---
-ALTER TABLE `foodstore_cartitem`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `foodstore_cartitem_cart_id_c5ee8d68_fk_foodstore_cart_id` (`cart_id`),
-  ADD KEY `foodstore_cartitem_products_id_60abd493_fk_foodstore_product_id` (`products_id`);
 
 --
 -- Indexes for table `foodstore_category`
@@ -651,13 +729,13 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT for table `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `auth_user`
 --
 ALTER TABLE `auth_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `auth_user_groups`
@@ -690,34 +768,40 @@ ALTER TABLE `blog_reply`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `cart_cartitem`
+--
+ALTER TABLE `cart_cartitem`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cart_cartorder`
+--
+ALTER TABLE `cart_cartorder`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cart_order`
+--
+ALTER TABLE `cart_order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
-
---
--- AUTO_INCREMENT for table `foodstore_cart`
---
-ALTER TABLE `foodstore_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `foodstore_cartitem`
---
-ALTER TABLE `foodstore_cartitem`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `foodstore_category`
@@ -789,24 +873,23 @@ ALTER TABLE `blog_reply`
   ADD CONSTRAINT `blog_reply_comment_id_be7970f5_fk_blog_comment_id` FOREIGN KEY (`comment_id`) REFERENCES `blog_comment` (`id`);
 
 --
+-- Constraints for table `cart_cartorder`
+--
+ALTER TABLE `cart_cartorder`
+  ADD CONSTRAINT `cart_cartorder_user_id_18c9a8de_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+
+--
+-- Constraints for table `cart_order`
+--
+ALTER TABLE `cart_order`
+  ADD CONSTRAINT `cart_order_order_data_id_c89bfc57_fk_cart_cartorder_id` FOREIGN KEY (`order_data_id`) REFERENCES `cart_cartorder` (`id`);
+
+--
 -- Constraints for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
   ADD CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   ADD CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
-
---
--- Constraints for table `foodstore_cart`
---
-ALTER TABLE `foodstore_cart`
-  ADD CONSTRAINT `foodstore_cart_user_id_919fe6a4_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
-
---
--- Constraints for table `foodstore_cartitem`
---
-ALTER TABLE `foodstore_cartitem`
-  ADD CONSTRAINT `foodstore_cartitem_cart_id_c5ee8d68_fk_foodstore_cart_id` FOREIGN KEY (`cart_id`) REFERENCES `foodstore_cart` (`id`),
-  ADD CONSTRAINT `foodstore_cartitem_products_id_60abd493_fk_foodstore_product_id` FOREIGN KEY (`products_id`) REFERENCES `foodstore_product` (`id`);
 
 --
 -- Constraints for table `foodstore_product`
