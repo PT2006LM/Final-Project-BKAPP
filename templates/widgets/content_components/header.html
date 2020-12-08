@@ -164,7 +164,7 @@
                     </div>
                     <ul>
                         {% for category in category_list %}
-                            <li><a href="#">{{ category }}</a></li>
+                            <li>{% if cat_name == category %}<b>{{ category }}</b>{% else %}<a href="{{ category.get_absolute_url }}">{{ category }}</a>{% endif %}</li>
                         {% endfor %}
                     </ul>
                 </div>
