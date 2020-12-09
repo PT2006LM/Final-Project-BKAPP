@@ -53,7 +53,7 @@
                     </div> -->
                     <div class="product__details__price">{{ product.price|floatformat }} VND / {{ product.unit }}</div>
                     <p>{{ product.description|linebreaks }}</p>
-                    <form action="" method="POST">
+                    <form action="{% url 'product-add-to-cart' product.category.slug product.pk %}" method="POST">
                         {% csrf_token %}
                         <div class="product__details__quantity">
                             <div class="quantity">
@@ -62,10 +62,11 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="product_id" value="{{ product.pk }}">
                         <input type="submit" value="ADD TO CARD" class="primary-btn">
                     </form>
-                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                    <a href="{% url 'product-set-favorite' product.category.slug product.pk %}?next={{ request.path_info }}" 
+                        class="heart-icon">
+                        <span class="icon_heart_alt"></span></a>
                     <ul>
                         <li><b>Availability</b> <span>{{ product.get_status_text }}</span></li>
                         <li><b>Shipping</b> <span>{{ product.ship }} <samp>Free pickup today</samp></span></li>
@@ -87,10 +88,10 @@
                             <a class="nav-link active" data-toggle="tab" href="#tabs-2" role="tab"
                                 aria-selected="true">Information</a>
                         </li>
-                        <!-- <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                                aria-selected="false">Reviews <span>({% if product.review %}{{ product.reviews.count }}{% else %}0{% endif %})</span></a>
-                        </li> -->
+                                aria-selected="false">Reviews <span>({{ product.review_set.count }})</span></a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tabs-2" role="tabpanel">
@@ -114,16 +115,26 @@
                                     nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
                             </div>
                         </div>
-                        <!-- <div class="tab-pane" id="tabs-3" role="tabpanel">
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
                             <div class="product__details__tab__desc">
                                 <h6>Reviews</h6>
+                                {% if request.user.is_authenticated and not current_user_reviewed_product %}
+                                    <form action="{% url 'review-create' product.category.slug product.pk %}" method="post">
+                                        {% csrf_token %}
+                                        {{ review_form }}
+                                        <input type="submit" value="Submit">
+                                    </form>
+                                {% endif %}
                                 
-                                {% if product.reviews.count >= 0 %}
+                                {% if product.review_set.count >= 0 %}
+                                    {% for review in product.review_set.all|dictsortreversed:'id' %}
+                                        {{ review.comment }}
+                                    {% endfor %}
                                 {% else %}
                                     <h4 class="text-center">There aren't any review now.</h4>
                                 {% endif %}
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>

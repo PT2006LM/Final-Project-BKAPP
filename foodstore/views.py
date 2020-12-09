@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 from django.db.models import QuerySet
 
-from foodstore import models
+from foodstore import models, forms
 from cart.cart import get_cart_from_session
 from cart.forms import CartEditForm, AddItemToCartForm
 from django.db import connection, reset_queries
@@ -101,28 +101,67 @@ def set_favorite_product(request, category, product_id):
     return HttpResponseRedirect(next_url)
 
 
+def product_add_cart(request, category, product_id):
+    form = AddItemToCartForm(request.POST)
 
-def product_detail(request, category, pk):
-    product = models.Product.objects.get(pk=pk)
-    template_name = 'foodstore/shop-details.html'
-    if request.method == 'POST':
+    if form.is_valid():
+        cleaned_data = form.cleaned_data
+        cart = get_cart_from_session(request)
 
-        form = AddItemToCartForm(request.POST)
-        if form.is_valid():
-            cart = get_cart_from_session(request)
-
-            # Add new items
-            cart.add_item_to_cart(item_id=form.data['product_id'],
-                        amount=int(form.data['quantity']))
+        # Add new items
+        cart.add_item_to_cart(item_id=product_id,
+            amount=int(cleaned_data['quantity']))
             
-            # Save cart back to session
-            request.session['cart'] = cart.get_serialized_data()
+        # Save cart back to session
+        request.session['cart'] = cart.get_serialized_data()
+        return HttpResponseRedirect(reverse('products'))
+    else:
+        print("Invalid")
+        print(form.errors)
+    
 
-            return HttpResponseRedirect(reverse('products'))
+        
 
-    elif request.method == 'GET':
-        form = AddItemToCartForm()
-        return render(request, template_name, {
-            'product': product,
-            'form': form
-        })
+
+def product_detail(request, category, product_id):
+    product = models.Product.objects.get(pk=product_id)
+    template_name = 'foodstore/shop-details.html'
+    
+    form = AddItemToCartForm()
+    review_form = forms.ReviewForm()
+
+    # Each user can only review each product one time
+    current_user_reviewed_product = len(list(
+        filter(lambda review : review.user == request.user,
+        product.review_set.all())
+    )) > 0
+    return render(request, template_name, {
+        'product': product,
+        'form': form,
+        'review_form': review_form,
+        'current_user_reviewed_product': current_user_reviewed_product
+    })
+
+
+def review_create(request, category, product_id):
+    print(request.method)
+    if request.method == 'POST':
+        review_form = forms.ReviewForm(request.POST)
+
+        if review_form.is_valid():
+            cleaned_data = review_form.cleaned_data
+            models.Review.objects.create(
+                product=models.Product.objects.get(pk=product_id),
+                user=request.user,
+                comment=cleaned_data['comment'],
+                stars=cleaned_data['rate']
+            )
+
+        else:
+            print("Invalid")
+
+        return HttpResponseRedirect(reverse('product-detail',
+                kwargs={
+                    'category': category,
+                    'product_id': product_id
+                }))
