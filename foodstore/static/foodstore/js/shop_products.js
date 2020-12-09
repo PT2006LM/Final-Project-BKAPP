@@ -27,7 +27,6 @@ $('select[name=sort_by]').change(function () {
 })
 
 function addPaginatorsInRange(start, end) {
-    let firstPageUrl = "{% add_query_params request page=1 %}";
     let startPaginatorString = start === 0 && pageNumber === start + 1 ?
         `<a href="#" class="disabled marker">First</a>` :
         `<a href="${firstPageUrl}" class="marker">First</a>`;

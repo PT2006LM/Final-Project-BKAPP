@@ -8,8 +8,19 @@
                 <div class="breadcrumb__text">
                     <h2>{{ page_title }}</h2>
                     <div class="breadcrumb__option">
+<<<<<<< HEAD
                         <a href="{% url 'home' %}">Trang chính</a>
                         <span>{{ page_title }}</span>
+=======
+                        <a href="{% url 'home' %}">Home</a>
+                        {% if query_cat %}
+                            <a href="{% url 'products' %}"
+                            >Shop</a>
+                            <span>{{ cat_name }}</span>
+                        {% else %}
+                            <span>{{ page_title }}</span>
+                        {% endif %}
+>>>>>>> b32d67654d379770644d0440f341bfaa48981262
                     </div>
                 </div>
             </div>

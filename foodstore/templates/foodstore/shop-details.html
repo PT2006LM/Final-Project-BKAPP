@@ -18,7 +18,8 @@
                     <h2>{{ product.name }}</h2>
                     <div class="breadcrumb__option">
                         <a href="{% url 'home' %}">Home</a>
-                        <a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a>
+                        <a href="{{ product.category.get_absolute_url }}"
+                        >{{ product.category.name }}</a>
                         <span>{{ product.name }}</span>
                     </div>
                 </div>
@@ -50,7 +51,7 @@
                         <i class="fa fa-star-half-o"></i>
                         <span>({% if product.review %}{{ product.reviews.count }}{% else %}0{% endif %} review(s))</span>
                     </div> -->
-                    <div class="product__details__price">${{ product.price }}</div>
+                    <div class="product__details__price">{{ product.price|floatformat }} VND / {{ product.unit }}</div>
                     <p>{{ product.description|linebreaks }}</p>
                     <form action="" method="POST">
                         {% csrf_token %}
@@ -68,7 +69,6 @@
                     <ul>
                         <li><b>Availability</b> <span>{{ product.get_status_text }}</span></li>
                         <li><b>Shipping</b> <span>{{ product.ship }} <samp>Free pickup today</samp></span></li>
-                        <li><b>Weight</b> <span>{{ product.get_amount_str }}</span></li>
                         <!-- <li><b>Share on</b>
                             <div class="share">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
