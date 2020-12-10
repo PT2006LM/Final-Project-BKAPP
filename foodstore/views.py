@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 from django.db.models import QuerySet
+from django.core.paginator import Paginator
 
 from foodstore import models, forms
 from cart.cart import get_cart_from_session
@@ -126,36 +127,54 @@ def product_add_cart(request, category, product_id):
 def product_detail(request, category, product_id):
     product = models.Product.objects.get(pk=product_id)
     template_name = 'foodstore/shop-details.html'
-    
+    # Rendering form
     form = AddItemToCartForm()
     review_form = forms.ReviewForm()
+
+    # Rendering reviews for this product by page
+    reviews = product.review_set.all()
+    review_page_number = request.GET.get('page', 1)
+    review_per_page = 1
+    page_reviews_obj = Paginator(
+        object_list=reviews, per_page=review_per_page)
 
     # Each user can only review each product one time
     current_user_reviewed_product = len(list(
         filter(lambda review : review.user == request.user,
-        product.review_set.all())
+        reviews)
     )) > 0
     return render(request, template_name, {
         'product': product,
         'form': form,
         'review_form': review_form,
-        'current_user_reviewed_product': current_user_reviewed_product
+        'current_user_reviewed_product': current_user_reviewed_product,
+        'reviews': page_reviews_obj.page(
+            number=review_page_number).object_list,
+        'review_page_number': review_page_number,
+        'page_reviews_obj': page_reviews_obj
     })
 
 
 def review_create(request, category, product_id):
-    print(request.method)
     if request.method == 'POST':
         review_form = forms.ReviewForm(request.POST)
 
         if review_form.is_valid():
             cleaned_data = review_form.cleaned_data
+            product = models.Product.objects.get(pk=product_id)
+            # Create new review
             models.Review.objects.create(
-                product=models.Product.objects.get(pk=product_id),
+                product=product,
                 user=request.user,
                 comment=cleaned_data['comment'],
                 stars=cleaned_data['rate']
             )
+            # Update product's rating
+            total_review_amount = product.review_set.count()
+            product_new_rating = (product.rating * (total_review_amount - 1) + float(cleaned_data['rate'])) / total_review_amount
+            product.rating = product_new_rating
+            product.save()
+            
 
         else:
             print("Invalid")
@@ -165,3 +184,56 @@ def review_create(request, category, product_id):
                     'category': category,
                     'product_id': product_id
                 }))
+
+
+def review_delete(request, category, product_id, review_id):
+    review = models.Review.objects.get(pk=review_id)
+    if request.user == review.user:
+        product = review.product
+        # Update product's rating
+        total_review_amount = product.review_set.count()
+        product_new_rating = (product.rating * total_review_amount - float(review.stars)) / (total_review_amount - 1)
+        product.rating = product_new_rating
+        product.save()
+        # Dispose of the review
+        review.delete()
+
+        return HttpResponseRedirect(reverse('product-detail',
+            kwargs={
+                'category': category,
+                'product_id': product_id
+            }))
+    else:
+        print("Cut")
+
+
+def review_update(request, category, product_id, review_id):
+    review = models.Review.objects.get(pk=review_id)
+    if request.user == review.user:
+        
+        review_form = forms.ReviewForm(request.POST)
+        if review_form.is_valid():
+            # Update review
+            cleaned_data = review_form.cleaned_data
+            review = models.Review.objects.get(pk=review_id)
+            review.comment = cleaned_data['comment']
+            review.stars = cleaned_data['rate']
+            review.save()
+
+            # Update product's rating
+            product = review.product
+            total_review_amount = product.review_set.count()
+            product_new_rating = (product.rating * total_review_amount + float(review.stars)) / total_review_amount
+            product.rating = product_new_rating
+            product.save()
+        else:
+            print("Loi r em ei")
+            print(review_form)
+
+        return HttpResponseRedirect(reverse('product-detail',
+            kwargs={
+                'category': category,
+                'product_id': product_id
+            }))
+    else:
+        print("Cut")

@@ -1,0 +1,9 @@
+.product__pagination a.disabled {
+    background: #7fad39;
+    color: #fff;
+    pointer-events: none;
+}
+
+.product__pagination a.marker {
+    width: 50px;
+}

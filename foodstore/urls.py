@@ -21,4 +21,10 @@ urlpatterns = [
     path('products/<slug:category>/<int:product_id>/review/create',
         views.review_create,
         name='review-create'),
+    path('products/<slug:category>/<int:product_id>/review/delete/<int:review_id>',
+        views.review_delete,
+        name='review-delete'),
+    path('products/<slug:category>/<int:product_id>/review/update/<int:review_id>',
+        views.review_update,
+        name='review-update')
 ]

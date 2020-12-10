@@ -7,17 +7,7 @@
 
 
 {% block style %}
-<style>
-    .product__pagination a.disabled {
-        background: #4cd137;
-        color: #fff;
-        pointer-events: none;
-    }
-
-    .product__pagination a.marker {
-        width: 50px;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'foodstore/css/page.css' %}">
 {% endblock %}
 
 
@@ -130,5 +120,5 @@
     let firstPageUrl = "{% add_query_params request page=1 %}";
 </script>
 
-<script src="{% static 'foodstore/js/shop_products.js' %}"></script>
+<script src="{% static 'foodstore/js/paginator_controller.js' %}"></script>
 {% endblock %}
