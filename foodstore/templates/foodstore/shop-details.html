@@ -1,6 +1,16 @@
 {% extends 'base_generics.html' %}
 
 {% load static %}
+{% load foodstore_tags %}
+
+
+{% block style %}
+<style>
+    .rate_radio label {
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
 
 {% block title %}Ogani Template{% endblock %}
 
@@ -85,16 +95,72 @@
                 <div class="product__details__tab">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#tabs-2" role="tab"
-                                aria-selected="true">Information</a>
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-3" role="tab"
+                                aria-selected="false">Reviews <span>({{ product.review_set.count }})</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                                aria-selected="false">Reviews <span>({{ product.review_set.count }})</span></a>
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                                aria-selected="true">Information</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tabs-2" role="tabpanel">
+                        <div class="tab-pane active" id="tabs-3" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                {% if request.user.is_authenticated %}
+                                    <form action="{% url 'review-create' product.category.slug product.pk %}" 
+                                        method="post"
+                                        id="review_form">
+                                        {% csrf_token %}
+                                        <label>Rating: </label>
+                                        {% for value, name in review_form.rate.field.choices %}
+                                            <div class="rate_radio d-inline p-1">
+                                                <label for="rate_{{ name }}">
+                                                    <span class="fa fa-star-o"></span>
+                                                </label>
+                                                <input 
+                                                    id="rate_{{ name }}"
+                                                    type="radio"
+                                                    name="rate",
+                                                    value="{{ value }}"
+                                                    class="d-none">
+                                            </div>
+                                        {% endfor %}
+                                        
+                                        <div class="my-1">
+                                            {{ review_form.comment.label_tag }}
+                                            {{ review_form.comment }}
+                                        </div>
+                                        <input type="submit" 
+                                            value="Submit"
+                                            class="btn btn-success my-3">
+                                    </form>
+                                {% endif %}
+                                
+                                {% if product.review_set.count >= 0 %}
+                                    <div class="comment_list mt-4">
+                                        {% for review in product.review_set.all|dictsortreversed:'id' %}
+                                            <article class="my-5 border-bottom">
+                                                <header>
+                                                    <h4><strong>{% if review.user.first_name %}{{ review.user.first_name  }} {{ review.user.last_name  }}{% else %}{{ review.user.username }}{% endif %}</strong></h4>
+                                                    <p><strong
+                                                        >
+                                                        {% for index in  5|number_to_range %}
+                                                        <span class="fa fa-star{% if index > review.stars %}-o{% endif %}"></span>
+                                                        {% endfor %}
+                                                    </strong> <small>{{ review.date_created }}</small></p>
+                                                </header>
+                                                <section>
+                                                    {{ review.comment|linebreaks  }}
+                                                </section>
+                                            </article>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <h4 class="text-center">There aren't any review now.</h4>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
                             <div class="product__details__tab__desc">
                                 <h6>Products Infomation</h6>
                                 <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
@@ -115,26 +181,6 @@
                                     nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tabs-3" role="tabpanel">
-                            <div class="product__details__tab__desc">
-                                <h6>Reviews</h6>
-                                {% if request.user.is_authenticated and not current_user_reviewed_product %}
-                                    <form action="{% url 'review-create' product.category.slug product.pk %}" method="post">
-                                        {% csrf_token %}
-                                        {{ review_form }}
-                                        <input type="submit" value="Submit">
-                                    </form>
-                                {% endif %}
-                                
-                                {% if product.review_set.count >= 0 %}
-                                    {% for review in product.review_set.all|dictsortreversed:'id' %}
-                                        {{ review.comment }}
-                                    {% endfor %}
-                                {% else %}
-                                    <h4 class="text-center">There aren't any review now.</h4>
-                                {% endif %}
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -142,4 +188,40 @@
     </div>
 </section>
 <!-- Product Details Section End -->
+{% endblock %}
+
+{% block script %}
+
+<script>
+    $('.rate_radio input').each(function(input_index, elem) {
+        $(this).change(function() {
+            onInputTriggered(input_index)
+        })
+    })
+
+    $('.rate_radio label').each(function(index) {
+        $(this).hover(function() {
+            onInputTriggered(index)
+        })
+    })
+
+    function onInputTriggered(input_index) {
+        $('.rate_radio label span').each(function(label_index, elem) {
+                if (label_index <= input_index) {
+                    // Fill star
+                    if ($(this).hasClass('fa-star-o')) {
+                        $(this).removeClass('fa-star-o');
+                        $(this).addClass('fa-star');
+                    }
+                } else {
+                    // Empty star
+                    if ($(this).hasClass('fa-star')) {
+                        $(this).removeClass('fa-star');
+                        $(this).addClass('fa-star-o');
+                    }
+                }
+            })
+    }
+</script>
+
 {% endblock %}

@@ -19,3 +19,8 @@ def add_query_params(request, **kwargs):
     for key, value in kwargs.items():
         updated[key] = value
     return request.build_absolute_uri('?'+updated.urlencode())
+
+
+@register.filter
+def number_to_range(number):
+    return list(range(1, number + 1))

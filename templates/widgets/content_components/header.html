@@ -108,10 +108,15 @@
                                     aria-expanded="false"
                                     >{% if request.user.is_authenticated %}{{ request.user.username }}{% else %}Guest{% endif %} <i class="fa fa-user"></i></button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    {% if request.user.is_authenticated %}
+                                    <a href="{% url 'backend:logout' %}"
+                                        class="dropdown-item">Đăng xuất</a>
+                                    {% else %}
                                     <a href="{% url 'backend:login' %}"
                                         class="dropdown-item">Đăng nhập</a>
                                     <a href="{% url 'backend:register' %}"
                                         class="dropdown-item">Đăng kí</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
