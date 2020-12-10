@@ -274,19 +274,18 @@
             if (thisRadioControllersQuery.children('input').length === 0) {
                 onInputTriggered(0, iconQuery);
             } else {
-                
-            }
-            let hasCheckedRadio = false;
-            thisRadioControllersQuery.children('input').each(function() {
-                if ($(this).prop('checked')) {
-                    let value = $(this).val();
-                    onInputTriggered(parseInt(value) - 1, iconQuery);
-                    hasCheckedRadio = true
-                }
-            })
+                let hasCheckedRadio = false;
+                thisRadioControllersQuery.children('input').each(function() {
+                    if ($(this).prop('checked')) {
+                        let value = $(this).val();
+                        onInputTriggered(parseInt(value) - 1, iconQuery);
+                        hasCheckedRadio = true
+                    }
+                })
 
-            if (!hasCheckedRadio) {
-                onInputTriggered(-1, iconQuery);
+                if (!hasCheckedRadio) {
+                    onInputTriggered(-1, iconQuery);
+                }
             }
         })
     })
