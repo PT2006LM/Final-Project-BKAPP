@@ -121,8 +121,6 @@ def product_add_cart(request, category, product_id):
         print(form.errors)
     
 
-        
-
 
 def product_detail(request, category, product_id):
     product = models.Product.objects.get(pk=product_id)
@@ -148,7 +146,7 @@ def product_detail(request, category, product_id):
     review_per_page = 1
     page_reviews_obj = Paginator(
         object_list=reviews, per_page=review_per_page)
-        
+
     return render(request, template_name, {
         'product': product,
         'form': form,

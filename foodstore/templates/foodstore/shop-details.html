@@ -62,7 +62,32 @@
         </div>
     </div>
 </section>
-<!-- Breadcrumb Section End -->
+<!-- Breadcrumb Section End -->  
+<!-- Modal -->
+<div class="modal fade" id="pageModal" tabindex="-1"     
+    aria-labelledby="pageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pageModalLabel">Confirm Dialog</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" 
+                class="btn btn-secondary rounded-0" data-dismiss="modal"
+                    >Cancel</button>
+                <button type="button" 
+                    class="confirm-btn btn btn-primary rounded-0"
+                    >Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->
 <!-- Product Details Section Begin -->
 <section class="product-details spad">
     <div class="container">
@@ -78,14 +103,6 @@
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__text">
                     <h3>{{ product.name }}</h3>
-                    <!-- <div class="product__details__rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <span>({% if product.review %}{{ product.reviews.count }}{% else %}0{% endif %} review(s))</span>
-                    </div> -->
                     <div class="product__details__price">{{ product.price|floatformat }} VND / {{ product.unit }}</div>
                     <p>{{ product.description|linebreaks }}</p>
                     <form action="{% url 'product-add-to-cart' product.category.slug product.pk %}" method="POST">
@@ -97,22 +114,14 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="submit" value="ADD TO CARD" class="primary-btn">
+                        <input type="submit" value="ADD TO CARD" class="primary-btn rounded-0">
                     </form>
                     <a href="{% url 'product-set-favorite' product.category.slug product.pk %}?next={{ request.path_info }}" 
-                        class="heart-icon">
-                        <span class="icon_heart_alt"></span></a>
+                        class="heart-icon" color="#e84393">
+                        <span class="fa fa-heart{% if product.pk not in request.session.favorite_products.object_ids %}-o{% endif %}"></span></a>
                     <ul>
                         <li><b>Availability</b> <span>{{ product.get_status_text }}</span></li>
                         <li><b>Shipping</b> <span>{{ product.ship }} <samp>Free pickup today</samp></span></li>
-                        <!-- <li><b>Share on</b>
-                            <div class="share">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -150,9 +159,10 @@
                                             </section>
                                             <div class="btns">
                                                 <label 
-                                                    class="btn btn-warning mb-0"
+                                                    class="btn btn-warning mb-0 rounded-0"
                                                     for="auth-review-controller">Edit</label>
-                                                <a href="{% url 'review-delete' product.category.slug product.pk auth_user_review.pk %}" class="btn btn-danger">Delete</a>
+                                                <button next_url="{% url 'review-delete' product.category.slug product.pk auth_user_review.pk %}" 
+                                                    class="btn btn-danger delete-btn rounded-0">Delete</button>
                                             </div>
                                         </article>
                                         <form action="{% url 'review-update' product.category.slug product.pk auth_user_review.pk %}" 
@@ -183,44 +193,44 @@
                                             </div>
                                             <input type="submit" 
                                                 value="Submit"
-                                                class="btn btn-success my-3">
+                                                class="btn btn-success my-3 rounded-0">
                                             <label 
-                                                for="auth-review-controller" class="btn btn-warning mb-0">Cancel</label>
+                                                for="auth-review-controller" class="btn btn-warning mb-0 rounded-0">Cancel</label>
+                                        </form>
+                                        {% else %}
+                                        <form action="{% url 'review-create' product.category.slug product.pk %}" 
+                                            method="post"
+                                            id="review_create_form">
+                                            {% csrf_token %}
+                                            <label>Rating: </label>
+                                            <strong>
+                                            {% for value, name in review_form.rate.field.choices %}
+                                                <div class="rate_radio d-inline">
+                                                    <label for="rate_{{ name }}" 
+                                                            class="d-inline-block">
+                                                        <span class="fa fa-star-o p-1"></span>
+                                                    </label>
+                                                    <input 
+                                                        id="rate_{{ name }}"
+                                                        type="radio"
+                                                        name="rate",
+                                                        value="{{ value }}"
+                                                        class="d-none">
+                                                </div>
+                                            {% endfor %}
+                                            </strong>
+                                                
+                                            <div class="my-1">
+                                                {{ review_form.comment.label_tag }}
+                                                {{ review_form.comment }}
+                                            </div>
+                                            <input type="submit" 
+                                                value="Submit"
+                                                class="btn btn-success my-3 rounded-0">
                                         </form>
                                         {% endif %}
                                     </div>
                                     <br>
-                                {% else %}
-                                    <form action="{% url 'review-create' product.category.slug product.pk %}" 
-                                            method="post"
-                                            id="review_create_form">
-                                            {% csrf_token %}
-                                        <label>Rating: </label>
-                                        <strong>
-                                        {% for value, name in review_form.rate.field.choices %}
-                                            <div class="rate_radio d-inline">
-                                                <label for="rate_{{ name }}" 
-                                                        class="d-inline-block">
-                                                    <span class="fa fa-star-o p-1"></span>
-                                                </label>
-                                                <input 
-                                                    id="rate_{{ name }}"
-                                                    type="radio"
-                                                    name="rate",
-                                                    value="{{ value }}"
-                                                    class="d-none">
-                                            </div>
-                                        {% endfor %}
-                                        </strong>
-                                            
-                                        <div class="my-1">
-                                            {{ review_form.comment.label_tag }}
-                                            {{ review_form.comment }}
-                                        </div>
-                                        <input type="submit" 
-                                            value="Submit"
-                                            class="btn btn-success my-3">
-                                    </form>
                                 {% endif %}
                                 
                                 {% if product.review_set.count >= 0 %}
@@ -286,6 +296,7 @@
 {% block script %}
 
 <script>
+    // Styling rating and control rating display on select and deselect
     $('strong .rate_radio input').each(function(input_index) {
         $(this).change(function() {
             let iconQuery = $(this).parent().parent()
@@ -347,7 +358,33 @@
             }
         })
     }
+    // End rating section
 
+    // Modal Section
+    $('form#review_update_form').submit(function(eventObject) {
+        eventObject.preventDefault();
+        setupModal('Do you want to edit you review?', function() {
+            eventObject.currentTarget.submit();
+        })
+    })
+
+    $('button.delete-btn').click(function() {
+        let bodyContent = "Do you want to delete your review and start a new one?";
+        let next_url = $(this).attr('next_url');
+        setupModal(bodyContent, function() {
+            document.location.href = next_url;
+        })
+    })
+
+    function setupModal(bodyContent, confirmHandle) {
+        $('.modal-body').text(bodyContent);
+        $('.confirm-btn').unbind();
+        $('.confirm-btn').click(confirmHandle)
+        $('#pageModal').modal();
+    }
+    // End Modal Section
+
+    // Pagination section
     let pageNumber = {{ review_page_number }};
     let totalPages = {{ page_reviews_obj.num_pages }};
     let firstPageUrl = "{% add_query_params request page=1 %}";
