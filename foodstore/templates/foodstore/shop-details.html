@@ -13,6 +13,26 @@
     .fa-star, .fa-star-o {
         color: #fbc531;
     }
+
+    #auth-review-controller {
+        display: none;
+    }
+
+    #auth-review-controller ~ form {
+        display: none;
+    }
+
+    #auth-review-controller ~ article {
+        display: block;
+    }
+
+    #auth-review-controller:checked ~ article {
+        display: none;
+    }
+
+    #auth-review-controller:checked ~ form {
+        display: block;
+    }
 </style>
 <link rel="stylesheet" href="{% static 'foodstore/css/page.css' %}">
 {% endblock %}
@@ -112,17 +132,75 @@
                         <div class="tab-pane active" id="tabs-3" role="tabpanel">
                             <div class="product__details__tab__desc">
                                 {% if request.user.is_authenticated %}
-                                    <h4 class="mb-3"><strong>{% if request.user.first_name %}{{ request.user.first_name  }} {{ request.user.last_name  }}{% else %}{{ request.user.username }}{% endif %}</strong></h4>
+                                    <div class="authenticated_review_controller">
+                                        <h4 class="mb-3"><strong>{% if request.user.first_name %}{{ request.user.first_name  }} {{ request.user.last_name  }}{% else %}{{ request.user.username }}{% endif %}</strong></h4>
+                                        
+                                        {% if auth_user_review %}
+                                        <input type="checkbox" 
+                                            id="auth-review-controller">
+                                        <article class="auth-review">
+                                            <p><strong
+                                                >
+                                                {% for index in  5|number_to_range %}
+                                                <span class="fa fa-star{% if index > auth_user_review.stars %}-o{% endif %}"></span>
+                                                {% endfor %}
+                                            </strong> <small>{{ auth_user_review.date_created }}</small></p>
+                                            <section>
+                                                {{ auth_user_review.comment|linebreaks  }}
+                                            </section>
+                                            <div class="btns">
+                                                <label 
+                                                    class="btn btn-warning mb-0"
+                                                    for="auth-review-controller">Edit</label>
+                                                <a href="{% url 'review-delete' product.category.slug product.pk auth_user_review.pk %}" class="btn btn-danger">Delete</a>
+                                            </div>
+                                        </article>
+                                        <form action="{% url 'review-update' product.category.slug product.pk auth_user_review.pk %}" 
+                                            method="post"
+                                            id="review_update_form">
+                                            {% csrf_token %}
+                                            <label>Rating: </label>
+                                            <strong>
+                                            {% for value, name in review_edit_form.rate.field.choices %}
+                                                <div class="rate_radio d-inline">
+                                                    <label for="rate_update_{{ name }}" 
+                                                        class="d-inline-block">
+                                                        <span class="fa fa-star{% if review_edit_form.rate.value < forloop.counter %}-o{% endif %} p-1"></span>
+                                                    </label>
+                                                    <input 
+                                                        id="rate_update_{{ name }}"
+                                                        type="radio"
+                                                        name="rate",
+                                                        value="{{ value }}"
+                                                        class="d-none">
+                                                </div>
+                                            {% endfor %}
+                                            </strong>
+                                            
+                                            <div class="my-1">
+                                                {{ review_edit_form.comment.label_tag }}
+                                                {{ review_edit_form.comment }}
+                                            </div>
+                                            <input type="submit" 
+                                                value="Submit"
+                                                class="btn btn-success my-3">
+                                            <label 
+                                                for="auth-review-controller" class="btn btn-warning mb-0">Cancel</label>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                    <br>
+                                {% else %}
                                     <form action="{% url 'review-create' product.category.slug product.pk %}" 
-                                        method="post"
-                                        id="review_form">
-                                        {% csrf_token %}
+                                            method="post"
+                                            id="review_create_form">
+                                            {% csrf_token %}
                                         <label>Rating: </label>
                                         <strong>
                                         {% for value, name in review_form.rate.field.choices %}
                                             <div class="rate_radio d-inline">
                                                 <label for="rate_{{ name }}" 
-                                                    class="d-inline-block">
+                                                        class="d-inline-block">
                                                     <span class="fa fa-star-o p-1"></span>
                                                 </label>
                                                 <input 
@@ -134,7 +212,7 @@
                                             </div>
                                         {% endfor %}
                                         </strong>
-                                        
+                                            
                                         <div class="my-1">
                                             {{ review_form.comment.label_tag }}
                                             {{ review_form.comment }}
@@ -143,11 +221,14 @@
                                             value="Submit"
                                             class="btn btn-success my-3">
                                     </form>
-                                    <br>
                                 {% endif %}
                                 
                                 {% if product.review_set.count >= 0 %}
+                                    <hr>
                                     <div class="comment_list mt-4">
+                                        <h4 class="text-center">Other Reviews on this products</h4>
+                                        <hr>
+
                                         {% for review in reviews|dictsortreversed:'id' %}
                                             <div class="my-4 border-bottom py-3">
                                                 <article>
@@ -163,54 +244,12 @@
                                                     <section>
                                                         {{ review.comment|linebreaks  }}
                                                     </section>
-
-                                                    {% if review.user == request.user %}
-                                                    <div class="btns">
-                                                        <button class="btn btn-warning">Edit</button>
-                                                        <a href="{% url 'review-delete' product.category.slug product.pk review.pk %}" class="btn btn-danger">Delete</a>
-                                                    </div>
-                                                    {% endif %}
                                                 </article>
-                                                <div class="review-edit">
-                                                    <h4 class="mb-3"><strong>{% if review.user.first_name %}{{ review.user.first_name  }} {{ review.user.last_name  }}{% else %}{{ review.user.username }}{% endif %}</strong></h4>
-                                                    <form action="{% url 'review-update' product.category.slug product.pk review.pk %}" 
-                                                        method="post"
-                                                        id="review_form_{{ review.pk }}">
-                                                        {% csrf_token %}
-                                                        <label>Rating: </label>
-                                                        <strong>
-                                                            {% for value, name in review_form.rate.field.choices %}
-                                                            <div class="rate_radio d-inline">
-                                                                <label for="rate_{{ name }}_{{ review.pk }}" class="d-inline-block">
-                                                                    <span class="fa fa-star-o p-1"></span>
-                                                                </label>
-                                                                <input 
-                                                                    id="rate_{{ name }}_{{ review.pk }}"
-                                                                    type="radio"
-                                                                    name="rate",
-                                                                    value="{{ value }}"
-                                                                    class="d-none">
-                                                            </div>
-                                                        {% endfor %}
-                                                        </strong>
-                                                        
-                                                        <div class="my-1">
-                                                            {{ review_form.comment.label_tag }}
-                                                            {{ review_form.comment }}
-                                                        </div>
-                                                        <input type="submit" 
-                                                            value="Confirm Change"
-                                                            class="btn btn-success my-3">
-                                                        <button class="btn btn-warning btn-inline">Cancel</button>
-                                                    </form>
-                                                </div>
                                             </div>
                                         {% endfor %}
                                     </div>
 
                                     <div class="product__pagination d-flex justify-content-center"></div>
-                                {% else %}
-                                    <h4 class="text-center">There aren't any review now.</h4>
                                 {% endif %}
                             </div>
                         </div>

@@ -131,23 +131,30 @@ def product_detail(request, category, product_id):
     form = AddItemToCartForm()
     review_form = forms.ReviewForm()
 
+    auth_user_review = product.review_set.filter(user=request.user)
+    review_edit_form = None
+    if len(auth_user_review) > 0:
+        auth_user_review = auth_user_review[0]
+
+        review_edit_form = forms.ReviewForm(data={
+            'comment': auth_user_review.comment,
+            'rate': auth_user_review.stars
+        })
+        
+
     # Rendering reviews for this product by page
-    reviews = product.review_set.all()
+    reviews = product.review_set.all().exclude(user=request.user)
     review_page_number = request.GET.get('page', 1)
     review_per_page = 1
     page_reviews_obj = Paginator(
         object_list=reviews, per_page=review_per_page)
-
-    # Each user can only review each product one time
-    current_user_reviewed_product = len(list(
-        filter(lambda review : review.user == request.user,
-        reviews)
-    )) > 0
+        
     return render(request, template_name, {
         'product': product,
         'form': form,
         'review_form': review_form,
-        'current_user_reviewed_product': current_user_reviewed_product,
+        'auth_user_review': auth_user_review,
+        'review_edit_form': review_edit_form,
         'reviews': page_reviews_obj.page(
             number=review_page_number).object_list,
         'review_page_number': review_page_number,
@@ -213,6 +220,7 @@ def review_update(request, category, product_id, review_id):
         
         review_form = forms.ReviewForm(request.POST)
         if review_form.is_valid():
+            old_rating = float(review.stars)
             # Update review
             cleaned_data = review_form.cleaned_data
             review = models.Review.objects.get(pk=review_id)
@@ -223,7 +231,7 @@ def review_update(request, category, product_id, review_id):
             # Update product's rating
             product = review.product
             total_review_amount = product.review_set.count()
-            product_new_rating = (product.rating * total_review_amount + float(review.stars)) / total_review_amount
+            product_new_rating = (product.rating * total_review_amount + float(review.stars) - old_rating) / total_review_amount
             product.rating = product_new_rating
             product.save()
         else:
