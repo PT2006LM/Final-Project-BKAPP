@@ -129,19 +129,26 @@ def product_detail(request, category, product_id):
     form = AddItemToCartForm()
     review_form = forms.ReviewForm()
 
-    auth_user_review = product.review_set.filter(user=request.user)
+    auth_user_review = None
     review_edit_form = None
-    if len(auth_user_review) > 0:
-        auth_user_review = auth_user_review[0]
+    if request.user.is_authenticated:
+        auth_user_review = product.review_set.filter(
+            user=request.user)
+    
+        if len(auth_user_review) > 0:
+            auth_user_review = auth_user_review[0]
 
-        review_edit_form = forms.ReviewForm(data={
-            'comment': auth_user_review.comment,
-            'rate': auth_user_review.stars
-        })
+            review_edit_form = forms.ReviewForm(data={
+                'comment': auth_user_review.comment,
+                'rate': auth_user_review.stars
+            })
         
 
     # Rendering reviews for this product by page
-    reviews = product.review_set.all().exclude(user=request.user)
+    if request.user.is_authenticated:
+        reviews = product.review_set.all().exclude(user=request.user)
+    else:
+        reviews = product.review_set.all()
     review_page_number = request.GET.get('page', 1)
     review_per_page = 1
     page_reviews_obj = Paginator(

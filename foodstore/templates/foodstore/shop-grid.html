@@ -74,19 +74,13 @@
                                 </div>
                             {% endif %}
                         </div>
-                        <div class="col-lg-4 col-md-3">
-                            <div class="filter__option">
-                                <span class="icon_grid-2x2" style="color:#7fad39"></span>
-                                <a href="{% add_query_params request mode='list' %}"><span class="icon_ul"></span></a>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 {% if product_count > 0 %}
                     <div class="row">
                         {% for product in product_list %}
                             <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
+                                <div class="product__item{% if product.pk in request.session.favorite_products.object_ids %} favorite{% endif %}">
                                     <div class="product__item__pic set-bg"
                                         data-setbg="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% static 'img/product/default.jpg' %}{% endif %}">
                                         <ul class="product__item__pic__hover">

@@ -102,6 +102,9 @@ DATABASES = {
         'PORT': '3306',
         'USER': 'root',
         'PASSWORD': '',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
     }
 }
 
