@@ -102,6 +102,26 @@ def set_favorite_product(request, category, product_id):
     return HttpResponseRedirect(next_url)
 
 
+def product_list_favorite(request):
+    favorite_products = request.session['favorite_products']
+    product_list = map(lambda index: models.Product.objects.get(pk=index), 
+        favorite_products['object_ids'])
+    product_list = list(product_list)
+    # Setup paginator
+    max_item_per_page = 6
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(product_list, max_item_per_page)
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'product_list': product_list,
+        'product_count': favorite_products['length'],
+        'page_obj': page_obj
+    }
+
+    return render(request, 'foodstore/shop-grid.html', context)
+
+
 def product_add_cart(request, category, product_id):
     form = AddItemToCartForm(request.POST)
 

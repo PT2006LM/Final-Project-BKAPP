@@ -12,7 +12,7 @@
     </div>
     <div class="humberger__menu__cart">
         <ul>
-            <li><a href="#"><i class="fa fa-heart"></i> {% if request.session.favorite_products.length > 0 %}<span>{{ request.session.favorite_products.length }}</span>{% endif %}</a></li>
+            <li><a href="{% url 'product-list-favorite' %}"><i class="fa fa-heart"></i> {% if request.session.favorite_products.length > 0 %}<span>{{ request.session.favorite_products.length }}</span>{% endif %}</a></li>
             <li><a href="{% url 'cart-detail' %}"><i class="fa fa-shopping-bag"></i> {% if request.session.cart.length > 0 %}<span>{{ request.session.cart.length }}</span>{% endif %}</a></li>
         </ul>
         <div class="header__cart__price">item: <span>{{ request.session.cart.total_price|floatformat  }}</span></div>
@@ -144,7 +144,7 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
-                        <li><a href="#"><i class="fa fa-heart"></i> {% if request.session.favorite_products.length > 0 %}<span>{{ request.session.favorite_products.length }}</span>{% endif %}</a></li>
+                        <li><a href="{% url 'product-list-favorite' %}"><i class="fa fa-heart"></i> {% if request.session.favorite_products.length > 0 %}<span>{{ request.session.favorite_products.length }}</span>{% endif %}</a></li>
                         <li><a href="{% url 'cart-detail' %}"><i class="fa fa-shopping-bag"></i> {% if request.session.cart.length > 0 %}<span>{{ request.session.cart.length }}</span>{% endif %}</a></li>
                     </ul>
                     <div class="header__cart__price">item: <span>{{ request.session.cart.total_price|floatformat  }}</span></div>

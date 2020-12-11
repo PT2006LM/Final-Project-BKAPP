@@ -6,6 +6,8 @@ from foodstore import views
 urlpatterns = [
     # path('products/', views.products, name='products-grid'),
     path('products/', views.ProductList.as_view(), name='products'),
+    path('products/favorite', views.product_list_favorite,
+        name='product-list-favorite'),
     path('products/<str:category>/', 
         views.ProductList.as_view(), 
         name='products-by-category'),
