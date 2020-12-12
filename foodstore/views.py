@@ -4,11 +4,11 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 from django.db.models import QuerySet
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 from foodstore import models, forms
 from cart.cart import get_cart_from_session
 from cart.forms import CartEditForm, AddItemToCartForm
-from django.db import connection, reset_queries
 
 class ProductList(ListView):
     """
@@ -83,6 +83,8 @@ def set_favorite_product(request, category, product_id):
     Remove Product instance if it's already existed
     """
     next_url = request.GET.__getitem__('next')
+    product = models.Product.objects.get(pk=product_id)
+    message = ''
     try:
         favorite_products = request.session['favorite_products']
     except KeyError:
@@ -94,11 +96,15 @@ def set_favorite_product(request, category, product_id):
         favorite_products['object_ids']))
     if len(queried_products) == 0:
         favorite_products['object_ids'].append(product_id)
+        message = f'You have successfully added {product} to favorite!'
     else:
         favorite_products['object_ids'].remove(queried_products[0])
+        message = f'You have successfully removed {product} from favorite!'
     favorite_products['length'] = len(favorite_products['object_ids'])
 
     request.session['favorite_products'] = favorite_products
+    
+    messages.add_message(request, messages.SUCCESS, message)
     return HttpResponseRedirect(next_url)
 
 
@@ -124,20 +130,25 @@ def product_list_favorite(request):
 
 def product_add_cart(request, category, product_id):
     form = AddItemToCartForm(request.POST)
+    message = ''
 
     if form.is_valid():
         cleaned_data = form.cleaned_data
         cart = get_cart_from_session(request)
+        quantity = int(cleaned_data['quantity'])
 
         # Add new items
         cart.add_item_to_cart(item_id=product_id,
-            amount=int(cleaned_data['quantity']))
+            amount=quantity)
+        product = models.Product.objects.get(pk=product_id)
+
+        message = f"You have successfully added {quantity} {product} to cart"
+        messages.add_message(request, messages.SUCCESS, message)
             
         # Save cart back to session
         request.session['cart'] = cart.get_serialized_data()
         return HttpResponseRedirect(reverse('products'))
     else:
-        print("Invalid")
         print(form.errors)
     
 
@@ -206,19 +217,19 @@ def review_create(request, category, product_id):
             product_new_rating = (product.rating * (total_review_amount - 1) + float(cleaned_data['rate'])) / total_review_amount
             product.rating = product_new_rating
             product.save()
-            
 
-        else:
-            print("Invalid")
-
-        return HttpResponseRedirect(reverse('product-detail',
+            return HttpResponseRedirect(reverse('product-detail',
                 kwargs={
                     'category': category,
                     'product_id': product_id
                 }))
+            
+        else:
+            print("Invalid")
 
 
 def review_delete(request, category, product_id, review_id):
+    message = ''
     review = models.Review.objects.get(pk=review_id)
     if request.user == review.user:
         product = review.product
@@ -229,6 +240,9 @@ def review_delete(request, category, product_id, review_id):
         product.save()
         # Dispose of the review
         review.delete()
+
+        message = f"You have successfully deleted your review on {product}"
+        messages.add_message(request, messages.SUCCESS, message)
 
         return HttpResponseRedirect(reverse('product-detail',
             kwargs={
@@ -259,14 +273,17 @@ def review_update(request, category, product_id, review_id):
             product_new_rating = (product.rating * total_review_amount + float(review.stars) - old_rating) / total_review_amount
             product.rating = product_new_rating
             product.save()
-        else:
-            print("Loi r em ei")
-            print(review_form)
 
-        return HttpResponseRedirect(reverse('product-detail',
+            message = f"You have successfully updated your review on {product}"
+            messages.add_message(request, messages.SUCCESS, message)
+
+            return HttpResponseRedirect(reverse('product-detail',
             kwargs={
                 'category': category,
                 'product_id': product_id
             }))
+        else:
+            print("Loi r em ei")
+            print(review_form)
     else:
         print("Cut")
