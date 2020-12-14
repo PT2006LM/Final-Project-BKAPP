@@ -53,16 +53,21 @@ class userController:
                 'obj': obj
             })
     def register(request):
-        form = forms.UserRegisterForm(request.POST or None, request.FILES or None)
+        form = forms.UserRegisterFormStaff(request.POST or None, request.FILES or None)
         if form.is_valid():
-            user = form.save(commit = False)
-            password = form.cleaned_data.get('password')
-            user.set_password(password)
-            user.save()
-            return redirect('admin.user.list')
+            # Save form -> Create new user in database
+            user = form.save()
+            # Log new user in
+            rawpassword = form.cleaned_data.get('password1')
+            username = form.cleaned_data.get('username')
+            # Validate and get user from given credentials
+            user = authenticate(username=username, password=rawpassword)
+            # Finally log user in
+            login(request, user)
+            return redirect('home')
         return render(request, 'pages/user/register.html',{
             'form': form,
-            'title': 'Admin Register'
+            'title': 'Staff Register'
             })
 
 

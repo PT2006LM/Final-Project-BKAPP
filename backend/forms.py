@@ -26,47 +26,6 @@ class ProductForm(forms.ModelForm):
     #['name','price','thumbnail','description','status','ship','amount','unit','date_created','category']
 
 # User
-class UserRegisterForm(forms.ModelForm):
-    first_name = forms.CharField(label='',
-        widget=forms.TextInput(attrs={
-            'class': "form-control",
-            'placeholder': 'First Name'
-            }))
-    last_name = forms.CharField(label='',
-        widget=forms.TextInput(attrs={
-            'class': "form-control",
-            'placeholder': 'Last name'
-            }))
-    username = forms.CharField(label='',
-        widget=forms.TextInput(attrs={
-            'class': "form-control",
-            'placeholder': 'Tên đăng nhập'
-            }))
-    email = forms.EmailField(label='',
-        widget=forms.EmailInput(attrs={
-            'class': "form-control",
-            'placeholder': 'Địa chỉ email'
-            }))
-    password = forms.CharField(label='',
-        widget=forms.PasswordInput(attrs={
-            'class': "form-control",
-            'placeholder': 'Mật khẩu'
-            }))
-    is_superuser = forms.BooleanField(label='Supper user', required=False)
-    is_staff = forms.BooleanField(label='Tài khoản cấp nhân viên', required=False)
-    is_active = forms.BooleanField(label='Hoạt động', required=False)
-    class Meta:
-        model = User
-        fields = [
-            'first_name', 'last_name', 'username', 'email', 'password', 'is_superuser', 'is_staff', 'is_active'
-        ]
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        email_qs = User.objects.filter(email = email)
-        if email_qs.exists():
-            raise forms.ValidationError('Email này đã được sử dụng')
-        return email
-
 class UserRegisterFormHome(UserCreationForm):
     first_name = forms.CharField(label='',
         widget=forms.TextInput(attrs={
@@ -112,3 +71,53 @@ class UserRegisterFormHome(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         fields = ("username", "first_name", "last_name", "email")
+#user manager
+class UserRegisterFormStaff(UserCreationForm):
+    first_name = forms.CharField(label='',
+        widget=forms.TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'First Name'
+            }))
+    last_name = forms.CharField(label='',
+        widget=forms.TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Last name'
+            }))
+    username = forms.CharField(label='',
+        widget=forms.TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Tên đăng nhập'
+            }))
+    email = forms.EmailField(label='',
+        widget=forms.EmailInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Địa chỉ email'
+            }))
+    error_messages = {
+        'password_mismatch': _('The two password fields didn’t match.'),
+    }
+    password1 = forms.CharField(
+        label='',
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Mật khẩu'
+            }),
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    password2 = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Nhập lại mật khẩu'
+            }),
+        strip=False,
+        help_text=_("Enter the same password as before, for verification."),
+    )
+    is_staff = forms.BooleanField(label='Quản lý',
+        widget=forms.CheckboxInput(attrs={
+            'class': "form-control",
+            }))
+
+    class Meta(UserCreationForm.Meta):
+        fields = ("username", "first_name", "last_name", "email","is_staff")
