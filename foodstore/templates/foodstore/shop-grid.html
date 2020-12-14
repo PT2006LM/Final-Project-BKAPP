@@ -42,10 +42,10 @@
                                     <span>Sort By</span>
                                     <select name="sort_by">
                                         <option value="date_created" {% if not sort_by %}selected{% endif %}>By Date Create</option>
-                                        <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name Ascending</option>
-                                        <option value="-name" {% if sort_by == '-name' %}selected{% endif %}>Name Descending</option>
-                                        <option value="price" {% if sort_by == 'price' %}selected{% endif %}>Price Ascending</option>
-                                        <option value="-price" {% if sort_by == '-price' %}selected{% endif %}>Price Descending</option>
+                                        <option value="name" {% if sort_by == 'name' %}selected{% endif %}{% if 'name' in request.GET.sort_by %} selected{% endif %}>Name Ascending</option>
+                                        <option value="-name" {% if sort_by == '-name' %}selected{% endif %}{% if '-name' in request.GET.sort_by %} selected{% endif %}>Name Descending</option>
+                                        <option value="price" {% if sort_by == 'price' %}selected{% endif %}{% if 'price' in request.GET.sort_by %} selected{% endif %}>Price Ascending</option>
+                                        <option value="-price" {% if sort_by == '-price' %}selected{% endif %} {% if '-price' in request.GET.sort_by %} selected{% endif %}>Price Descending</option>
                                     </select>
                                 </div>
                             </form>
