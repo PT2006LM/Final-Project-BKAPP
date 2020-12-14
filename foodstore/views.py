@@ -236,6 +236,7 @@ def review_create(request, category, product_id):
     if review_form.is_valid():
         cleaned_data = review_form.cleaned_data
         product = models.Product.objects.prefetch_related('review_set').get(pk=product_id)
+        total_review_amount_before_update = product.review_set.count()
         # Create new review
         models.Review.objects.create(
             product=product,
@@ -244,8 +245,8 @@ def review_create(request, category, product_id):
             stars=cleaned_data['rate']
         )
         # Update product's rating
-        total_review_amount = product.review_set.count()
-        product_new_rating = (product.rating * (total_review_amount - 1) + float(cleaned_data['rate'])) / total_review_amount
+        
+        product_new_rating = (product.rating * total_review_amount_before_update + float(cleaned_data['rate'])) / (total_review_amount_before_update + 1)
         product.rating = product_new_rating
         product.save()
 
@@ -265,16 +266,16 @@ def review_create(request, category, product_id):
 
 @login_required
 def review_delete(request, category, product_id, review_id):
-    if request.method != 'POST':
-        raise SuspiciousOperation
-
     message = ''
     review = models.Review.objects.get(pk=review_id)
     if request.user == review.user:
         product = review.product
         # Update product's rating
         total_review_amount = product.review_set.count()
-        product_new_rating = (product.rating * total_review_amount - float(review.stars)) / (total_review_amount - 1)
+        if total_review_amount == 1:
+            product_new_rating = 0
+        else:
+            product_new_rating = (product.rating * total_review_amount - float(review.stars)) / (total_review_amount - 1)
         product.rating = product_new_rating
         product.save()
         # Dispose of the review
@@ -289,7 +290,7 @@ def review_delete(request, category, product_id, review_id):
                 'product_id': product_id
             }))
     else:
-        raise PermissionDenied
+        raise PermissionDenied("You dont have permission to access this page")
 
 
 @login_required
@@ -332,4 +333,4 @@ def review_update(request, category, product_id, review_id):
             'product_id': product_id
         }))
     else:
-        raise PermissionDenied
+        raise PermissionDenied("You dont have permission to access this page")

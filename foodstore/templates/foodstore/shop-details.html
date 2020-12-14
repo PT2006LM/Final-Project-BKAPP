@@ -183,7 +183,7 @@
                                                         type="radio"
                                                         name="rate",
                                                         value="{{ value }}"
-                                                        class="d-none">
+                                                        class="d-none"{% if review_edit_form.rate.value == forloop.counter %} checked{% endif %}>
                                                 </div>
                                             {% endfor %}
                                             </strong>
