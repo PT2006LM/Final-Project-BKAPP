@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib import messages
+
 from cart.cart import get_cart_from_session
 from cart.forms import OrderForm
 from cart.models import CartItem, CartOrder, Order
@@ -67,7 +69,6 @@ def checkout(request):
                     total_price=float(value['total_price']))
 
             # Create final Order object from CartOrder and form.cleaned_data 
-            print(cleaned_data)
             Order.objects.create(
                 first_name=cleaned_data['first_name'],
                 last_name=cleaned_data['last_name'],
@@ -79,8 +80,11 @@ def checkout(request):
                 addition_note=cleaned_data['addition_note'],
                 order_data=cart_order
             )
+            messages.add_message(request, messages.SUCCESS, 
+                "Payment successfully!")
             return render(request, 'cart/checkout_completed.html')
         else:
-            print("Invalid")
+            messages.add_message(request, messages.ERROR, 
+                'Some error has occur, please try again')
             return render(request, 'cart/checkout.html', 
             context=context_data)

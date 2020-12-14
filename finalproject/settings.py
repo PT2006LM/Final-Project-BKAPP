@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     'ckeditor',
     'ckeditor_uploader',
+    'debug_toolbar',
 
     # owned apps
     'foodstore',
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -160,3 +162,10 @@ CKEDITOR_IMAGE_BACKEND = "pillow"
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGOUT_REDIRECT_URL = 'home'
+
+
+INTERNAL_IPS = [
+    # ...
+    '127.0.0.1',
+    # ...
+]

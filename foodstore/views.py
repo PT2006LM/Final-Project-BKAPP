@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.views.generic import ListView
 from django.db.models import QuerySet
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied, SuspiciousOperation
 
 from foodstore import models, forms
 from cart.cart import get_cart_from_session
@@ -29,7 +31,7 @@ class ProductList(ListView):
 
 
     def get_queryset(self, *args, **kwargs):
-        queryset = super(ProductList, self).get_queryset(*args, **kwargs)
+        queryset = self.model.objects.all().select_related('category')
         # Check if queried name existed in GET
         queried_name = self.request.GET.get('q', None)
         if queried_name:
@@ -65,7 +67,7 @@ class ProductList(ListView):
             queryset = queryset.filter(category__slug=self.kwargs['category'])
         except KeyError:
             pass
-        self.product_count = queryset.count()
+        self.product_count = len(list(queryset))
         return super().paginate_queryset(queryset, page_size)
 
 
@@ -160,7 +162,8 @@ def product_add_cart(request, category, product_id):
         # Add new items
         cart.add_item_to_cart(item_id=product_id,
             amount=quantity)
-        product = models.Product.objects.get(pk=product_id)
+        product = models.Product.objects.get(
+            pk=product_id).select_related('review_set')
 
         message = f"You have successfully added {quantity} {product} to cart"
         messages.add_message(request, messages.SUCCESS, message)
@@ -169,12 +172,16 @@ def product_add_cart(request, category, product_id):
         request.session['cart'] = cart.get_serialized_data()
         return HttpResponseRedirect(reverse('products'))
     else:
-        print(form.errors)
+        messages.add_message(request, messages.ERROR, 'There was an error occur, please try again')
+        return HttpResponseRedirect(reverse('product-detail', kwargs={
+            'category': category,
+            'product_id': product_id
+        }))
     
 
 
 def product_detail(request, category, product_id):
-    product = models.Product.objects.get(pk=product_id)
+    product = models.Product.objects.prefetch_related('review_set').select_related('category').get(pk=product_id)
     template_name = 'foodstore/shop-details.html'
     # Rendering form
     form = AddItemToCartForm()
@@ -197,7 +204,8 @@ def product_detail(request, category, product_id):
 
     # Rendering reviews for this product by page
     if request.user.is_authenticated:
-        reviews = product.review_set.all().exclude(user=request.user)
+        reviews = product.review_set.all().exclude(
+            user=request.user)
     else:
         reviews = product.review_set.all()
     review_page_number = request.GET.get('page', 1)
@@ -218,37 +226,48 @@ def product_detail(request, category, product_id):
     })
 
 
+@login_required
 def review_create(request, category, product_id):
-    if request.method == 'POST':
-        review_form = forms.ReviewForm(request.POST)
+    if request.method != 'POST':
+        raise SuspiciousOperation
 
-        if review_form.is_valid():
-            cleaned_data = review_form.cleaned_data
-            product = models.Product.objects.get(pk=product_id)
-            # Create new review
-            models.Review.objects.create(
-                product=product,
-                user=request.user,
-                comment=cleaned_data['comment'],
-                stars=cleaned_data['rate']
-            )
-            # Update product's rating
-            total_review_amount = product.review_set.count()
-            product_new_rating = (product.rating * (total_review_amount - 1) + float(cleaned_data['rate'])) / total_review_amount
-            product.rating = product_new_rating
-            product.save()
+    review_form = forms.ReviewForm(request.POST)
 
-            return HttpResponseRedirect(reverse('product-detail',
-                kwargs={
-                    'category': category,
-                    'product_id': product_id
-                }))
+    if review_form.is_valid():
+        cleaned_data = review_form.cleaned_data
+        product = models.Product.objects.prefetch_related('review_set').get(pk=product_id)
+        # Create new review
+        models.Review.objects.create(
+            product=product,
+            user=request.user,
+            comment=cleaned_data['comment'],
+            stars=cleaned_data['rate']
+        )
+        # Update product's rating
+        total_review_amount = product.review_set.count()
+        product_new_rating = (product.rating * (total_review_amount - 1) + float(cleaned_data['rate'])) / total_review_amount
+        product.rating = product_new_rating
+        product.save()
+
+        return HttpResponseRedirect(reverse('product-detail',
+            kwargs={
+                'category': category,
+                'product_id': product_id
+            }))
             
-        else:
-            print("Invalid")
+    else:
+        messages.add_message(request, messages.ERROR, 'Invalid input, please try again!')
+        return HttpResponseRedirect(reverse('product-detail', kwargs={
+            'category': category,
+            'product_id': product_id
+        }))
 
 
+@login_required
 def review_delete(request, category, product_id, review_id):
+    if request.method != 'POST':
+        raise SuspiciousOperation
+
     message = ''
     review = models.Review.objects.get(pk=review_id)
     if request.user == review.user:
@@ -270,10 +289,14 @@ def review_delete(request, category, product_id, review_id):
                 'product_id': product_id
             }))
     else:
-        print("Cut")
+        raise PermissionDenied
 
 
+@login_required
 def review_update(request, category, product_id, review_id):
+    if request.method != 'POST':
+        raise SuspiciousOperation
+
     review = models.Review.objects.get(pk=review_id)
     if request.user == review.user:
         
@@ -303,7 +326,10 @@ def review_update(request, category, product_id, review_id):
                 'product_id': product_id
             }))
         else:
-            print("Loi r em ei")
-            print(review_form)
+            messages.add_message(request, messages.ERROR, 'Invalid input, please try again!')
+        return HttpResponseRedirect(reverse('product-detail', kwargs={
+            'category': category,
+            'product_id': product_id
+        }))
     else:
-        print("Cut")
+        raise PermissionDenied

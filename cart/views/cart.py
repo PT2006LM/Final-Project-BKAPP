@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from foodstore.models import Product
 from cart.cart import Cart, get_cart_from_session
 from cart.forms import CartEditForm
+from django.contrib import messages
 
 
 
@@ -11,7 +12,6 @@ def cart(request):
     if request.method == "POST":
         if request.POST["submit"] == "Update Cart":
             return handle_update_cart_form(request)
-
 
     elif request.method == "GET":
         return get(request)
@@ -41,11 +41,13 @@ def handle_update_cart_form(request):
         cart.update_cart_data(cart_data)
 
         request.session['cart'] = cart.get_serialized_data()
+        messages.add_message(request, messages.SUCCESS, 
+            'Successfully updated item!')
 
         return HttpResponseRedirect(reverse('cart-detail'))
     else:
-        print("Errorrr")
-        print(len(form.errors))
+        messages.add_message(request, messages.ERROR, 
+            'There was a problem updating the cart')
         return HttpResponseRedirect(reverse('cart-detail'))
 
 

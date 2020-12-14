@@ -20,9 +20,11 @@ from finalproject import views
 from django.conf import settings
 from django.conf.urls.static import static
 from backend import views as viewadmin
+import debug_toolbar
 
 
 urlpatterns = [
+    path('__debug__/', include(debug_toolbar.urls)),
     path('djangoadmin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', views.homepage, name='home'),
