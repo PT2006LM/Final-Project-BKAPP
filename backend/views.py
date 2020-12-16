@@ -5,12 +5,23 @@ from foodstore import models
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 # Create your views here.
 
 class adminController:
     @login_required(login_url=reverse_lazy('backend:login'))
     def index(request):
-        return render(request,'pages/index.html')
+        admin_users = User.objects.filter(is_staff=True)
+        guest_users = User.objects.filter(is_staff=False)
+        products_count = models.Product.objects.count()
+        category_count = models.Category.objects.count()
+        return render(request,'pages/index.html', {
+            'admin_users': admin_users,
+            'guest_users': guest_users,
+            'products_count': products_count,
+            'category_count': category_count,
+            'section_name': 'Danh sách'
+        })
 
     def login(request):
         if request.POST:
@@ -75,7 +86,9 @@ class categoryControler:
     def index(request):
         obj = models.Category.objects.all()
         return render(request,'pages/category/index.html',{
-            'obj': obj
+            'obj': obj,
+            'section': 'category',
+            'section_name': 'Category'
         })
     def create(request):
         form = forms.CategoryForm(request.POST or None)
@@ -83,7 +96,9 @@ class categoryControler:
             form.save()
             return redirect('backend:category.index')
         return render(request,'pages/category/create.html',{
-            'form': form
+            'form': form,
+            'section': 'category',
+            'section_name': 'Category'
         })
     def edit(request, id):
         obj = models.Category.objects.get(id = id)
@@ -92,24 +107,32 @@ class categoryControler:
             form.save()
             return redirect('backend:category.index')
         return render(request,'pages/category/edit.html',{
-            'form': form
+            'form': form,
+            'section': 'category',
+            'section_name': 'Category'
         })
     def delete(request, id):
         models.Category.objects.filter(id=id).delete()
-        return redirect('admin.category.index')
+        return redirect('backend:category.index')
 
 class productController:
     def index(request):
         obj = models.Product.objects.all()
         return render(request,'pages/product/index.html',
-            {'obj': obj})
+            {
+                'obj': obj,
+                'section': 'product',
+                'section_name': 'Product'
+            })
     def create(request):
         form = forms.ProductForm(request.POST or None)
         if form.is_valid():
             form.save()
             return redirect('backend:product.index')
         return render(request,'pages/product/create.html',{
-            'form': form
+            'form': form,
+            'section': 'product',
+            'section_name': 'Product'
         })
     def edit(request, id):
         obj = models.Product.objects.get(id = id)
@@ -118,7 +141,9 @@ class productController:
             form.save()
             return redirect('backend:product.index')
         return render(request,'pages/product/edit.html',{
-            'form': form
+            'form': form,
+            'section': 'product',
+            'section_name': 'Product'
         })
     def delete(request, id):
         models.Product.objects.filter(id=id).delete()

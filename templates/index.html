@@ -9,7 +9,7 @@
 {% include 'widgets/content_components/header.html' with is_homepage="true" %}
 
 <!-- Categories Section Begin -->
-<section class="categories">
+<!-- <section class="categories">
     <div class="container">
         <div class="row">
             <div class="categories__slider owl-carousel">
@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- Categories Section End -->
 <!-- Featured Section Begin -->
 <section class="featured spad">
@@ -54,7 +54,7 @@
                 <div class="featured__controls">
                     <ul>
                         <li class="active" data-filter="*">Tất cả sản phẩm</li>
-                        {% for val in category %}
+                        {% for val in category_list %}
                         <li data-filter=".cateogry_{{ val.id }}">{{ val.name }}</li>
                         {% endfor %}
                     </ul>
@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="row featured__filter">
-            {% for value in category %}
+            {% for value in category_list %}
                 {% for val in value.product.all %}
                     <div class="col-lg-3 col-md-4 col-sm-6 mix cateogry_{{ value.id }}">
                         <div class="featured__item">
@@ -86,7 +86,7 @@
 </section>
 <!-- Featured Section End -->
 <!-- Banner Begin -->
-<div class="banner">
+<!-- <div class="banner">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -101,7 +101,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Banner End -->
 <!-- Latest Product Section Begin -->
 <section class="latest-product spad">

@@ -36,18 +36,23 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="http://localhost:8000/admin/category" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Category</p>
+                <a href="http://localhost:8000/admin/category" class="nav-link{% if section == 'category' %} active{% endif %}">
+                  <i class="fa{% if section != 'category' %}r{% endif %} fa-circle nav-icon"></i>
+                  <p>Category <span class="badge {% if section == 'category' %}bg-dark{% else %}bg-light text-dark{% endif %}">{{ category_count }}</span></p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost:8000/admin/product" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Product</p>
+                <a href="http://localhost:8000/admin/product" class="nav-link{% if section == 'product' %} active{% endif %}">
+                  <i class="fa{% if section != 'product' %}r{% endif %} fa-circle nav-icon"></i>
+                  <p>Product <span class="badge {% if section == 'product' %}bg-dark{% else %}bg-light text-dark{% endif %}">{{ product_count }}</span></p>
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'home' %}" class="nav-link">
+              <i class="fa fa-home nav-icon"></i> Trang chính
+            </a>
           </li>
         </ul>
       </nav>

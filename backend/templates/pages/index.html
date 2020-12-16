@@ -7,31 +7,31 @@
 {% block 'main' %}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>Danh sách quản lý</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="http://localhost:8000/admin">Trang chính</a></li>
-            <li class="breadcrumb-item active">danh sách</li>
-          </ol>
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
+  {% include 'layout/breadcrumb.html' with section_name=section_name %}
 
   <!-- Main content -->
   <section class="content">
 
-    <!-- Default box -->
+    <!-- Card Managers -->
     <div class="card card-solid">
+      <h5 class="card-header">Danh sách quản lý</h5>
       <div class="card-body pb-0">
         <div class="row d-flex align-items-stretch">
-          <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+          {% for user in admin_users %}
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="card bg-light">
+              <div class="card-header text-muted border-bottom-0">
+                {% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}
+              </div>
+              <div class="card-body pt-0">
+                <h2 class="lead"><b>{{ user.username }} </b></h2>
+                <p class="text-muted text-sm"><b>Email: </b>{{ user.email }}</p>
+                <p class="text-muted text-sm"><b>Note: </b>{% if user.is_superuser %}Super User{% else %}None{% endif %}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
             <div class="card bg-light">
               <div class="card-header text-muted border-bottom-0">
                 Digital Strategist
@@ -160,10 +160,25 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
+        </div>
+      </div>
       <!-- /.card-body -->
     </div>
     <!-- /.card -->
+
+    <!-- Card statistic -->
+    <div class="card card-solid col-12 col-sm-6">
+      <div class="card-header">Thống kê CSDL</div>
+      <div class="card-body">
+        <p><a href="{% url 'backend:product.index' %}"><b>Products</b></a>: <span class="badge bg-dark">{{ products_count }}</span> types</p>
+        <p><a href="{% url 'backend:category.index' %}"><b>Category</b></a>: <span class="badge bg-dark">{{ category_count }}</span> types</p>
+        <p><b>Guest account: </b><span class="badge bg-dark">{{ guest_users.count }}</span> account</p>
+      </div>
+    </div>
+    <!-- end Card -->
+    
+    
 
   </section>
   <!-- /.content -->

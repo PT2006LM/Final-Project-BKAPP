@@ -7,22 +7,7 @@
 {% block 'main' %}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Product</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Blank Page</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+  {% include 'layout/breadcrumb.html' with section_name=section_name %}
 
     <!-- Main content -->
     <section class="content">
@@ -38,6 +23,7 @@
                 <tr>
                   <th>STT</th>
                   <th>Name</th>
+                  <th>Price</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -47,6 +33,9 @@
                 <td>{{ forloop.counter }}</td>
                 <td>
                   {{ item.name }}
+                </td>
+                <td>
+                  {{ item.price|floatformat }}
                 </td>
                 <td>
                   <div class="btn-group">

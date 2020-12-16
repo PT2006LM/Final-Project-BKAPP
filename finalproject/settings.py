@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'foodstore.context_processors.category_processor',
+                'foodstore.context_processors.product_processor',
             ],
             'libraries': {
                 'foodstore_tags': 'foodstore.template_tags'
