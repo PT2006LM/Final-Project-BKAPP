@@ -33,7 +33,7 @@ class Product(models.Model):
     amount = models.FloatField(default=0)
     unit = models.CharField(max_length=50, blank=True)
     date_created = models.DateField(auto_now_add=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product')
     rating = models.FloatField(default=0)
 
     STATUS_STATES = ['Empty', 'In Stock']
