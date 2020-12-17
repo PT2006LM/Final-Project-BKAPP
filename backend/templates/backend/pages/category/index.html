@@ -1,4 +1,4 @@
-{% extends 'main.html' %}
+{% extends 'backend/main.html' %}
 {% block 'link' %}
 <!-- DataTables -->
 <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -7,7 +7,7 @@
 {% block 'main' %}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-  {% include 'layout/breadcrumb.html' with section_name=section_name %}
+  {% include 'backend/layout/breadcrumb.html' with section_name=section_name %}
 
     <!-- Main content -->
     <section class="content">

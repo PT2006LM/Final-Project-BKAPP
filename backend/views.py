@@ -15,7 +15,7 @@ class adminController:
         guest_users = User.objects.filter(is_staff=False)
         products_count = models.Product.objects.count()
         category_count = models.Category.objects.count()
-        return render(request,'pages/index.html', {
+        return render(request,'backend/pages/index.html', {
             'admin_users': admin_users,
             'guest_users': guest_users,
             'products_count': products_count,
@@ -37,7 +37,7 @@ class adminController:
                     else:
                         redirect_page = 'home'
                     return redirect(reverse(redirect_page))
-        return render(request,'pages/login.html')
+        return render(request,'backend/pages/login.html')
 
 def register(request):
     form = forms.UserRegisterFormHome(request.POST or None)
@@ -52,7 +52,7 @@ def register(request):
         # Finally log user in
         login(request, user)
         return redirect('home')
-    return render(request, 'pages/user/register.html',{
+    return render(request, 'backend/pages/user/register.html',{
         'form': form,
         'title': 'Register'
         })
@@ -60,7 +60,7 @@ def register(request):
 class userController:
     def list(request):
             obj = models.User.objects.all()
-            return render(request, 'pages/user/list.html', {
+            return render(request, 'backend/pages/user/list.html', {
                 'obj': obj
             })
     def register(request):
@@ -76,7 +76,7 @@ class userController:
             # Finally log user in
             login(request, user)
             return redirect('home')
-        return render(request, 'pages/user/register.html',{
+        return render(request, 'backend/pages/user/register.html',{
             'form': form,
             'title': 'Staff Register'
             })
@@ -85,7 +85,7 @@ class userController:
 class categoryControler:
     def index(request):
         obj = models.Category.objects.all()
-        return render(request,'pages/category/index.html',{
+        return render(request,'backend/pages/category/index.html',{
             'obj': obj,
             'section': 'category',
             'section_name': 'Category'
@@ -95,7 +95,7 @@ class categoryControler:
         if form.is_valid():
             form.save()
             return redirect('backend:category.index')
-        return render(request,'pages/category/create.html',{
+        return render(request,'backend/pages/category/create.html',{
             'form': form,
             'section': 'category',
             'section_name': 'Category'
@@ -106,7 +106,7 @@ class categoryControler:
         if form.is_valid():
             form.save()
             return redirect('backend:category.index')
-        return render(request,'pages/category/edit.html',{
+        return render(request,'backend/pages/category/edit.html',{
             'form': form,
             'section': 'category',
             'section_name': 'Category'
@@ -118,7 +118,7 @@ class categoryControler:
 class productController:
     def index(request):
         obj = models.Product.objects.all()
-        return render(request,'pages/product/index.html',
+        return render(request,'backend/pages/product/index.html',
             {
                 'obj': obj,
                 'section': 'product',
@@ -129,7 +129,7 @@ class productController:
         if form.is_valid():
             form.save()
             return redirect('backend:product.index')
-        return render(request,'pages/product/create.html',{
+        return render(request,'backend/pages/product/create.html',{
             'form': form,
             'section': 'product',
             'section_name': 'Product'
@@ -140,7 +140,7 @@ class productController:
         if form.is_valid():
             form.save()
             return redirect('backend:product.index')
-        return render(request,'pages/product/edit.html',{
+        return render(request,'backend/pages/product/edit.html',{
             'form': form,
             'section': 'product',
             'section_name': 'Product'
