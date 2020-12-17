@@ -171,8 +171,8 @@
     <div class="card card-solid col-12 col-sm-6">
       <div class="card-header">Thống kê CSDL</div>
       <div class="card-body">
-        <p><a href="{% url 'backend:product.index' %}"><b>Products</b></a>: <span class="badge bg-dark">{{ products_count }}</span> types</p>
-        <p><a href="{% url 'backend:category.index' %}"><b>Category</b></a>: <span class="badge bg-dark">{{ category_count }}</span> types</p>
+        <p><a href="{% url 'product.index' %}"><b>Products</b></a>: <span class="badge bg-dark">{{ products_count }}</span> types</p>
+        <p><a href="{% url 'category.index' %}"><b>Category</b></a>: <span class="badge bg-dark">{{ category_count }}</span> types</p>
         <p><b>Guest account: </b><span class="badge bg-dark">{{ guest_users.count }}</span> account</p>
       </div>
     </div>

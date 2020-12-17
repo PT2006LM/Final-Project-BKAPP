@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-12 ">
           <div class="box">
-            <a href="{% url 'backend:user.register'  %}" class="btn">Thêm mới user</a>
+            <a href="{% url 'user.register'  %}" class="btn">Thêm mới user</a>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
                   <td>{{ val.is_active }}</td>
                   <td>
                     <a href="" class="btn btn-default">Xóa</a>
-                    <a href="" class="btn btn-info show-user" data-url="{% url 'backend:user.show' val.id %}" data-toggle="modal" data-target="#modal-info"><i class="fa fa-eye"></i> </a>
+                    <a href="" class="btn btn-info show-user" data-url="{% url 'user.show' val.id %}" data-toggle="modal" data-target="#modal-info"><i class="fa fa-eye"></i> </a>
                   </td>
                 </tr>
                 {% endfor %}

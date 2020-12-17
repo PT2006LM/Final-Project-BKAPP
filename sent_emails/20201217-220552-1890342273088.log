@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on localhost:8000
+From: webmaster@localhost
+To: nhminh0701@gmail.com
+Date: Thu, 17 Dec 2020 15:05:52 -0000
+Message-ID: <160821755217.20736.12731769547311395030@DESKTOP-83USQBT.Home>
+
+
+You're receiving this email because you requested a password reset for your user account at localhost:8000.
+
+Please go to the following page and choose a new password:
+
+http://localhost:8000/password/reset/confirm/Ng/af1pds-76d0eac5ae61e197bd02ce37c7181ac6
+
+Your username, in case you’ve forgotten: minhsieunhan
+
+Thanks for using our site!
+
+The localhost:8000 team
+
+
+
+-------------------------------------------------------------------------------

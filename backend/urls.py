@@ -1,20 +1,28 @@
 from django.urls import path
 from backend import views
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LogoutView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+
 from finalproject import settings
 
-app_name = 'backend'
-
 urlpatterns = [
-    # admin
-    path('admin', views.adminController.index, 
-        name='index'),
+    # auth
     path('login', views.adminController.login , 
         name='login'),
     path('register', views.register, name='register'),
     path('logout', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL),
         name='logout'),
+    # Password Reset Views
+    path('password/reset', PasswordResetView.as_view(), 
+        name="password_reset"),
+    path('password/reset/done', PasswordResetDoneView.as_view(),
+        name="password_reset_done"),
+    path('password/reset/confirm/<uidb64>/<token>', PasswordResetConfirmView.as_view(),
+        name="password_reset_confirm"),
+    path('password/reset/complete', PasswordResetCompleteView.as_view(),
+        name="password_reset_complete"),
 
+    path('admin', views.adminController.index, 
+        name='index'),
     # user
     path('admin/user', views.userController.list,  
         name='user.list'),

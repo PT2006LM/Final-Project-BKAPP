@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     'ckeditor',
     'ckeditor_uploader',
+    'widget_tweaks',
     'debug_toolbar',
 
     # owned apps
@@ -157,6 +158,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+LOGIN_URL = 'login'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
@@ -170,3 +172,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+# Email backend
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))

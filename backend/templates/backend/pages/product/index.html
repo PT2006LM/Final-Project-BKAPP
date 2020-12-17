@@ -15,7 +15,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <a href="{% url 'backend:product.create'%}" class="btn btn-primary">Create</a>
+          <a href="{% url 'product.create'%}" class="btn btn-primary">Create</a>
         </div>
         <div class="card-body">
             <table id="data-table" class="table table-bordered table-hover">
@@ -39,8 +39,8 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{% url 'backend:product.edit' item.id %}" class="btn btn-success">Edit</a>
-                    <a href="{% url 'backend:product.delete' item.id %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'product.edit' item.id %}" class="btn btn-success">Edit</a>
+                    <a href="{% url 'product.delete' item.id %}" class="btn btn-danger">Delete</a>
                   </div>
                 </td>
                 {% endfor %}

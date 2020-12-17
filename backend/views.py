@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from backend import forms
-from foodstore import models
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-# Create your views here.
+from django.contrib import messages
+
+
+from backend import forms
+from foodstore import models
 
 class adminController:
-    @login_required(login_url=reverse_lazy('backend:login'))
+    @login_required(login_url=reverse_lazy('login'))
     def index(request):
         admin_users = User.objects.filter(is_staff=True)
         guest_users = User.objects.filter(is_staff=False)
@@ -33,10 +35,15 @@ class adminController:
                     # Check user permission to redirect home page or admin
                     login(request, user)
                     if user.is_staff:
-                        redirect_page = 'backend:index'
+                        redirect_page = 'index'
                     else:
                         redirect_page = 'home'
+                    messages.add_message(request, messages.SUCCESS,
+                        "You have successfully loged in!")
                     return redirect(reverse(redirect_page))
+            else:
+                messages.add_message(request, messages.ERROR,
+                    "Incorrect credential.")
         return render(request,'backend/pages/login.html')
 
 def register(request):
@@ -51,7 +58,10 @@ def register(request):
         user = authenticate(username=username, password=rawpassword)
         # Finally log user in
         login(request, user)
+        messages.add_message(request, messages.SUCCESS,
+            "You have successfully registered")
         return redirect('home')
+
     return render(request, 'backend/pages/user/register.html',{
         'form': form,
         'title': 'Register'
@@ -94,7 +104,9 @@ class categoryControler:
         form = forms.CategoryForm(request.POST or None)
         if form.is_valid():
             form.save()
-            return redirect('backend:category.index')
+            messages.add_message(request, messages.SUCCESS,
+                'You have successfully created a category')
+            return redirect('category.index')
         return render(request,'backend/pages/category/create.html',{
             'form': form,
             'section': 'category',
@@ -105,7 +117,9 @@ class categoryControler:
         form = forms.CategoryForm(request.POST or None, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect('backend:category.index')
+            messages.add_message(request, messages.SUCCESS,
+                'You have edited a category')
+            return redirect('category.index')
         return render(request,'backend/pages/category/edit.html',{
             'form': form,
             'section': 'category',
@@ -113,7 +127,9 @@ class categoryControler:
         })
     def delete(request, id):
         models.Category.objects.filter(id=id).delete()
-        return redirect('backend:category.index')
+        messages.add_message(request, messages.SUCCESS,
+                'You have successfully deleted a category')
+        return redirect('category.index')
 
 class productController:
     def index(request):
@@ -128,7 +144,9 @@ class productController:
         form = forms.ProductForm(request.POST or None)
         if form.is_valid():
             form.save()
-            return redirect('backend:product.index')
+            messages.add_message(request, messages.SUCCESS,
+                'You have successfully added a product')
+            return redirect('product.index')
         return render(request,'backend/pages/product/create.html',{
             'form': form,
             'section': 'product',
@@ -139,7 +157,9 @@ class productController:
         form = forms.ProductForm(request.POST or None, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect('backend:product.index')
+            messages.add_message(request, messages.SUCCESS,
+                'You have successfully edited a product')
+            return redirect('product.index')
         return render(request,'backend/pages/product/edit.html',{
             'form': form,
             'section': 'product',
@@ -147,5 +167,7 @@ class productController:
         })
     def delete(request, id):
         models.Product.objects.filter(id=id).delete()
-        return redirect('backend:product.index')
+        messages.add_message(request, messages.SUCCESS,
+                'You have successfully deleted a product')
+        return redirect('product.index')
     
