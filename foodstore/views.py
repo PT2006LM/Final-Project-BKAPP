@@ -162,8 +162,8 @@ def product_add_cart(request, category, product_id):
         # Add new items
         cart.add_item_to_cart(item_id=product_id,
             amount=quantity)
-        product = models.Product.objects.get(
-            pk=product_id).select_related('review_set')
+        product = models.Product.objects.prefetch_related(
+            'review_set').get(pk=product_id)
 
         message = f"You have successfully added {quantity} {product} to cart"
         messages.add_message(request, messages.SUCCESS, message)
