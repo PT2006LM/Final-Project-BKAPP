@@ -98,40 +98,73 @@ class categoryControler:
         obj = models.Category.objects.all()
         return render(request,'backend/pages/category/index.html',{
             'obj': obj,
-            'section': 'category',
-            'section_name': 'Category'
+            'section': 'Categories',
+            'section_name': 'Categories'
         })
     def create(request):
-        form = forms.CategoryForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.SUCCESS,
-                'You have successfully created a category')
-            return redirect('category.index')
+        if request.method == 'POST':
+            form = forms.CategoryForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.add_message(request, messages.SUCCESS,
+                    'You have successfully created a category')
+                return redirect('category.index')
+            else:
+                messages.add_message(request, messages.ERROR,
+                    'There was something wrong, please check again')
+                parent_sections = {
+                    'Categories': reverse_lazy('category.index'),
+                }
+                return render(request,'backend/pages/category/create.html',{
+                    'form': form,
+                    'section': 'Create',
+                    'section_name': 'Categories',
+                    'parent_sections': parent_sections,
+                })
         else:
-            messages.add_message(request, messages.ERROR,
-                'There was something wrong, please check again')
-        return render(request,'backend/pages/category/create.html',{
-            'form': form,
-            'section': 'category',
-            'section_name': 'Category'
-        })
+            form = forms.CategoryForm()
+            parent_sections = {
+                    'Categories': reverse_lazy('category.index'),
+                }
+            return render(request,'backend/pages/category/create.html',{
+                'form': form,
+                'section': 'Create',
+                'section_name': 'Categories',
+                'parent_sections': parent_sections,
+            })
+
     def edit(request, id):
         obj = models.Category.objects.get(id = id)
-        form = forms.CategoryForm(request.POST or None, instance=obj)
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.SUCCESS,
-                'You have edited a category')
-            return redirect('category.index')
+        if request.method == 'POST':
+            form = forms.CategoryForm(request.POST, instance=obj)
+            if form.is_valid():
+                form.save()
+                messages.add_message(request, messages.SUCCESS,
+                    'You have edited a category')
+                return redirect('category.index')
+            else:
+                messages.add_message(request, messages.ERROR,
+                    'There was something wrong, please check again')
+                parent_sections = {
+                    'Categories': reverse_lazy('category.index'),
+                }
+                return render(request,'backend/pages/category/edit.html',{
+                    'form': form,
+                    'section': 'Edit_' + str(id),
+                    'section_name': 'Categories',
+                    'parent_sections': parent_sections
+                })
         else:
-            messages.add_message(request, messages.ERROR,
-                'There was something wrong, please check again')
-        return render(request,'backend/pages/category/edit.html',{
-            'form': form,
-            'section': 'category',
-            'section_name': 'Category'
-        })
+            form = forms.CategoryForm(instance=obj)
+            parent_sections = {
+                'Categories': reverse_lazy('category.index'),
+            }
+            return render(request,'backend/pages/category/edit.html',{
+                'form': form,
+                'section': 'Edit_' + str(id),
+                'section_name': 'Categories',
+                'parent_sections': parent_sections
+            })
     def delete(request, id):
         models.Category.objects.filter(id=id).delete()
         messages.add_message(request, messages.SUCCESS,
@@ -144,32 +177,39 @@ class productController:
         return render(request,'backend/pages/product/index.html',
             {
                 'obj': obj,
-                'section': 'product',
-                'section_name': 'Product'
+                'section': 'Products',
+                'section_name': 'Products'
             })
     def create(request):
         if request.method == "POST":
             form = forms.ProductForm(request.POST, request.FILES)
             if form.is_valid():
                 form.save(commit=True)
-                print(request.FILES)
                 messages.add_message(request, messages.SUCCESS,
                     'You have successfully added a product')
                 return redirect('product.index')
             else:
                 messages.add_message(request, messages.ERROR,
                     'There was something wrong, please check again')
+                parent_sections = {
+                    'Products': reverse_lazy('product.index'),
+                }
                 return render(request,'backend/pages/product/create.html',{
                     'form': form,
-                    'section': 'product',
-                    'section_name': 'Product'
+                    'section': 'Create',
+                    'section_name': 'Products',
+                    'parent_sections': parent_sections
                 })
         else:
             form = forms.ProductForm()
+            parent_sections = {
+                    'Products': reverse_lazy('product.index'),
+                }
             return render(request,'backend/pages/product/create.html',{
                 'form': form,
-                'section': 'product',
-                'section_name': 'Product'
+                'section': 'Create',
+                'section_name': 'Products',
+                'parent_sections': parent_sections
             })
     def edit(request, id):
         obj = models.Product.objects.get(id = id)
@@ -183,17 +223,25 @@ class productController:
             else:
                 messages.add_message(request, messages.ERROR,
                     'There was something wrong, please check again')
-            return render(request,'backend/pages/product/edit.html',{
-                'form': form,
-                'section': 'product',
-                'section_name': 'Product'
-            })
+                parent_sections = {
+                    'Products': reverse_lazy('product.index'),
+                }
+                return render(request,'backend/pages/product/edit.html',{
+                    'form': form,
+                    'section': 'Edit_' + str(id),
+                    'section_name': 'Products',
+                    'parent_sections': parent_sections
+                })
         else:
             form = forms.ProductForm(instance=obj)
+            parent_sections = {
+                    'Products': reverse_lazy('product.index'),
+                }
             return render(request,'backend/pages/product/edit.html',{
                 'form': form,
-                'section': 'product',
-                'section_name': 'Product'
+                'section': 'Edit_' + str(id),
+                'section_name': 'Products',
+                'parent_sections': parent_sections
             })
     def delete(request, id):
         models.Product.objects.filter(id=id).delete()
