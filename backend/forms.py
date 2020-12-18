@@ -11,15 +11,62 @@ class CategoryForm(forms.ModelForm):
         model = models.Category
         fields = ['name']
 class ProductForm(forms.ModelForm):
-    name = forms.CharField(label="Tên sản phẩm", widget=forms.TextInput(attrs={'class':"form-control"}))
-    price = forms.FloatField(label="Giá sản phẩm", widget=forms.TextInput(attrs={'class':"form-control"}))
-    thumbnail = forms.ImageField(label="Ảnh sản phẩm", widget=forms.FileInput(attrs={'class':"form-control"}))
-    description = forms.CharField(label="Nội dung sản phẩm", widget=forms.Textarea(attrs={'class':"form-control"}))
-    status = forms.IntegerField(label="Trạng thái", widget=forms.NumberInput(attrs={'class':"form-control"}))
-    ship = forms.CharField(label="Thời gian giao hàng", widget=forms.TextInput(attrs={'class':"form-control"}))
-    amount = forms.FloatField(label="Số lượng", widget=forms.NumberInput(attrs={'class':"form-control"}))
-    unit = forms.CharField(label="Đơn vị", widget=forms.TextInput(attrs={'class':"form-control"}))
-    date_created = forms.DateField(label="Ngày", widget=forms.DateInput(attrs={'class':"form-control"}))
+    name = forms.CharField(
+        label="Tên sản phẩm", 
+        widget=forms.TextInput(attrs={
+            'class':"form-control",
+            'placeholder': "Tên sản phẩm"
+            }))
+    price = forms.FloatField(
+        label="Giá sản phẩm", 
+        widget=forms.TextInput(attrs={
+            'class':"form-control",
+            "placeholder": "Giá sản phẩm"
+            }))
+    thumbnail = forms.ImageField(
+        required=False,
+        label="Ảnh sản phẩm", 
+        widget=forms.FileInput())
+    description = forms.CharField(
+        label="Nội dung sản phẩm", 
+        widget=forms.Textarea(attrs={
+            'class':"form-control",
+            "placeholder": "Nội dung sản phẩm",
+            "rows": 4
+            }))
+    status = forms.IntegerField(
+        label="Trạng thái", 
+        widget=forms.NumberInput(attrs={
+            'class':"form-control",
+            'placeholder': "Trạng thái"
+            }))
+    ship = forms.CharField(
+        label="Thời gian giao hàng", 
+        widget=forms.TextInput(attrs={
+            'class':"form-control",
+            'placeholder': "Thời gian giao hàng"}))
+    amount = forms.FloatField(
+        label="Số lượng", 
+        widget=forms.NumberInput(attrs={
+            'class':"form-control",
+            'placeholder': "Số lượng"
+            }))
+    unit = forms.CharField(
+        label="Đơn vị", 
+        widget=forms.TextInput(attrs={
+            'class':"form-control",
+            'placeholder': "Đơn vị"
+            }))
+    date_created = forms.DateField(
+        required=False,
+        label="Ngày", 
+        widget=forms.DateInput(attrs={
+            'class':"form-control"}))
+    rating = forms.FloatField(
+        required=False,
+        widget=forms.NumberInput({
+        'disabled': True
+    }))
     class Meta:
         model = models.Product
         fields = '__all__'

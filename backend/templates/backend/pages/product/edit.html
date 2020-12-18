@@ -1,43 +1,111 @@
 {% extends 'backend/main.html' %}
+
+{% load static %}
+
 {% block 'main' %}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   {% include 'backend/layout/breadcrumb.html' with section_name=section_name %}
 
-    <!-- Main content -->
-    <section class="content">
+  <!-- Main content -->
+  <section class="content">
 
-      <!-- Default box -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Sửa sản phẩm</h3>
+    <!-- Default box -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Sửa sản phẩm</h3>
 
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-              <i class="fas fa-minus"></i></button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fas fa-times"></i></button>
-          </div>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+            <i class="fas fa-minus"></i></button>
         </div>
-        <div class="card-body">
-            <form  action="" method="post">  
-              {% csrf_token %}
-              {{ form }}
-              <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Xác nhận</button>
-              </div>
-            </form>
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-          Footer
-        </div>
-        <!-- /.card-footer-->
       </div>
-      <!-- /.card -->
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-sm-6 col-12">
+              <div class="my-2">
+                {{ form.rating.label_tag }}
+                {{ form.rating }}
+              </div>
+              <div class="my-2">
+                {{ form.thumbnail.label_tag }}
+                {{ form.thumbnail }}
+                <div class="p-2">
+                  <img 
+                    src="{% if form.thumbnail.value %}{{ form.thumbnail.value.url }}{% else %}{% static 'images/default-image.jpg' %}{% endif %}" 
+                    style="width: 100%" 
+                    alt="Current Thumbnail"
+                    id="thumbnail-display">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-12">
+              <div class="my-2">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+              </div>
+              <div class="my-2">
+                {{ form.price.label_tag }}
+                {{ form.price }}
+              </div>
+              <div class="my-2">
+                {{ form.category.errors }}
+                {{ form.category.label_tag }}
+                {{ form.category }}
+              </div>
+              <div class="my-2">
+                {{ form.status.label_tag }}
+                {{ form.status }}
+              </div>
+              <div class="my-2">
+                {{ form.ship.label_tag }}
+                {{ form.ship }}
+              </div>
+              <div class="my-2">
+                {{ form.amount.label_tag }}
+                {{ form.amount }}
+              </div>
+              <div class="my-2">
+                {{ form.unit.label_tag }}
+                {{ form.unit }}
+              </div>
+            </div>
+          </div>
+          <div class="my-2">
+            {{ form.description }}
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Xác nhận</button>
+          </div>
+        </form>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        Footer
+      </div>
+      <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
 
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{% endblock %}
+
+
+{% block script %}
+<script>
+  $('#id_thumbnail').change(function() {
+    if (this.files && this.files[0]) {
+      let fileReader = new FileReader();
+      fileReader.onload = function(e) {
+        $('#thumbnail-display').attr('src', e.target.result);
+      }
+      fileReader.readAsDataURL(this.files[0]);
+    }
+  })
+</script>
 {% endblock %}

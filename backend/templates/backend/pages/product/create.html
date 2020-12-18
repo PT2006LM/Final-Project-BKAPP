@@ -1,4 +1,7 @@
 {% extends 'backend/main.html' %}
+
+{% load static %}
+
 {% block 'main' %}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -20,9 +23,66 @@
           </div>
         </div>
         <div class="card-body">
-          <form  action="" method="post">  
+          <form method="post" enctype="multipart/form-data">  
             {% csrf_token %}
-            {{ form }}
+            <div class="row">
+              <div class="col-sm-6 col-12">
+                <div class="my-2">
+                  {{ form.thumbnail.errors }}
+                  {{ form.thumbnail.label_tag }}
+                  {{ form.thumbnail }}
+                  <div class="p-2">
+                    <img 
+                      src="{% static 'images/default-image.jpg' %}" 
+                      style="width: 100%" 
+                      alt="Current Thumbnail"
+                      id="thumbnail-display">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-12">
+                <div class="my-2">
+                  {{ form.name.errors }}
+                  {{ form.name.label_tag }}
+                  {{ form.name }}
+                </div>
+                <div class="my-2">
+                  {{ form.price.errors }}
+                  {{ form.price.label_tag }}
+                  {{ form.price }}
+                </div>
+                <div class="my-2">
+                  {{ form.category.errors }}
+                  {{ form.category.label_tag }}
+                  {{ form.category }}
+                </div>
+                <div class="my-2">
+                  {{ form.status.errors }}
+                  {{ form.status.label_tag }}
+                  {{ form.status }}
+                </div>
+                <div class="my-2">
+                  {{ form.ship.errors }}
+                  {{ form.ship.label_tag }}
+                  {{ form.ship }}
+                </div>
+                <div class="my-2">
+                  {{ form.amount.errors }}
+                  {{ form.amount.label_tag }}
+                  {{ form.amount }}
+                </div>
+                <div class="my-2">
+                  {{ form.unit.errors }}
+                  {{ form.unit.label_tag }}
+                  {{ form.unit }}
+                </div>
+              </div>
+            </div>
+            <div class="my-2">
+              {{ form.description.errors }}
+              {{ form.description }}
+            </div>
+            
             <div class="card-footer">
               <button type="submit" class="btn btn-primary">Xác nhận</button>
             </div>
@@ -41,6 +101,19 @@
   </div>
   <!-- /.content-wrapper -->
 {% endblock %}
-{% block 'script' %}
 
+
+{% block script %}
+<script>
+  $('#id_thumbnail').change(function() {
+    if (this.files && this.files[0]) {
+      let fileReader = new FileReader();
+      fileReader.onload = function(e) {
+        $('#thumbnail-display').attr('src', e.target.result);
+      }
+
+      fileReader.readAsDataURL(this.files[0])
+    }
+  })
+</script>
 {% endblock %}

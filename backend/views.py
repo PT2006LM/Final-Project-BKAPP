@@ -74,7 +74,8 @@ class userController:
                 'obj': obj
             })
     def register(request):
-        form = forms.UserRegisterFormStaff(request.POST or None, request.FILES or None)
+        form = forms.UserRegisterFormStaff(
+            request.POST or None, request.FILES or None)
         if form.is_valid():
             # Save form -> Create new user in database
             user = form.save()
@@ -107,6 +108,9 @@ class categoryControler:
             messages.add_message(request, messages.SUCCESS,
                 'You have successfully created a category')
             return redirect('category.index')
+        else:
+            messages.add_message(request, messages.ERROR,
+                'There was something wrong, please check again')
         return render(request,'backend/pages/category/create.html',{
             'form': form,
             'section': 'category',
@@ -120,6 +124,9 @@ class categoryControler:
             messages.add_message(request, messages.SUCCESS,
                 'You have edited a category')
             return redirect('category.index')
+        else:
+            messages.add_message(request, messages.ERROR,
+                'There was something wrong, please check again')
         return render(request,'backend/pages/category/edit.html',{
             'form': form,
             'section': 'category',
@@ -141,30 +148,53 @@ class productController:
                 'section_name': 'Product'
             })
     def create(request):
-        form = forms.ProductForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.SUCCESS,
-                'You have successfully added a product')
-            return redirect('product.index')
-        return render(request,'backend/pages/product/create.html',{
-            'form': form,
-            'section': 'product',
-            'section_name': 'Product'
-        })
+        if request.method == "POST":
+            form = forms.ProductForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save(commit=True)
+                print(request.FILES)
+                messages.add_message(request, messages.SUCCESS,
+                    'You have successfully added a product')
+                return redirect('product.index')
+            else:
+                messages.add_message(request, messages.ERROR,
+                    'There was something wrong, please check again')
+                return render(request,'backend/pages/product/create.html',{
+                    'form': form,
+                    'section': 'product',
+                    'section_name': 'Product'
+                })
+        else:
+            form = forms.ProductForm()
+            return render(request,'backend/pages/product/create.html',{
+                'form': form,
+                'section': 'product',
+                'section_name': 'Product'
+            })
     def edit(request, id):
         obj = models.Product.objects.get(id = id)
-        form = forms.ProductForm(request.POST or None, instance=obj)
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.SUCCESS,
-                'You have successfully edited a product')
-            return redirect('product.index')
-        return render(request,'backend/pages/product/edit.html',{
-            'form': form,
-            'section': 'product',
-            'section_name': 'Product'
-        })
+        if request.method == "POST":
+            form = forms.ProductForm(request.POST, request.FILES, instance=obj)
+            if form.is_valid():
+                form.save()
+                messages.add_message(request, messages.SUCCESS,
+                    'You have successfully edited a product')
+                return redirect('product.index')
+            else:
+                messages.add_message(request, messages.ERROR,
+                    'There was something wrong, please check again')
+            return render(request,'backend/pages/product/edit.html',{
+                'form': form,
+                'section': 'product',
+                'section_name': 'Product'
+            })
+        else:
+            form = forms.ProductForm(instance=obj)
+            return render(request,'backend/pages/product/edit.html',{
+                'form': form,
+                'section': 'product',
+                'section_name': 'Product'
+            })
     def delete(request, id):
         models.Product.objects.filter(id=id).delete()
         messages.add_message(request, messages.SUCCESS,

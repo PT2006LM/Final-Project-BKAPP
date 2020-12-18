@@ -27,6 +27,8 @@
       height: 150px;
     }
   </style>
+  {% block style %}
+  {% endblock %}
 
 
 </head>
@@ -51,8 +53,8 @@
     {% endif %}
 
     {% block 'main' %}
-
     {% endblock %}
+
     {% include 'backend/layout/footer.html' %}
   </div>
   <!-- ./wrapper -->
@@ -65,7 +67,7 @@
   <script src="dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="dist/js/demo.js"></script>
-  {% block 'script' %}
+  {% block script %}
   {% endblock %}
 </body>
 
