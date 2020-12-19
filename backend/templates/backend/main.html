@@ -39,19 +39,6 @@
     {% include 'backend/layout/header.html' %}
     {% include 'backend/layout/navbar.html' %}
 
-    {% if messages %}
-    {% for message in messages %}
-    <div
-      class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
-      role="alert">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    {% endfor %}
-    {% endif %}
-
     {% block 'main' %}
     {% endblock %}
 
@@ -61,6 +48,8 @@
 
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- PopperJs-->
+  <script src="js/popper.min.js"></script>
   <!-- Bootstrap 4 -->
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->

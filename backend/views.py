@@ -273,13 +273,25 @@ class orderController:
         order = cart_models.Order.objects.select_related(
             'order_data'
         ).get(pk=id)
+        parent_sections = {
+            'Orders': reverse_lazy('order.index'),
+        }
         return render(request, 'backend/pages/order/detail.html',
             {
                 'order': order,
                 'section': 'Order_' + str(id),
-                'section_name': 'Orders'
+                'section_name': 'Orders',
+                'parent_sections': parent_sections,
             })
-    def update(request):
-        pass
-    def delete(request):
-        pass
+    def update(request, id):
+        order = cart_models.Order.objects.get(pk=id)
+        order.paid = not order.paid
+        order.save()
+        messages.add_message(request, messages.SUCCESS,
+            f"Order {id} updated")
+        return redirect(reverse('order.index'))
+    def delete(request, id):
+        cart_models.Order.objects.get(pk=id).delete()
+        messages.add_message(request, messages.SUCCESS,
+            f"Order {id} deleted")
+        return redirect(reverse('order.index'))

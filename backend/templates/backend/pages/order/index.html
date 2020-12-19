@@ -9,63 +9,77 @@
 <div class="content-wrapper">
   {% include 'backend/layout/breadcrumb.html' with section_name=section_name %}
 
-    <!-- Main content -->
-    <section class="content">
+  <!-- Main content -->
+  <section class="content pb-4">
 
-      <!-- Default box -->
-      <div class="card">
-        <div class="card-header">
-          List of Orders
-        </div>
-        <div class="card-body">
-            <table id="data-table" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>STT</th>
-                  <th>Name</th>
-                  <th>Date</th>
-                  <td>City</td>
-                  <th>Address</th>
-                  <th>Price</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                  {% for item in obj %}
-                  <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ item.first_name }} {{ item.last_name }}</td>
-                    <td>{{ item.order_data.date_created }}</td>
-                    <td>{{ item.city }}</td>
-                    <td>{{ item.districts }}</td>
-                    <td>{{ item.order_data.total_price }}</td>
-                    <td>{{ item.get_status }}</td>
-                    <td>
-                      <div class="">
-                        <div><a href="{% url 'order.detail' item.pk %}" 
-                          class="btn btn-success">View</a></div>
-                        <div><a href="#" class="btn btn-danger">Delete</a></div>
-                        <div><a href="#" class="btn btn-primary">Print</a></div>
-                      </div>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-          Footer
-        </div>
-        <!-- /.card-footer-->
+    <!-- Default box -->
+    <div class="card">
+      <div class="card-header">
+        List of Orders
       </div>
-      <!-- /.card -->
+      <div class="card-body">
+        <table id="data-table" class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Name</th>
+              <th>Date</th>
+              <td>City</td>
+              <th>Address</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in obj %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ item.first_name }} {{ item.last_name }}</td>
+              <td>{{ item.order_data.date_created }}</td>
+              <td>{{ item.city }}</td>
+              <td>{{ item.districts }}</td>
+              <td>{{ item.order_data.total_price }}</td>
+              <td>
+                <h5><span
+                    class="badge badge-{% if item.paid %}success{% else %}danger{% endif %}">{{ item.get_status }}</span>
+                </h5>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-cog"></i> 
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a href="{% url 'order.detail' item.pk %}"  
+                      class="dropdown-item" type="button">View</a>
+                    <a href="{% url 'order.update' item.pk %}" 
+                      class="dropdown-item" type="button">Toggle Status</a>
+                    <a href="{% url 'order.delete' item.pk %}" 
+                      class="dropdown-item" type="button">Delete</a>
+                    <!-- <a href="#" 
+                      class="dropdown-item" type="button">Print</a> -->
+                  </div>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        Footer
+      </div>
+      <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
 
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 {% endblock %}
 {% block 'script' %}
 <!-- DataTables -->
@@ -75,16 +89,16 @@
 <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <!-- page script -->
 <script>
-    $(function () {
-      $('#data-table').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
+  $(function () {
+    $('#data-table').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
     });
-  </script>
+  });
+</script>
 {% endblock %}

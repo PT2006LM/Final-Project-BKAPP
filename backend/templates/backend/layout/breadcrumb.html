@@ -1,19 +1,31 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>{{section_name}}</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}">Trang chính</a></li>
-            {% for name, link in parent_sections.items %}
-            <li class="breadcrumb-item"><a href="{{ link }}">{{ name }}</a></li>
-            {% endfor %}
-            <li class="breadcrumb-item active">{{ section }}</li>
-          </ol>
-        </div>
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>{{section_name}}</h1>
       </div>
-    </div><!-- /.container-fluid -->
-  </section>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{% url 'index' %}">Trang chính</a></li>
+          {% for name, link in parent_sections.items %}
+          <li class="breadcrumb-item"><a href="{{ link }}">{{ name }}</a></li>
+          {% endfor %}
+          <li class="breadcrumb-item active">{{ section }}</li>
+        </ol>
+      </div>
+    </div>
+    {% if messages %}
+    {% for message in messages %}
+    <div
+      class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
+      role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div><!-- /.container-fluid -->
+</section>
