@@ -38,6 +38,7 @@ urlpatterns = [
         name='category.edit'),
     path('admin/category/delete/<int:id>', views.categoryControler.delete, 
         name='category.delete'),
+
     #product
     path('admin/product', views.productController.index, 
         name='product.index'),
@@ -47,4 +48,10 @@ urlpatterns = [
         name='product.edit'),
     path('admin/product/delete/<int:id>', views.productController.delete, 
         name='product.delete'),
+
+    # orders
+    path('admin/order', views.orderController.index,
+        name='order.index'),
+    path('admin/order/<int:id>', views.orderController.detail,
+        name='order.detail'),
 ]

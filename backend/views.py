@@ -9,6 +9,7 @@ from django.contrib import messages
 
 from backend import forms
 from foodstore import models
+from cart import models as cart_models
 
 class adminController:
     @login_required(login_url=reverse_lazy('login'))
@@ -22,7 +23,7 @@ class adminController:
             'guest_users': guest_users,
             'products_count': products_count,
             'category_count': category_count,
-            'section_name': 'Danh sách'
+            'section_name': 'Home'
         })
 
     def login(request):
@@ -99,7 +100,8 @@ class categoryControler:
         return render(request,'backend/pages/category/index.html',{
             'obj': obj,
             'section': 'Categories',
-            'section_name': 'Categories'
+            'section_name': 'Categories',
+            'section_parent_nav': 'Categories',
         })
     def create(request):
         if request.method == 'POST':
@@ -120,6 +122,7 @@ class categoryControler:
                     'section': 'Create',
                     'section_name': 'Categories',
                     'parent_sections': parent_sections,
+                    'section_parent_nav': 'Categories',
                 })
         else:
             form = forms.CategoryForm()
@@ -131,6 +134,7 @@ class categoryControler:
                 'section': 'Create',
                 'section_name': 'Categories',
                 'parent_sections': parent_sections,
+                'section_parent_nav': 'Categories',
             })
 
     def edit(request, id):
@@ -152,7 +156,8 @@ class categoryControler:
                     'form': form,
                     'section': 'Edit_' + str(id),
                     'section_name': 'Categories',
-                    'parent_sections': parent_sections
+                    'parent_sections': parent_sections,
+                    'section_parent_nav': 'Categories',
                 })
         else:
             form = forms.CategoryForm(instance=obj)
@@ -163,7 +168,8 @@ class categoryControler:
                 'form': form,
                 'section': 'Edit_' + str(id),
                 'section_name': 'Categories',
-                'parent_sections': parent_sections
+                'parent_sections': parent_sections,
+                'section_parent_nav': 'Categories',
             })
     def delete(request, id):
         models.Category.objects.filter(id=id).delete()
@@ -178,7 +184,8 @@ class productController:
             {
                 'obj': obj,
                 'section': 'Products',
-                'section_name': 'Products'
+                'section_name': 'Products',
+                'section_parent_nav': 'Categories',
             })
     def create(request):
         if request.method == "POST":
@@ -198,7 +205,8 @@ class productController:
                     'form': form,
                     'section': 'Create',
                     'section_name': 'Products',
-                    'parent_sections': parent_sections
+                    'parent_sections': parent_sections,
+                    'section_parent_nav': 'Categories',
                 })
         else:
             form = forms.ProductForm()
@@ -209,7 +217,8 @@ class productController:
                 'form': form,
                 'section': 'Create',
                 'section_name': 'Products',
-                'parent_sections': parent_sections
+                'parent_sections': parent_sections,
+                'section_parent_nav': 'Categories',
             })
     def edit(request, id):
         obj = models.Product.objects.get(id = id)
@@ -230,7 +239,8 @@ class productController:
                     'form': form,
                     'section': 'Edit_' + str(id),
                     'section_name': 'Products',
-                    'parent_sections': parent_sections
+                    'parent_sections': parent_sections,
+                    'section_parent_nav': 'Categories',
                 })
         else:
             form = forms.ProductForm(instance=obj)
@@ -241,11 +251,35 @@ class productController:
                 'form': form,
                 'section': 'Edit_' + str(id),
                 'section_name': 'Products',
-                'parent_sections': parent_sections
+                'parent_sections': parent_sections,
+                'section_parent_nav': 'Categories',
             })
     def delete(request, id):
         models.Product.objects.filter(id=id).delete()
         messages.add_message(request, messages.SUCCESS,
                 'You have successfully deleted a product')
         return redirect('product.index')
-    
+
+class orderController:
+    def index(request):
+        orders = cart_models.Order.objects.select_related(
+            'order_data').all()
+        return render(request, 'backend/pages/order/index.html', {
+            'obj': orders,
+            'section': 'Orders',
+            'section_name': 'Orders'
+        })
+    def detail(request, id):
+        order = cart_models.Order.objects.select_related(
+            'order_data'
+        ).get(pk=id)
+        return render(request, 'backend/pages/order/detail.html',
+            {
+                'order': order,
+                'section': 'Order_' + str(id),
+                'section_name': 'Orders'
+            })
+    def update(request):
+        pass
+    def delete(request):
+        pass

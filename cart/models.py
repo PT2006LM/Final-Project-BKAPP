@@ -34,3 +34,6 @@ class Order(models.Model):
     addition_note = models.TextField(max_length=50)
     order_data = models.OneToOneField(CartOrder, on_delete=models.CASCADE)
     paid = models.BooleanField(default=False)
+
+    def get_status(self):
+        return "Paid" if self.paid else "Pending"

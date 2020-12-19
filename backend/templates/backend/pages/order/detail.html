@@ -1,0 +1,97 @@
+{% extends 'backend/main.html' %}
+{% block 'link' %}
+
+{% endblock %}
+{% block 'main' %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  {% include 'backend/layout/breadcrumb.html' with section_name=section_name %}
+
+  <!-- Main content -->
+  <section class="content pb-4">
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Order No. {{ order.pk }}</h3>
+      </div>
+    </div>
+
+    <div class="py-1 px-4 mb-3">
+      Order date: {{ order.order_data.date_created }}
+    </div>
+
+    <div class="card" id="customer-info">
+      <div class="card-header">
+        <h4 class="card-title">Customer Information</h4>
+      </div>
+      <div class="card-body">
+        <p><strong>Name</strong>: {{ order.first_name }} {{ order.last_name }}</p>
+        <p><strong>Phone No.</strong>: {{ order.phone }}</p>
+        <p><strong>Email</strong>: {{ order.email }}</p>
+      </div>
+    </div>
+
+    <div class="card" id="shipping-info">
+      <div class="card-header">
+        <h4 class="card-title">Shipping Information</h4>
+      </div>
+      <div class="card-body row">
+        <div class="col-12 col-sm-6">
+          <p><strong>City</strong>: {{ order.city }}</p>
+          <p><strong>District</strong>: {{ order.districts }}</p>
+          <p><strong>Address</strong>: {{ order.detail_address }}</p>
+        </div>
+        <div class="col-12 col-sm-6">
+          <h5><strong>Note</strong></h5>
+          {% if order.addition_note != '' %}
+          {{ order.addition_note|linebreaks }}
+          {% else %}
+          <p>Empty</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="ordered-products">
+      <div class="card-header">
+        List of Orders
+      </div>
+      <div class="card-body">
+        <table id="data-table" class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Name</th>
+              <th>Quantity</th>
+              <td>Price</td>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in order.order_data.cartitem_set.all %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>
+                <a href="{{ item.product.get_absolute_url }}"
+                >{{ item.product.name }}</a></td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.price }}</td>
+              <td class="text-right">{{ item.total_price }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total</th>
+              <th colspan="3"></th>
+              <th class="text-right">{{ order.order_data.total_price }}</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{% endblock %}

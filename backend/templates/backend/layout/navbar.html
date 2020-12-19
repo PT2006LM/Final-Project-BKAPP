@@ -27,7 +27,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link{% if section_parent_nav %}{% if section_parent_nav == 'Categories' %} active{% endif %}{% endif %}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Danh mục
@@ -36,18 +36,24 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="http://localhost:8000/admin/category" class="nav-link{% if section_name != 'Categories' %} active{% endif %}">
-                  <i class="fa{% if section_name != 'Categories' %}r{% endif %} fa-circle nav-icon"></i>
-                  <p>Category <span class="badge {% if section_name != 'Categories' %}bg-dark{% else %}bg-light text-dark{% endif %}">{{ category_count }}</span></p>
+                <a href="http://localhost:8000/admin/category" class="nav-link{% if section_name == 'Categories' %} active{% endif %}">
+                  <i class="fa{% if section_name == 'Categories' %}r{% endif %} fa-circle nav-icon"></i>
+                  <p>Category <span class="badge {% if section_name == 'Categories' %}bg-dark{% else %}bg-light text-dark{% endif %}">{{ category_count }}</span></p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost:8000/admin/product" class="nav-link{% if section_name != 'Products' %} active{% endif %}">
-                  <i class="fa{% if section_name != 'Products' %}r{% endif %} fa-circle nav-icon"></i>
-                  <p>Product <span class="badge {% if section_name != 'Products' %}bg-dark{% else %}bg-light text-dark{% endif %}">{{ product_count }}</span></p>
+                <a href="http://localhost:8000/admin/product" class="nav-link{% if section_name == 'Products' %} active{% endif %}">
+                  <i class="fa{% if section_name == 'Products' %}r{% endif %} fa-circle nav-icon"></i>
+                  <p>Product <span class="badge {% if section_name == 'Products' %}bg-dark{% else %}bg-light text-dark{% endif %}">{{ product_count }}</span></p>
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'order.index' %}" class="nav-link{% if section_name == 'Orders' %} active{% endif %}">
+              <i class="fa fa-cart-plus nav-icon"></i> 
+              <p>Orders</p>
+            </a>
           </li>
           <li class="nav-item">
             <a href="{% url 'home' %}" class="nav-link">
