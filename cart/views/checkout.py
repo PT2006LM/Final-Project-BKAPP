@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string, get_template
 
 from cart.cart import get_cart_from_session
 from cart.forms import OrderForm
@@ -69,7 +71,7 @@ def checkout(request):
                     total_price=float(value['total_price']))
 
             # Create final Order object from CartOrder and form.cleaned_data 
-            Order.objects.create(
+            order = Order.objects.create(
                 first_name=cleaned_data['first_name'],
                 last_name=cleaned_data['last_name'],
                 districts=cleaned_data['district'],
@@ -82,9 +84,26 @@ def checkout(request):
             )
             messages.add_message(request, messages.SUCCESS, 
                 "Payment successfully!")
+            send_bill_email(request, order)
             return render(request, 'cart/checkout_completed.html')
         else:
             messages.add_message(request, messages.ERROR, 
                 'Some error has occur, please try again')
             return render(request, 'cart/checkout.html', 
             context=context_data)
+
+
+def send_bill_email(request, order):
+    ctx = {
+        'order': order
+    }
+    html_content = get_template('cart/order_email_template.html').render(ctx)
+    mail = EmailMessage(
+        subject="Your order is ready",
+        body=html_content,
+        from_email="localhost@mail.com",
+        to=[order.email]
+    )
+    mail.content_subtype = "html"
+    mail.send()
+    print("Mail successfully sent")

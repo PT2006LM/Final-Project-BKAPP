@@ -58,8 +58,8 @@
                       class="dropdown-item" type="button">Toggle Status</a>
                     <a href="{% url 'order.delete' item.pk %}" 
                       class="dropdown-item" type="button">Delete</a>
-                    <!-- <a href="#" 
-                      class="dropdown-item" type="button">Print</a> -->
+                    <a href="{% url 'order.detail_pdf' item.pk %}" 
+                      class="dropdown-item" type="button">Print</a>
                   </div>
                 </div>
               </td>

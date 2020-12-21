@@ -6,7 +6,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 
-
 from backend import forms
 from foodstore import models
 from cart import models as cart_models
@@ -283,6 +282,7 @@ class orderController:
                 'section_name': 'Orders',
                 'parent_sections': parent_sections,
             })
+
     def update(request, id):
         order = cart_models.Order.objects.get(pk=id)
         order.paid = not order.paid
@@ -290,6 +290,7 @@ class orderController:
         messages.add_message(request, messages.SUCCESS,
             f"Order {id} updated")
         return redirect(reverse('order.index'))
+
     def delete(request, id):
         cart_models.Order.objects.get(pk=id).delete()
         messages.add_message(request, messages.SUCCESS,
