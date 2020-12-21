@@ -5,6 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.template.loader import render_to_string
+from django.http.response import HttpResponse
+from django.template import RequestContext
+
+from weasyprint import HTML
 
 from backend import forms
 from foodstore import models
@@ -296,3 +301,24 @@ class orderController:
         messages.add_message(request, messages.SUCCESS,
             f"Order {id} deleted")
         return redirect(reverse('order.index'))
+
+    def detail_pdf(request, id):
+        order = cart_models.Order.objects.select_related(
+            'order_data'
+        ).get(pk=id)
+
+        parent_sections = {
+            'Orders': reverse_lazy('order.index'),
+        }
+
+        html_string = render_to_string('backend/pages/order/order_pdf_template.html', {
+                'order': order,
+                'section': 'Order_' + str(id),
+                'section_name': 'Orders',
+                'parent_sections': parent_sections,
+            }, request=request)
+        html = HTML(string=html_string)
+        main_doc = html.render()
+        result = main_doc.write_pdf()
+
+        return HttpResponse(result, content_type="application/pdf")

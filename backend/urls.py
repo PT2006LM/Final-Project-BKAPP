@@ -54,6 +54,8 @@ urlpatterns = [
         name='order.index'),
     path('admin/order/<int:id>', views.orderController.detail,
         name='order.detail'),
+    path('admin/order/<int:id>/pdf', views.orderController.detail_pdf,
+        name='order.detail_pdf'),
     path('admin/order/<int:id>/update', views.orderController.update,
         name='order.update'),
     path('admin/order/<int:id>/delete', views.orderController.delete,
