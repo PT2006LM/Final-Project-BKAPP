@@ -111,29 +111,33 @@ def set_favorite_product(request, category, product_id):
 
 
 def product_list_favorite(request):
-    favorite_products = request.session['favorite_products']
-    product_list = map(lambda index: models.Product.objects.get(pk=index), 
-        favorite_products['object_ids'])
-    product_list = list(product_list)
+    try:
+        favorite_products = request.session['favorite_products']
+        product_list = map(lambda index: models.Product.objects.get(pk=index), 
+            favorite_products['object_ids'])
+        product_list = list(product_list)
 
-    def sort_list(item_list, category):
-        if category == 'price':
-            return sorted(item_list, key=lambda x: x.price)
-        elif category == '-price':
-            return sorted(item_list, key=lambda x: x.price, reverse=True)
-        elif category == 'name':
-            return sorted(item_list, key=lambda x: x.name)
-        elif category == '-name':
-            return sorted(item_list, key=lambda x: x.name, reverse=True)
-        elif category == 'date_created':
-            return sorted(item_list, key=lambda x: x.date_created, reverse=True)
+        def sort_list(item_list, category):
+            if category == 'price':
+                return sorted(item_list, key=lambda x: x.price)
+            elif category == '-price':
+                return sorted(item_list, key=lambda x: x.price, reverse=True)
+            elif category == 'name':
+                return sorted(item_list, key=lambda x: x.name)
+            elif category == '-name':
+                return sorted(item_list, key=lambda x: x.name, reverse=True)
+            elif category == 'date_created':
+                return sorted(item_list, key=lambda x: x.date_created, reverse=True)
 
 
-    # Sort items
-    sort_category = request.GET.get('sort_by', None)
-    if sort_category:
-        product_list = sort_list(product_list, sort_category)
-
+        # Sort items
+        sort_category = request.GET.get('sort_by', None)
+        if sort_category:
+            product_list = sort_list(product_list, sort_category)
+        product_count = favorite_products['length']
+    except KeyError:
+        product_list = []
+        product_count = 0
 
     # Setup paginator
     max_item_per_page = 6
@@ -141,9 +145,11 @@ def product_list_favorite(request):
     paginator = Paginator(product_list, max_item_per_page)
     page_obj = paginator.get_page(page_number)
     
+
+
     context = {
         'product_list': product_list,
-        'product_count': favorite_products['length'],
+        'product_count': product_count,
         'page_obj': page_obj
     }
 

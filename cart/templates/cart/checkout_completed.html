@@ -9,9 +9,11 @@
 {% include 'widgets/content_components/breadcrumb.html' with page_title="Checkout" %}
 
 <!-- Checkout Section Begin -->
-<p>Thank you for shopping. Our shipper will contact you soon.</p>
+<div class="container p-4 text-center">
+    <p>Thank you for shopping. Our shipper will contact you soon.</p>
 
-<a href="{% url 'home' %}" class="btn btn-lg btn-primary">
-    Click here to head home</a>
+    <a href="{% url 'home' %}" class="btn btn-lg btn-primary">
+        Click here to head home</a>
+</div>
 <!-- Checkout Section End -->
 {% endblock %}

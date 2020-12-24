@@ -95,4 +95,4 @@ def get_cart_from_session(request):
                 total_price=current_data['total_price'])
     else: 
         # If not, create a new empty cart object 
-        return Cart()
+        return Cart({}, 0)

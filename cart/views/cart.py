@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.contrib import messages
+
 from foodstore.models import Product
 from cart.cart import Cart, get_cart_from_session
 from cart.forms import CartEditForm
-from django.contrib import messages
 
 
 
@@ -80,5 +81,6 @@ def get(request):
 
     return render(request, 'cart/shopping-cart.html', {
         'cart_data': cart_rendering_data,
+        'cart_data_len': len(cart_rendering_data),
         'total_price': cart.total_price,
     })

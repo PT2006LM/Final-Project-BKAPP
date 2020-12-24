@@ -20,4 +20,6 @@ def homepage(request):
     })
 
 def contact(request):
-    return render(request, 'contact.html')
+    return render(request, 'contact.html', {
+        'heading_menu': 'contact',
+    })

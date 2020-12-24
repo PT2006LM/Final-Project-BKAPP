@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string, get_template
+from django.contrib.auth.decorators import login_required
 
 from cart.cart import get_cart_from_session
 from cart.forms import OrderForm
@@ -12,6 +13,7 @@ import json
 from foodstore.models import Product
 
 
+@login_required
 def checkout(request):
     cart = get_cart_from_session(request)
 
@@ -87,6 +89,27 @@ def checkout(request):
             send_bill_email(request, order)
             return render(request, 'cart/checkout_completed.html')
         else:
+            # Modify serialized cart_data to form of {
+            #   'product': assocaited Product object from database assocated with id,
+            #   'total_price': total_price from serialized data
+            # }
+            # Get vietnam location's data to render district and city fields
+            with open('cart/vietnam_loc_data.json', 'r') as json_file:
+                vietnam_loc_data = json.load(json_file)
+            
+            cart_context_data = {
+                'cart_data': [ {
+                    'product': Product.objects.get(pk=int(key)),
+                    'total_price': value['total_price']
+                } for key, value in cart['cart_data'].items()],
+                'total_price': cart['total_price'],
+            }
+
+            context_data = {
+                'cart': cart_context_data,
+                'form': form,
+                'vietnam_loc_data': vietnam_loc_data
+            }
             messages.add_message(request, messages.ERROR, 
                 'Some error has occur, please try again')
             return render(request, 'cart/checkout.html', 
