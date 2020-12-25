@@ -24,7 +24,7 @@ import debug_toolbar
 
 urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
-    path('djangoadmin/', admin.site.urls),
+    # path('djangoadmin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', views.homepage, name='home'),
     path('test/contact/', views.contact, name='test-contact'),

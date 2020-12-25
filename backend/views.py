@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -16,7 +16,7 @@ from foodstore import models
 from cart import models as cart_models
 
 class adminController:
-    @login_required(login_url=reverse_lazy('login'))
+    @staff_member_required(login_url=reverse_lazy('login'))
     def index(request):
         admin_users = User.objects.filter(is_staff=True)
         guest_users = User.objects.filter(is_staff=False)
@@ -73,6 +73,7 @@ def register(request):
         })
 
 class userController:
+    @staff_member_required(login_url=reverse_lazy('login'))
     def list(request):
             obj = models.User.objects.all()
             return render(request, 'backend/pages/user/list.html', {
@@ -99,6 +100,7 @@ class userController:
 
 
 class categoryControler:
+    @staff_member_required(login_url=reverse_lazy('login'))
     def index(request):
         obj = models.Category.objects.all()
         return render(request,'backend/pages/category/index.html',{
@@ -107,6 +109,7 @@ class categoryControler:
             'section_name': 'Categories',
             'section_parent_nav': 'Categories',
         })
+    @staff_member_required(login_url=reverse_lazy('login'))
     def create(request):
         if request.method == 'POST':
             form = forms.CategoryForm(request.POST)
@@ -141,6 +144,7 @@ class categoryControler:
                 'section_parent_nav': 'Categories',
             })
 
+    @staff_member_required(login_url=reverse_lazy('login'))
     def edit(request, id):
         obj = models.Category.objects.get(id = id)
         if request.method == 'POST':
@@ -175,6 +179,7 @@ class categoryControler:
                 'parent_sections': parent_sections,
                 'section_parent_nav': 'Categories',
             })
+    @staff_member_required(login_url=reverse_lazy('login'))
     def delete(request, id):
         models.Category.objects.filter(id=id).delete()
         messages.add_message(request, messages.SUCCESS,
@@ -182,6 +187,7 @@ class categoryControler:
         return redirect('category.index')
 
 class productController:
+    @staff_member_required(login_url=reverse_lazy('login'))
     def index(request):
         obj = models.Product.objects.all()
         return render(request,'backend/pages/product/index.html',
@@ -191,6 +197,7 @@ class productController:
                 'section_name': 'Products',
                 'section_parent_nav': 'Categories',
             })
+    @staff_member_required(login_url=reverse_lazy('login'))
     def create(request):
         if request.method == "POST":
             form = forms.ProductForm(request.POST, request.FILES)
@@ -224,6 +231,7 @@ class productController:
                 'parent_sections': parent_sections,
                 'section_parent_nav': 'Categories',
             })
+    @staff_member_required(login_url=reverse_lazy('login'))
     def edit(request, id):
         obj = models.Product.objects.get(id = id)
         if request.method == "POST":
@@ -258,6 +266,7 @@ class productController:
                 'parent_sections': parent_sections,
                 'section_parent_nav': 'Categories',
             })
+    @staff_member_required(login_url=reverse_lazy('login'))
     def delete(request, id):
         models.Product.objects.filter(id=id).delete()
         messages.add_message(request, messages.SUCCESS,
@@ -265,6 +274,7 @@ class productController:
         return redirect('product.index')
 
 class orderController:
+    @staff_member_required(login_url=reverse_lazy('login'))
     def index(request):
         orders = cart_models.Order.objects.select_related(
             'order_data').all()
@@ -273,6 +283,8 @@ class orderController:
             'section': 'Orders',
             'section_name': 'Orders'
         })
+
+    @staff_member_required(login_url=reverse_lazy('login'))
     def detail(request, id):
         order = cart_models.Order.objects.select_related(
             'order_data'
@@ -288,6 +300,7 @@ class orderController:
                 'parent_sections': parent_sections,
             })
 
+    @staff_member_required(login_url=reverse_lazy('login'))
     def update(request, id):
         order = cart_models.Order.objects.get(pk=id)
         order.paid = not order.paid
@@ -296,12 +309,14 @@ class orderController:
             f"Order {id} updated")
         return redirect(reverse('order.index'))
 
+    @staff_member_required(login_url=reverse_lazy('login'))
     def delete(request, id):
         cart_models.Order.objects.get(pk=id).delete()
         messages.add_message(request, messages.SUCCESS,
             f"Order {id} deleted")
         return redirect(reverse('order.index'))
 
+    
     def detail_pdf(request, id):
         order = cart_models.Order.objects.select_related(
             'order_data'
