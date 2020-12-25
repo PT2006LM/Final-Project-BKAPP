@@ -49,7 +49,8 @@ class ProductForm(forms.ModelForm):
         label="Số lượng", 
         widget=forms.NumberInput(attrs={
             'class':"form-control",
-            'placeholder': "Số lượng"
+            'placeholder': "Số lượng",
+            'disabled': True,
             }))
     unit = forms.CharField(
         label="Đơn vị", 

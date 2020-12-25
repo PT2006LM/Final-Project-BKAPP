@@ -25,6 +25,7 @@
                   <th>Name</th>
                   <th>Price</th>
                   <th>Rating</th>
+                  <th>Sold quantity</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -40,6 +41,9 @@
                 </td>
                 <td>
                   {{ item.rating }}
+                </td>
+                <td>
+                  {{ item.amount|floatformat }}
                 </td>
                 <td>
                   <div class="btn-group">

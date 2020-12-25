@@ -64,13 +64,19 @@ def checkout(request):
             cart_order = CartOrder.objects.create(
                 user=request_user, total_price=float(cart['total_price'])
             )
+            
             # Generate CartItem from cart['cart_data']'s items and above Cart
             for key, value in cart['cart_data'].items():
+                product = Product.objects.get(pk=int(key))
+                amount = int(value['amount'])
                 CartItem.objects.create(cart_parent=cart_order,
-                    product=Product.objects.get(pk=int(key)), 
-                    quantity=int(value['amount']),
+                    product=product, 
+                    quantity=amount,
                     price=float(value['price']),
                     total_price=float(value['total_price']))
+                # Update product sold quantity
+                product.amount += amount
+                product.save()
 
             # Create final Order object from CartOrder and form.cleaned_data 
             order = Order.objects.create(
@@ -85,7 +91,7 @@ def checkout(request):
                 order_data=cart_order
             )
             messages.add_message(request, messages.SUCCESS, 
-                "Payment successfully!")
+                "Payment successfully! We sent an email about your order, please check your inbox.")
             send_bill_email(request, order)
             return render(request, 'cart/checkout_completed.html')
         else:

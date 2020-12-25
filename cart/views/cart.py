@@ -26,7 +26,6 @@ def handle_update_cart_form(request):
     """
     cart = get_cart_from_session(request)
     form_cart_items_data = {}
-    print(request.POST)
     for key in cart.cart_data:
         if key not in request.POST:
             continue
