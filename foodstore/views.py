@@ -242,6 +242,12 @@ def review_create(request, category, product_id):
     if review_form.is_valid():
         cleaned_data = review_form.cleaned_data
         product = models.Product.objects.prefetch_related('review_set').get(pk=product_id)
+
+        # If this user reviewed this product, raise exception
+        for review in product.review_set.all():
+            if review.user == request.user:
+                raise SuspiciousOperation
+
         total_review_amount_before_update = product.review_set.count()
         # Create new review
         models.Review.objects.create(
