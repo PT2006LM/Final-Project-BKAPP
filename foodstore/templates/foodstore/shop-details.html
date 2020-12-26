@@ -4,6 +4,8 @@
 {% load foodstore_tags %}
 
 
+{% block title %}{{ product.name }}{% endblock %}
+
 {% block style %}
 <style>
     .rate_radio label {
@@ -36,8 +38,6 @@
 </style>
 <link rel="stylesheet" href="{% static 'foodstore/css/page.css' %}">
 {% endblock %}
-
-{% block title %}Ogani Template{% endblock %}
 
 
 {% block content %}
