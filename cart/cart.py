@@ -25,6 +25,7 @@ class Cart:
         are updated accordingly. 
         NOTE: Total price of cart also updated
         """
+        item_id = str(item_id)
         if item_id in self.cart_data.keys():
             self.cart_data[item_id]['amount'] += amount
             self.cart_data[item_id]['total_price'] += self.cart_data[item_id]['price'] * amount

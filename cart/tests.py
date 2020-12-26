@@ -43,3 +43,20 @@ class CartTestCase(TestCase):
             'price': float(20),
             'total_price': float(60)
         })
+
+
+    def test_add_same_product_twice(self):
+        c = Client()
+        c.post(reverse('product-add-to-cart', kwargs={
+            'category': self.cat_a.slug,
+            'product_id': self.product_a.pk
+        }), data={
+            'quantity': 3
+        })
+        c.post(reverse('product-add-to-cart', kwargs={
+            'category': self.cat_a.slug,
+            'product_id': self.product_a.pk
+        }), data={
+            'quantity': 3
+        })
+        self.assertEqual(c.session['cart']['length'], 1)

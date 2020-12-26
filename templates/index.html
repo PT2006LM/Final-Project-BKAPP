@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="latest-product__item__text">
                                     <h6>{{ las.name }}</h6>
-                                    <span>{{ las.price }} VND</span>
+                                    <span>{{ las.price|floatformat }} VND</span>
                                 </div>
                             </a>
                             {% endfor %}
@@ -143,7 +143,7 @@
                                 </div>
                                 <div class="latest-product__item__text">
                                     <h6>{{ rating.name }}</h6>
-                                    <span>{{ rating.price }} VND</span>
+                                    <span>{{ rating.price|floatformat }} VND</span>
                                 </div>
                             </a>
                             {% endfor %}
@@ -165,7 +165,7 @@
                                 </div>
                                 <div class="latest-product__item__text">
                                     <h6>{{ sal.name }}</h6>
-                                    <span>{{ sal.price }} VND</span>
+                                    <span>{{ sal.price|floatformat }} VND</span>
                                 </div>
                             </a>
                             {% endfor %}
