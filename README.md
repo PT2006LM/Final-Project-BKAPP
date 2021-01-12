@@ -3,7 +3,7 @@
 
 ### Project setup
 Install dependencies (recommended in a virtual environment) via
-> pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 Since this project use weasyprint which require GTK, install the dependency via the [document's instruction](https://weasyprint.readthedocs.io/en/latest/install.html).
 
