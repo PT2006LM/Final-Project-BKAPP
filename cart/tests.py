@@ -60,3 +60,6 @@ class CartTestCase(TestCase):
             'quantity': 3
         })
         self.assertEqual(c.session['cart']['length'], 1)
+
+
+    # def test_edit_product_amount_in_cart(self):
