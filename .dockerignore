@@ -3,7 +3,7 @@ env
 .vscode
 mysqlclient-1.4.6-cp38-cp38-win_amd64.whl
 staticfiles
-
+mydatabase
 sent_emails
 __pycache__
 *.pyc
